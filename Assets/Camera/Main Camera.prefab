@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8827286951232457498}
   - component: {fileID: 274810072459954254}
   - component: {fileID: 8162139010179745030}
+  - component: {fileID: 1909636301907981210}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -137,3 +138,22 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
+--- !u!114 &1909636301907981210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6814857036489812148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd809f87f36f201458e5a13c20819aaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  middleDown: {fileID: -4202590892572099509, guid: f60942dfd1d437340afd25034205eac3, type: 3}
+  middleUp: {fileID: -3626618978401559676, guid: f60942dfd1d437340afd25034205eac3, type: 3}
+  mouseDelta: {fileID: -8331543856165794329, guid: f60942dfd1d437340afd25034205eac3, type: 3}
+  dragSpeed: 0.5
+  scroll: {fileID: 7066251308298378193, guid: f60942dfd1d437340afd25034205eac3, type: 3}
+  scrollSpeed: 1.15
+  scrollMin: 0.5
