@@ -1,23 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace MdUtils
 {
-    public class Singleton : MonoBehaviour
+    public class Singleton<T> : MonoBehaviour where T : Component
     {
-        public static Singleton Instance => _instance;
+        public static T Instance => _instance;
         
-        private static Singleton _instance;
+        private static T _instance;
         
-        private void Awake()
+        protected void Awake()
         {
-            if (_instance != null && _instance != this)
-            {
-                Destroy(this.gameObject);
-            } else {
-                _instance = this;
-            }
+
+            if (_instance != null && _instance != this as T)
+                throw new Exception($"Singleton already exists! : {_instance.name}");
+            _instance = this as T;
         }
     }
 }

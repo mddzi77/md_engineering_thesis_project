@@ -1,18 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using TheLayers;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LayerSelectButton : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private LayerConfig _layerConfig;
+    
+    private Button _button;
+    private Image _image;
+    
+    private void Awake()
     {
-        
+        _button = GetComponent<Button>();
+        _button.onClick.AddListener(OnClick);
+        _image = GetComponent<Image>();
+        _image.sprite = _layerConfig.Sprite;
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    private void OnClick()
     {
-        
+        LayersManager.Instance.SetCurrentLayer(_layerConfig);
+        Debug.Log($"Layer changed to {_layerConfig.LayerName}");
     }
 }

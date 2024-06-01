@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layerName: NDiffusion
   order: 2
-  sprite: {fileID: 1008206152, guid: fa3146e65d9604a46a26caaef3901df8, type: 3}
+  sprite: {fileID: -256608158, guid: fa3146e65d9604a46a26caaef3901df8, type: 3}
