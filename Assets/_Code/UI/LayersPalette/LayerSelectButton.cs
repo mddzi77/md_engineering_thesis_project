@@ -4,24 +4,27 @@ using TheLayers;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LayerSelectButton : MonoBehaviour
+namespace UI.LayersPalette
 {
-    [SerializeField] private LayerConfig _layerConfig;
-    
-    private Button _button;
-    private Image _image;
-    
-    private void Awake()
+    public class LayerSelectButton : MonoBehaviour
     {
-        _button = GetComponent<Button>();
-        _button.onClick.AddListener(OnClick);
-        _image = GetComponent<Image>();
-        _image.sprite = _layerConfig.Sprite;
-    }
-    
-    private void OnClick()
-    {
-        LayersManager.Instance.SetCurrentLayer(_layerConfig);
-        Debug.Log($"Layer changed to {_layerConfig.LayerName}");
+        [SerializeField] private LayerConfig _layerConfig;
+
+        private Button _button;
+        private Image _image;
+
+        private void Awake()
+        {
+            _button = GetComponent<Button>();
+            _button.onClick.AddListener(OnClick);
+            _image = GetComponent<Image>();
+            _image.sprite = _layerConfig.Sprite;
+        }
+
+        private void OnClick()
+        {
+            LayersManager.Instance.SetCurrentLayer(_layerConfig);
+            Debug.Log($"Layer changed to {_layerConfig.LayerName}");
+        }
     }
 }
