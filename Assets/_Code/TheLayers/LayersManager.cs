@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace TheLayers
 {
-    public class LayersManager: Singleton<LayersManager>
+    public class LayersManager: MonoSingleton<LayersManager>
     {
         [SerializeField] private LayerConfig[] _layerConfigs;
         

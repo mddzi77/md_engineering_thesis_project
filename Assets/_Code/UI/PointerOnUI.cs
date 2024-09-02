@@ -8,36 +8,36 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class PointerOnUI : Singleton<PointerOnUI>
+    public class PointerOnUI : MonoSingleton<PointerOnUI>
     {
-        private GraphicRaycaster[] raycasters;
-        private Vector2 pointerPosition;
-        private PointerEventData pointerEventData;
-        private List<RaycastResult> rayCastUIResults = new();
+        private GraphicRaycaster[] _raycasters;
+        private Vector2 _pointerPosition;
+        private PointerEventData _pointerEventData;
+        private readonly List<RaycastResult> _rayCastUIResults = new();
 
         private bool _value
         {
             get
             {
-                pointerPosition = Pointer.current.position.ReadValue();
-                pointerEventData = new PointerEventData(EventSystem.current);
-                pointerEventData.position = pointerPosition;
-                rayCastUIResults.Clear();
-                foreach (GraphicRaycaster raycaster in raycasters)
+                _pointerPosition = Pointer.current.position.ReadValue();
+                _pointerEventData = new PointerEventData(EventSystem.current);
+                _pointerEventData.position = _pointerPosition;
+                _rayCastUIResults.Clear();
+                foreach (GraphicRaycaster raycaster in _raycasters)
                 {
-                    raycaster.Raycast(pointerEventData, rayCastUIResults);
-                    if (rayCastUIResults.Count > 0)
+                    raycaster.Raycast(_pointerEventData, _rayCastUIResults);
+                    if (_rayCastUIResults.Count > 0)
                         break;
                 }
 
-                return rayCastUIResults.Count > 0;
+                return _rayCastUIResults.Count > 0;
             }
         }
 
         private new void Awake()
         {
             base.Awake();
-            raycasters = FindObjectsOfType<GraphicRaycaster>();
+            _raycasters = FindObjectsOfType<GraphicRaycaster>();
         }
 
         public static implicit operator bool(PointerOnUI pointerOnUI)

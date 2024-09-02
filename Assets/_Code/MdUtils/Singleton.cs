@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace MdUtils
 {
-    public class Singleton<T> : MonoBehaviour where T : Component
+    public class MonoSingleton<T> : MonoBehaviour where T : Component
     {
         public static T Instance => _instance;
         
