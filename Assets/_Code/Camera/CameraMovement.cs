@@ -9,10 +9,10 @@ namespace MainCamera
 {
     public class CameraMovement : MonoBehaviour
     {
-        [SerializeField] private InputActionReference middleDown;
-        [SerializeField] private InputActionReference middleUp;
+        [SerializeField] private InputActionReference middleMouse;
         [SerializeField] private InputActionReference mouseDelta;
         [SerializeField] private float dragSpeed = 1;
+        
         [Space] [SerializeField] private InputActionReference scroll;
         [SerializeField] private float scrollSpeed = .1f;
         [SerializeField] private float scrollMin = .5f;
@@ -23,14 +23,12 @@ namespace MainCamera
         private void Awake()
         {
             _mainCamera = Camera.main;
-            middleDown.action.performed += _ => _isDragging = true;
-            middleUp.action.performed += _ => _isDragging = false;
             scroll.action.performed += OnScroll;
         }
 
         private void Update()
         {
-            if (!_isDragging) return;
+            if (!middleMouse.action.IsPressed()) return;
             Vector3 delta = Time.deltaTime * dragSpeed * _mainCamera.orthographicSize *
                             mouseDelta.action.ReadValue<Vector2>();
             _mainCamera.transform.position -= delta;

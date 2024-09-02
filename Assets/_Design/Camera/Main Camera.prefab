@@ -96,8 +96,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b57c2e31dcad0a646ab611c491a083e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: c3f7655a6ab1fbe4e8252f16e7b6de31, type: 2}
   maxGridThickness: 0.22
+  thicknessMultiplier: {x: 0.00532213, y: 0.00339}
+  gridPlaneMultiplier: 1.4
 --- !u!1 &6814857036489812148
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,8 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd809f87f36f201458e5a13c20819aaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  middleDown: {fileID: -4202590892572099509, guid: f60942dfd1d437340afd25034205eac3, type: 3}
-  middleUp: {fileID: -3626618978401559676, guid: f60942dfd1d437340afd25034205eac3, type: 3}
+  middleMouse: {fileID: -3626618978401559676, guid: f60942dfd1d437340afd25034205eac3, type: 3}
   mouseDelta: {fileID: -8331543856165794329, guid: f60942dfd1d437340afd25034205eac3, type: 3}
   dragSpeed: 0.5
   scroll: {fileID: 7066251308298378193, guid: f60942dfd1d437340afd25034205eac3, type: 3}

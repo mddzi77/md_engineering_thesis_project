@@ -33,18 +33,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "MiddleUp",
+                    "name": "MiddleMouse",
                     "type": "Button",
                     "id": "66ca4d35-27b3-42e7-8fe7-0e6c36944984",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "MiddleDown",
-                    "type": "Button",
-                    "id": "1dfaf791-d41c-41e2-aa43-6c47e25c34a1",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -107,21 +98,10 @@
                     "name": "",
                     "id": "dda02d69-b115-455f-8999-96807663461e",
                     "path": "<Mouse>/middleButton",
-                    "interactions": "Press(behavior=1)",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MiddleUp",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8edf77ef-a139-416d-8e4d-72098b94e03a",
-                    "path": "<Mouse>/middleButton",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MiddleDown",
+                    "action": "MiddleMouse",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
