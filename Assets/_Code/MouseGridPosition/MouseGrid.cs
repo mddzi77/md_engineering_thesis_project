@@ -13,7 +13,7 @@ namespace MouseGridPosition
         private static Vector2 _gridPos;
         private Camera _camera;
 
-        private void Awake()
+        private new void Awake()
         {
             base.Awake();
             _camera = Camera.main;

@@ -13,7 +13,6 @@ namespace MdUtils
         
         protected void Awake()
         {
-
             if (_instance != null && _instance != this as T)
                 throw new Exception($"Singleton already exists! : {_instance.name}");
             _instance = this as T;
