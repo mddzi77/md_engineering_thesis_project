@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 9af8554aed063fa4dbc5ec083f91792d
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - pixelBase: {fileID: 7648762249852405367, guid: c58ed3de86a033543819e6b432f9f1bf, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
