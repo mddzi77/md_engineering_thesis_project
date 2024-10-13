@@ -4,7 +4,7 @@ namespace Drawer
 {
     public class Pixel : MonoBehaviour
     {
-        [SerializeField] private BoxCollider2D boxCollider;
+        [SerializeField] private BoxCollider boxCollider;
         [SerializeField] private SpriteRenderer spriteRenderer;
         
         public void SetSprite(Sprite sprite) => spriteRenderer.sprite = sprite;
