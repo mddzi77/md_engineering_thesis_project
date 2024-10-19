@@ -19,7 +19,7 @@ namespace MouseGridPosition
             _camera = Camera.main;
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             var mouseScreenPos = mousePosition.action.ReadValue<Vector2>();
             var mouseWorldPos = _camera.ScreenToWorldPoint(mouseScreenPos);

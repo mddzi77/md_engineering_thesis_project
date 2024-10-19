@@ -9,7 +9,7 @@ namespace TheLayers
         public List<Pixel> Pixels => _pixels;
         
         private LayerConfig _layerConfig;
-        private List<Pixel> _pixels = new();
+        private readonly List<Pixel> _pixels = new();
 
         public void Init(LayerConfig layerConfig)
         {

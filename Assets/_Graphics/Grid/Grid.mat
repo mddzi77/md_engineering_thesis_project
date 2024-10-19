@@ -42,9 +42,9 @@ Material:
     - _QueueOffset: 0
     - _Transparent: 1
     m_Colors:
-    - _Background_Color: {r: 0.31132078, g: 0.31132078, b: 0.31132078, a: 1}
+    - _Background_Color: {r: 0.2627451, g: 0.2627451, b: 0.2627451, a: 1}
     - _Cell_Size: {r: 1, g: 1, b: 0, a: 0}
-    - _Grid_Color: {r: 0.38679245, g: 0.38679245, b: 0.38679245, a: 1}
+    - _Grid_Color: {r: 0.39607844, g: 0.39607844, b: 0.39607844, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &6261872159008686227
 MonoBehaviour:
