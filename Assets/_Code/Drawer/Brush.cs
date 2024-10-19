@@ -44,16 +44,30 @@ namespace Drawer
             
             if (CanDraw(position) == false) return;
             
-            var pixel = Instantiate(pixelBase, _layerManager.CurrentLayerHolder).GetComponent<Pixel>();
+            var pixel = Instantiate(pixelBase, _layerManager.CurrentLayerHolder.transform).GetComponent<Pixel>();
+            _layerManager.CurrentLayerHolder.AddPixel(pixel);
             pixel.transform.position = position;
             pixel.SetSprite(_layerManager.CurrentLayer.Sprite);
         }
 
         private bool CanDraw(Vector3 position)
         {
+            // Raycast version
             position.z -= 0.5f;
             // Debug.DrawRay(position, Vector3.forward, Color.red, 2f);
             return Physics.Raycast(position, Vector3.forward, out var hit, 1f) == false;
+            
+            // List version
+            // var pixels = _layerManager.CurrentLayerHolder.Pixels;
+            //
+            // if (pixels.Count == 0) return true;
+            //
+            // foreach (var pixel in pixels)
+            // {
+            //     if (Vector2.Distance(pixel.transform.position, position) < 0.5f)
+            //         return false;
+            // }
+            // return true;
         }
     }
 }

@@ -1264,6 +1264,9 @@
     "m_AlphaClip": true,
     "m_CastShadows": true,
     "m_ReceiveShadows": true,
+    "m_DisableTint": false,
+    "m_AdditionalMotionVectorMode": 0,
+    "m_AlembicMotionVectors": false,
     "m_SupportsLODCrossFade": false,
     "m_CustomEditorGUI": "",
     "m_SupportVFX": false
@@ -1455,8 +1458,8 @@
     "m_ObjectId": "5ffa51bf53534393a881dd535f823558",
     "m_Title": "X Axis",
     "m_Position": {
-        "x": -465.0,
-        "y": 174.00003051757813
+        "x": -465.00006103515627,
+        "y": 173.9999542236328
     }
 }
 
@@ -1490,7 +1493,7 @@
     "m_ObjectId": "656359fa8d3641128ee867d22126c62a",
     "m_Title": "Y Axis",
     "m_Position": {
-        "x": -465.0,
+        "x": -465.00006103515627,
         "y": -104.0
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using MdUtils;
+using MdUtils.Attributes.DisableEdit;
 using UnityEngine;
 
 namespace TheLayers
@@ -10,12 +11,12 @@ namespace TheLayers
         [SerializeField] private LayerConfig[] _layerConfigs;
         
         public LayerConfig CurrentLayer => _currentLayer;
-        public Transform CurrentLayerHolder => _currentLayerHolder;
+        public LayerHolder CurrentLayerHolder => _currentLayerHolder;
         
         private LayerConfig _currentLayer;
-        private Transform _currentLayerHolder;
+        private LayerHolder _currentLayerHolder;
         
-        private Dictionary<LayerConfig, Transform> _layerHolders = new();
+        private Dictionary<LayerConfig, LayerHolder> _layerHolders = new();
 
         private new void Awake()
         {
@@ -37,20 +38,19 @@ namespace TheLayers
         {
             foreach (var layerConfig in _layerConfigs)
             {
-                if (layerConfig.LayerName == layerName)
-                {
-                    _currentLayer = layerConfig;
-                    _currentLayerHolder = _layerHolders[layerConfig];
-                    return;
-                }
+                if (layerConfig.LayerName != layerName) continue;
+                _currentLayer = layerConfig;
+                _currentLayerHolder = _layerHolders[layerConfig];
+                return;
             }
         }
         
         private void CreateLayer(LayerConfig layerConfig)
         {
             var layer = new GameObject(layerConfig.LayerName);
+            var holder = layer.AddComponent<LayerHolder>();
             layer.transform.SetParent(transform);
-            _layerHolders.Add(layerConfig, layer.transform);
+            _layerHolders.Add(layerConfig, holder);
         }
     }
 }
