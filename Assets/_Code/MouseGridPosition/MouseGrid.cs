@@ -26,7 +26,6 @@ namespace MouseGridPosition
             CalculateGridPosition(mouseWorldPos);
         }
         
-
         private void CalculateGridPosition(Vector3 mouseWorldPos)
         {
             _gridPos = new Vector2(
