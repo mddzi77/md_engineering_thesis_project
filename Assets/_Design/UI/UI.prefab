@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9157018491759650029}
   - component: {fileID: 2658607686379940949}
   - component: {fileID: 764370909258099192}
+  - component: {fileID: 7170983339836402943}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -102,6 +103,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &7170983339836402943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4306535051219108982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac8d7b85a2c178c499d2dc5f11cefe59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6286429646254468246
 GameObject:
   m_ObjectHideFlags: 0
@@ -111,8 +124,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7387501920986061315}
-  - component: {fileID: 8788139195641328253}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,18 +147,6 @@ Transform:
   - {fileID: 3494488867911043060}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8788139195641328253
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6286429646254468246}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac8d7b85a2c178c499d2dc5f11cefe59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &41851889549202889
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -237,7 +237,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4912121775051053991, guid: 9ab4a0ead2c5d5744aa2c739008b69a0, type: 3}
       propertyPath: m_Name
-      value: LayersButton
+      value: RightPanel
       objectReference: {fileID: 0}
     - target: {fileID: 6550552068133904332, guid: 9ab4a0ead2c5d5744aa2c739008b69a0, type: 3}
       propertyPath: m_AnchorMax.y

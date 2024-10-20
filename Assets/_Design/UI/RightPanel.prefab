@@ -381,7 +381,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2323864167174252917}
   m_Layer: 5
-  m_Name: LayersButton
+  m_Name: RightPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

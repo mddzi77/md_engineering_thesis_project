@@ -54,7 +54,9 @@ namespace Drawer
         {
             // Raycast version
             position.z -= 0.5f;
-            // Debug.DrawRay(position, Vector3.forward, Color.red, 2f);
+            position.x += 0.5f;
+            position.y += 0.5f;
+            Debug.DrawRay(position, Vector3.forward, Color.red, 2f);
             return Physics.Raycast(position, Vector3.forward, out var hit, 1f) == false;
             
             // List version
