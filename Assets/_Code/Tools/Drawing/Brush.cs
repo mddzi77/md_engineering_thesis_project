@@ -1,17 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using MouseGridPosition;
 using TheLayers;
 using UI;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
-namespace Drawer
+namespace Tools.Drawing
 {
-    public class Brush : DrawerAbstract
+    public class Brush : ToolAbstract
     {
         [SerializeField] private InputActionReference leftMouse;
 
@@ -56,7 +51,7 @@ namespace Drawer
             position.z -= 0.5f;
             position.x += 0.5f;
             position.y += 0.5f;
-            Debug.DrawRay(position, Vector3.forward, Color.red, 2f);
+            // Debug.DrawRay(position, Vector3.forward, Color.red, 2f);
             return Physics.Raycast(position, Vector3.forward, out var hit, 1f) == false;
             
             // List version

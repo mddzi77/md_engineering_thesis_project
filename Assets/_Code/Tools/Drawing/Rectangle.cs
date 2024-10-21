@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Numerics;
 using Cysharp.Threading.Tasks;
 using MouseGridPosition;
 using TheLayers;
@@ -10,9 +9,9 @@ using UnityEngine.InputSystem;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
-namespace Drawer
+namespace Tools.Drawing
 {
-    public class Rectangle : DrawerAbstract
+    public class Rectangle : ToolAbstract
     {
         [SerializeField] private InputActionReference leftMouse;
         [SerializeField] private InputActionReference modifierAction;
@@ -29,11 +28,25 @@ namespace Drawer
 
         private void Start()
         {
-            detector.contactOffset = 0.1f;
             _layerManager = LayersManager.Instance;
             leftMouse.action.performed += OnLeftMouse;
             leftMouse.action.canceled += OnLeftMouseCancel;
             modifierAction.action.canceled += ModifierStop;
+        }
+
+        private void OnEnable()
+        {
+            leftMouse.action.performed += OnLeftMouse;
+            leftMouse.action.canceled += OnLeftMouseCancel;
+            modifierAction.action.canceled += ModifierStop;
+        }
+
+        private void OnDisable()
+        {
+            leftMouse.action.performed -= OnLeftMouse;
+            leftMouse.action.canceled -= OnLeftMouseCancel;
+            modifierAction.action.canceled -= ModifierStop;
+            ResetTool();
         }
 
         private void Update()
@@ -158,14 +171,6 @@ namespace Drawer
             Draw();
             ResetTool();
         }
-
-        private void ResetTool()
-        {
-            transform.localScale = Vector3.one;
-            layerSprite.sprite = null;
-            detectedObjects.Clear();
-            _mode = Mode.None;
-        }
         
         private void SetLayerOrder()
         {
@@ -185,6 +190,14 @@ namespace Drawer
                     return false;
             }
             return true;
+        }
+
+        private void ResetTool()
+        {
+            transform.localScale = Vector3.one;
+            layerSprite.sprite = null;
+            detectedObjects.Clear();
+            _mode = Mode.None;
         }
 
         private enum Mode

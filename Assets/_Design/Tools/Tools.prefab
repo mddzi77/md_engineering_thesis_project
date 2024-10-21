@@ -19,7 +19,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7898586373536706408
 Transform:
   m_ObjectHideFlags: 0
@@ -167,7 +167,7 @@ GameObject:
   - component: {fileID: 5753840454053093876}
   - component: {fileID: 7143563123090335309}
   m_Layer: 0
-  m_Name: Drawer
+  m_Name: Tools
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -202,6 +202,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e661e015ef95a740af492c76a80f0d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tools:
+  - config: {fileID: 11400000, guid: 15c21d7e0e5fd8a4f9d572f853736698, type: 2}
+    tool: {fileID: 3337193285866088843}
+  - config: {fileID: 11400000, guid: a348d67923224454181bc071b696ec00, type: 2}
+    tool: {fileID: 7508248154703324720}
 --- !u!1 &7800769013120249515
 GameObject:
   m_ObjectHideFlags: 0
@@ -218,7 +223,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3059687050312825188
 Transform:
   m_ObjectHideFlags: 0

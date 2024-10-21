@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Drawer
+namespace Tools.Drawing
 {
     public class Pixel : MonoBehaviour
     {

@@ -3,12 +3,13 @@ using Cysharp.Threading.Tasks;
 using MdUtils;
 using MdUtils.Attributes.DisableEdit;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace TheLayers
 {
     public class LayersManager: MonoSingleton<LayersManager>
     {
-        [SerializeField] private LayerConfig[] _layerConfigs;
+        [SerializeField] private LayerConfig[] layerConfigs;
         
         public LayerConfig CurrentLayer => _currentLayer;
         public LayerHolder CurrentLayerHolder => _currentLayerHolder;
@@ -22,10 +23,11 @@ namespace TheLayers
         {
             base.Awake();
             
-            foreach (var layer in _layerConfigs)
+            foreach (var layer in layerConfigs)
             {
                 CreateLayer(layer);
             }
+            SetCurrentLayer(layerConfigs[0]); // set default layer
         }
 
         public void SetCurrentLayer(LayerConfig layerConfig)
@@ -36,7 +38,7 @@ namespace TheLayers
 
         public void SetCurrentLayer(string layerName)
         {
-            foreach (var layerConfig in _layerConfigs)
+            foreach (var layerConfig in layerConfigs)
             {
                 if (layerConfig.LayerName != layerName) continue;
                 _currentLayer = layerConfig;

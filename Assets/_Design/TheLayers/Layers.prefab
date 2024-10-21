@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c4e17340054ae3b1ca4dcac177623e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _layerConfigs:
+  layerConfigs:
   - {fileID: 11400000, guid: dad3ac571ff3437448f6a94eea19b0b8, type: 2}
   - {fileID: 11400000, guid: 019ac252b0b7345419148e265465456f, type: 2}
   - {fileID: 11400000, guid: d381a13066c1b4d41b9a7631b666b28d, type: 2}
