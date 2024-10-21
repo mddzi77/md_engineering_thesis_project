@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
+using Cysharp.Threading.Tasks;
 using MouseGridPosition;
 using TheLayers;
 using UI;
@@ -149,10 +150,11 @@ namespace Drawer
             ResetTool();
         }
 
-        private void SecondClick()
+        private async void SecondClick()
         {
             _endPos = MouseGrid.GridPos;
             DragUpdate();
+            await UniTask.WaitForSeconds(0.4f);
             Draw();
             ResetTool();
         }
