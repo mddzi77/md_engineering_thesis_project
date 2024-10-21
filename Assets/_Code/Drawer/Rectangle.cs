@@ -1,4 +1,6 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Collections.Generic;
+using System.Numerics;
 using MouseGridPosition;
 using TheLayers;
 using UI;
@@ -14,7 +16,8 @@ namespace Drawer
         [SerializeField] private InputActionReference leftMouse;
         [SerializeField] private InputActionReference modifierAction;
         [SerializeField] private SpriteRenderer layerSprite;
-        [SerializeField] private Collider detector;
+        [SerializeField] private BoxCollider detector;
+        [SerializeField] private List<GameObject> detectedObjects;
         
         private Mode _mode = Mode.None;
         private LayersManager _layerManager;
@@ -25,6 +28,7 @@ namespace Drawer
 
         private void Start()
         {
+            detector.contactOffset = 0.1f;
             _layerManager = LayersManager.Instance;
             leftMouse.action.performed += OnLeftMouse;
             leftMouse.action.canceled += OnLeftMouseCancel;
@@ -35,6 +39,16 @@ namespace Drawer
         {
             if (_mode != Mode.Drag) return;
             DragUpdate();
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            detectedObjects.Add(other.gameObject);
+        }
+        
+        private void OnTriggerExit(Collider other)
+        {
+            detectedObjects.Remove(other.gameObject);
         }
 
         private void DragUpdate()
@@ -73,6 +87,7 @@ namespace Drawer
                 transform.position = position;
                 deltaY = currentPos.y - _startPos.y + 1;
             }
+            ModifyBounds(deltaX, deltaY);
             transform.localScale = new Vector3(deltaX, deltaY, 1);
             
             _oldGridPos = currentPos;
@@ -80,13 +95,35 @@ namespace Drawer
 
         private void Draw()
         {
-            
+            var startX = _startPos.x < _endPos.x ? (int) _startPos.x : (int) _endPos.x;
+            var endX = _startPos.x > _endPos.x ? (int) _startPos.x : (int) _endPos.x;
+            var startY = _startPos.y < _endPos.y ? (int) _startPos.y : (int) _endPos.y;
+            var endY = _startPos.y > _endPos.y ? (int) _startPos.y : (int) _endPos.y;
+
+            for (int x = startX; x <= endX; x++)
+            {
+                for (int y = startY; y <= endY; y++)
+                {
+                    var position = new Vector3(x, y, _layerManager.CurrentLayer.Order);
+                    DrawPixel(position);
+                }
+            }
+        }
+        
+        private void DrawPixel(Vector3 position)
+        {
+            if (!CanDraw(position)) return;
+            var pixel = Instantiate(pixelBase, _layerManager.CurrentLayerHolder.transform).GetComponent<Pixel>();
+            _layerManager.CurrentLayerHolder.AddPixel(pixel);
+            pixel.transform.position = position;
+            pixel.SetSprite(_layerManager.CurrentLayer.Sprite);
         }
         
         private void OnLeftMouse(InputAction.CallbackContext context)
         {
             if (PointerOnUI.Instance) return;
 
+            SetLayerOrder();
             if (_mode == Mode.Click)
             {
                 SecondClick();
@@ -124,7 +161,28 @@ namespace Drawer
         {
             transform.localScale = Vector3.one;
             layerSprite.sprite = null;
+            detectedObjects.Clear();
             _mode = Mode.None;
+        }
+        
+        private void SetLayerOrder()
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, _layerManager.CurrentLayer.Order);
+        }
+        
+        private void ModifyBounds(float deltaX, float deltaY)
+        {
+            detector.size = new Vector3(1 - 0.1f / deltaX, 1 - 0.1f / deltaY, 0.1f);
+        }
+
+        private bool CanDraw(Vector3 position)
+        {
+            foreach (var detected in detectedObjects)
+            {
+                if (detected.transform.position == position)
+                    return false;
+            }
+            return true;
         }
 
         private enum Mode
