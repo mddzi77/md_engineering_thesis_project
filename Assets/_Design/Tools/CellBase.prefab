@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4996172630810872146}
   - component: {fileID: 224242419811628109}
   m_Layer: 0
-  m_Name: PixelBase
+  m_Name: CellBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -39,7 +39,7 @@ namespace Tools.Drawing
             
             if (CanDraw(position) == false) return;
             
-            var pixel = Instantiate(pixelBase, _layerManager.CurrentLayerHolder.transform).GetComponent<Pixel>();
+            var pixel = Instantiate(cellBase, _layerManager.CurrentLayerHolder.transform).GetComponent<Cell>();
             _layerManager.CurrentLayerHolder.AddPixel(pixel);
             pixel.transform.position = position;
             pixel.SetSprite(_layerManager.CurrentLayer.Sprite);

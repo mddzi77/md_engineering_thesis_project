@@ -2,7 +2,7 @@
 
 namespace Tools.Drawing
 {
-    public class Pixel : MonoBehaviour
+    public class Cell : MonoBehaviour
     {
         [SerializeField] private BoxCollider boxCollider;
         [SerializeField] private SpriteRenderer spriteRenderer;

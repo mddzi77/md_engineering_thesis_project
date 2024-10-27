@@ -127,7 +127,7 @@ namespace Tools.Drawing
         private void DrawPixel(Vector3 position)
         {
             if (!CanDraw(position)) return;
-            var pixel = Instantiate(pixelBase, _layerManager.CurrentLayerHolder.transform).GetComponent<Pixel>();
+            var pixel = Instantiate(cellBase, _layerManager.CurrentLayerHolder.transform).GetComponent<Cell>();
             _layerManager.CurrentLayerHolder.AddPixel(pixel);
             pixel.transform.position = position;
             pixel.SetSprite(_layerManager.CurrentLayer.Sprite);

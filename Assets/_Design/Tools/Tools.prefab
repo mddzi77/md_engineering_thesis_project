@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6a3403cbfaf4d30b816dcfa6be3be92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pixelBase: {fileID: 7648762249852405367, guid: c58ed3de86a033543819e6b432f9f1bf, type: 3}
+  cellBase: {fileID: 7648762249852405367, guid: c58ed3de86a033543819e6b432f9f1bf, type: 3}
   leftMouse: {fileID: -4949743767066450138, guid: f60942dfd1d437340afd25034205eac3, type: 3}
   modifierAction: {fileID: 4792521147824218995, guid: f60942dfd1d437340afd25034205eac3, type: 3}
   layerSprite: {fileID: 2418471749851492488}
@@ -251,5 +251,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda8967a433aec240874f11b7514801f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pixelBase: {fileID: 7648762249852405367, guid: c58ed3de86a033543819e6b432f9f1bf, type: 3}
+  cellBase: {fileID: 7648762249852405367, guid: c58ed3de86a033543819e6b432f9f1bf, type: 3}
   leftMouse: {fileID: -4949743767066450138, guid: f60942dfd1d437340afd25034205eac3, type: 3}

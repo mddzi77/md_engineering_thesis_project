@@ -7,24 +7,24 @@ namespace TheLayers
 {
     public class LayerHolder : MonoBehaviour
     {
-        public List<Pixel> Pixels => _pixels;
+        public List<Cell> Pixels => _pixels;
         
         private LayerConfig _layerConfig;
-        private readonly List<Pixel> _pixels = new();
+        private readonly List<Cell> _pixels = new();
 
         public void Init(LayerConfig layerConfig)
         {
             _layerConfig = layerConfig;
         }
         
-        public void AddPixel(Pixel pixel)
+        public void AddPixel(Cell cell)
         {
-            _pixels.Add(pixel);
+            _pixels.Add(cell);
         }
         
-        public void RemovePixel(Pixel pixel)
+        public void RemovePixel(Cell cell)
         {
-            _pixels.Remove(pixel);
+            _pixels.Remove(cell);
         }
     }
 }
