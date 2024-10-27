@@ -51,7 +51,7 @@ namespace Tools.Drawing
 
         private void Update()
         {
-            if (_mode != Mode.Drag) return;
+            if (_mode is Mode.None) return;
             DragUpdate();
         }
 
@@ -114,20 +114,23 @@ namespace Tools.Drawing
             var startY = _startPos.y < _endPos.y ? (int) _startPos.y : (int) _endPos.y;
             var endY = _startPos.y > _endPos.y ? (int) _startPos.y : (int) _endPos.y;
 
+            var tasks = new List<UniTask>();
             for (int x = startX; x <= endX; x++)
             {
                 for (int y = startY; y <= endY; y++)
                 {
                     var position = new Vector3(x, y, _layerManager.CurrentLayer.Order);
-                    DrawPixel(position);
+                    tasks.Add(DrawPixel(position));
                 }
             }
+            UniTask.WhenAll(tasks);
         }
         
-        private void DrawPixel(Vector3 position)
+        private async UniTask DrawPixel(Vector3 position)
         {
             if (!CanDraw(position)) return;
-            var pixel = Instantiate(cellBase, _layerManager.CurrentLayerHolder.transform).GetComponent<Cell>();
+            var asyncOperation = await InstantiateAsync(cellBase, _layerManager.CurrentLayerHolder.transform);
+            var pixel = asyncOperation[0].GetComponent<Cell>(); //Instantiate(cellBase, _layerManager.CurrentLayerHolder.transform).GetComponent<Cell>();
             _layerManager.CurrentLayerHolder.AddPixel(pixel);
             pixel.transform.position = position;
             pixel.SetSprite(_layerManager.CurrentLayer.Sprite);
