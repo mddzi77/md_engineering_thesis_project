@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using MouseGridPosition;
 using TheLayers;
 using UI;
+using UI.Bottom;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Vector2 = UnityEngine.Vector2;
@@ -12,14 +13,18 @@ using Vector3 = UnityEngine.Vector3;
 
 namespace Tools.Drawing
 {
-    public class Rectangle : ToolAbstract
+    public class Rectangle : ToolAbstract, IRectangleWithSize
     {
         [SerializeField] private InputActionReference leftMouse;
         [SerializeField] private InputActionReference modifierAction;
         [SerializeField] private SpriteRenderer layerSprite;
         [SerializeField] private BoxCollider detector;
         [SerializeField] private List<GameObject> detectedObjects;
-        
+
+        public int SizeX { get; private set; }
+        public int SizeY { get; private set; }
+        public bool IsWorking => _mode != Mode.None;
+
         private Mode _mode = Mode.None;
         private LayersManager _layerManager;
         private Vector2 _oldGridPos = Vector2.zero;
@@ -103,6 +108,8 @@ namespace Tools.Drawing
                 deltaY = currentPos.y - _startPos.y + 1;
             }
             ModifyBounds(deltaX, deltaY);
+            SizeX = (int) deltaX;
+            SizeY = (int) deltaY;
             transform.localScale = new Vector3(deltaX, deltaY, 1);
             
             _oldGridPos = currentPos;

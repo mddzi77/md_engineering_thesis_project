@@ -3,7 +3,7 @@ using MouseGridPosition;
 using TMPro;
 using UnityEngine;
 
-namespace UI.GridPositionDisplayer
+namespace UI.Bottom
 {
     public class GridPositionDisplayer : MonoBehaviour
     {

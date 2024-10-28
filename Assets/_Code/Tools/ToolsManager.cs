@@ -8,6 +8,8 @@ namespace Tools
     public class ToolsManager : MonoSingleton<ToolsManager>
     {
         [SerializeField] private ToolHolder[] tools;
+        
+        public ToolHolder[] Tools => tools;
 
         private bool _toolIsActive;
         private ToolHolder _currentTool;
