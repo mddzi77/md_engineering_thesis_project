@@ -6,8 +6,8 @@ namespace MainCamera
 {
     public class GridResizer : MonoBehaviour
     {
-        [SerializeField] private float maxGridThickness = 0.22f;
-        [SerializeField] private Vector2 thicknessMultiplier = new(0.00532213f, 0.00339f);
+        [SerializeField] private Vector2 cameraZoomLimits = new(0.6f, 60f);
+        [SerializeField] private Vector2 thicknessMultiplier = new(0.002f, 0.3f);
         [SerializeField] private float gridPlaneMultiplier = 1.4f;
 
         private Camera _mainCamera;
@@ -28,12 +28,15 @@ namespace MainCamera
 
         private void UpdateThickness()
         {
-            var thickness = _mainCamera.orthographicSize * thicknessMultiplier.x + thicknessMultiplier.y;
-            if (thickness > maxGridThickness)
+            var t = Mathf.Clamp01(
+                (_mainCamera.orthographicSize - cameraZoomLimits.x) / (cameraZoomLimits.y - cameraZoomLimits.x)
+                );
+            if (1 - t < 0.001f)
             {
                 _meshRenderer.enabled = false;
                 return;
             }
+            var thickness = Mathf.Lerp(thicknessMultiplier.x, thicknessMultiplier.y, t); //_mainCamera.orthographicSize * thicknessMultiplier.x + thicknessMultiplier.y;
 
             _meshRenderer.enabled = true;
             _meshRenderer.materials[0].SetFloat(_gridThickness, thickness);
