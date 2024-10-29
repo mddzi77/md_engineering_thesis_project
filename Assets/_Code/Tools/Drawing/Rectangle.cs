@@ -23,7 +23,7 @@ namespace Tools.Drawing
 
         public int SizeX { get; private set; }
         public int SizeY { get; private set; }
-        public bool IsWorking => _mode != Mode.None;
+        public event Action<bool, IRectangleWithSize> OnToggle;
 
         private Mode _mode = Mode.None;
         private LayersManager _layerManager;
@@ -153,13 +153,14 @@ namespace Tools.Drawing
         {
             if (PointerOnUI.Instance) return;
 
-            SetLayerOrder();
             if (_mode == Mode.Click)
             {
                 SecondClick();
                 return;
             }
             
+            SetLayerOrder();
+            OnToggle?.Invoke(true, this);
             _startPos = MouseGrid.GridPos;
             layerSprite.sprite = _layerManager.CurrentLayer.Sprite;
             _mode = modifierAction.action.IsPressed() ? Mode.Click : Mode.Drag;
@@ -182,7 +183,7 @@ namespace Tools.Drawing
         private void SecondClick()
         {
             _endPos = MouseGrid.GridPos;
-            DragUpdate();
+            // DragUpdate();
             // await UniTask.WaitForSeconds(0.4f);
             Draw();
             ResetTool();
@@ -210,6 +211,7 @@ namespace Tools.Drawing
 
         private void ResetTool()
         {
+            OnToggle?.Invoke(false, this);
             transform.localScale = Vector3.one;
             layerSprite.sprite = null;
             detectedObjects.Clear();

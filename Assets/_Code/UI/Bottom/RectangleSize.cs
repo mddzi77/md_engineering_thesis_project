@@ -10,54 +10,34 @@ namespace UI.Bottom
     public class RectangleSize : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI text;
-        
-        private List<IRectangleWithSize> _rectangleTools = new();
-        private bool _enabled = true;
+
+        private IRectangleWithSize _currentRectTool;
+        private bool _enabled;
 
         private void Start()
         {
+            text.gameObject.SetActive(false);
             foreach (var tool in ToolsManager.Instance.Tools)
             {
                 if (tool.tool is IRectangleWithSize rectangleTool)
                 {
-                    _rectangleTools.Add(rectangleTool);
+                    rectangleTool.OnToggle += Toggle;
                 }
             }
         }
 
         private void FixedUpdate()
         {
-            if (!IsEnabled()) return;
+            if (!_enabled) return;
+            text.text = $"[{_currentRectTool.SizeX} ; {_currentRectTool.SizeY}]";
         }
         
-        private bool IsEnabled()
+        private void Toggle(bool isWorking, IRectangleWithSize rectangleTool)
         {
-            if (_rectangleTools.Count == 0)
-            {
-                if (!_enabled) return false;
-                text.gameObject.SetActive(false);
-                _enabled = false;
-                return false;
-            }
-            
-            foreach (var tool in _rectangleTools)
-            {
-                if (tool.IsWorking)
-                {
-                    if (!_enabled)
-                    {
-                        text.gameObject.SetActive(true);
-                        _enabled = true;
-                    }
-                    text.text = $"[{tool.SizeX} ; {tool.SizeY}]";
-                    return true;
-                }
-            }
-
-            if (!_enabled) return false;
-            text.gameObject.SetActive(false);
-            _enabled = false;
-            return false; 
+            _currentRectTool = rectangleTool;
+            _enabled = isWorking;
+            if (text != null)
+                text.gameObject.SetActive(isWorking);
         }
     }
 }

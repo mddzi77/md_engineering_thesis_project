@@ -1,9 +1,11 @@
-﻿namespace UI.Bottom
+﻿using System;
+
+namespace UI.Bottom
 {
     public interface IRectangleWithSize
     {
         int SizeX { get; }
 	    int SizeY { get; }
-        bool IsWorking { get; }
+        event Action<bool, IRectangleWithSize> OnToggle;
     }
 }
