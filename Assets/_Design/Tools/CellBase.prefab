@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 673483591397709490}
   - component: {fileID: 8987957970264078968}
   - component: {fileID: 4996172630810872146}
-  - component: {fileID: 224242419811628109}
   m_Layer: 0
   m_Name: CellBase
   m_TagString: Untagged
@@ -46,7 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36d22fb48f8f495ca2fd81a23d1d0620, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boxCollider: {fileID: 224242419811628109}
   spriteRenderer: {fileID: 4996172630810872146}
 --- !u!212 &4996172630810872146
 SpriteRenderer:
@@ -103,24 +101,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!65 &224242419811628109
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7648762249852405367}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 0.1}
-  m_Center: {x: 0.5, y: 0.5, z: 0}

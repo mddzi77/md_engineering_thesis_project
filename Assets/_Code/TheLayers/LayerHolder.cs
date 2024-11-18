@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TheLayers.Table;
 using Tools;
 using Tools.Drawing;
 using UnityEngine;
@@ -7,24 +8,26 @@ namespace TheLayers
 {
     public class LayerHolder : MonoBehaviour
     {
-        public List<Cell> Pixels => _pixels;
+        public LayerTable Table { get; private set; }
+        public List<Cell> Cells => _cells;
         
         private LayerConfig _layerConfig;
-        private readonly List<Cell> _pixels = new();
+        private readonly List<Cell> _cells = new();
 
-        public void Init(LayerConfig layerConfig)
+        public void Init(LayerConfig layerConfig, LayerTable layerTable)
         {
             _layerConfig = layerConfig;
+            Table = layerTable;
         }
         
         public void AddPixel(Cell cell)
         {
-            _pixels.Add(cell);
+            _cells.Add(cell);
         }
         
         public void RemovePixel(Cell cell)
         {
-            _pixels.Remove(cell);
+            _cells.Remove(cell);
         }
     }
 }

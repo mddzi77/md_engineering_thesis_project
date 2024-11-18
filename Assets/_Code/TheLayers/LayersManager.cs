@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using MdUtils;
+using TheLayers.Table;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -50,7 +51,8 @@ namespace TheLayers
         {
             var layer = new GameObject(layerConfig.LayerName);
             var holder = layer.AddComponent<LayerHolder>();
-            holder.Init(layerConfig);
+            var table = layer.AddComponent<LayerTable>();
+            holder.Init(layerConfig, table);
             layer.transform.SetParent(transform);
             _layerHolders.Add(layerConfig, holder);
         }
