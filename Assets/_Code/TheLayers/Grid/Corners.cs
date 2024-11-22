@@ -2,7 +2,7 @@ using System;
 using System.Numerics;
 using UnityEngine.Serialization;
 
-namespace TheLayers.Table
+namespace TheLayers.Grid
 {
     [Serializable]
     public class Corners
@@ -11,10 +11,18 @@ namespace TheLayers.Table
         public int right;
         public int bottom;
         public int left;
+
+        public Corners(int x, int y)
+        {
+            top = y;
+            right = x;
+            bottom = y;
+            left = x;
+        }
         
         public Vector4 ToVector4() => new(top, left, right, bottom);
 
-        public bool TryWiderBounds(int xPoint, int yPoint, out Vector4 diff) // x = top, y = right, z = bottom, w = left
+        public bool TryWiderBounds(int xPoint, int yPoint, out Vector4 diff)
         {
             diff = Vector4.Zero;
             var changed = false;

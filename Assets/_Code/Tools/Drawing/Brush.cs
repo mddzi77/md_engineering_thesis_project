@@ -41,6 +41,7 @@ namespace Tools.Drawing
             
             var pixel = Instantiate(cellBase, _layerManager.CurrentLayerHolder.transform).GetComponent<Cell>();
             _layerManager.CurrentLayerHolder.AddPixel(pixel);
+            _layerManager.CurrentLayerHolder.SetPoint(new Vector2Int((int) _gridPos.x, (int) _gridPos.y));
             pixel.transform.position = position;
             pixel.SetSprite(_layerManager.CurrentLayer.Sprite);
         }
