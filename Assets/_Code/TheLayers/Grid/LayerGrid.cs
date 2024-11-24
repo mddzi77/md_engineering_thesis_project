@@ -14,17 +14,17 @@ namespace TheLayers.Grid
         [SerializeField] private Corners corners;
 
         // private NativeArray<bool> _grid;
-        private static readonly int _width = 80000;
-        private static readonly int _height = 80000;
-        private static readonly Vector2Int offset = new (40000-1, 40000-1); // -1 to account for 0 axis cells
-        private static readonly BitArray _grid = new BitArray(_width * _height);
-        private bool _gridInitialized;
+        private GridQuarter _topRight = new (new Vector2Int(0, 0));
+        private GridQuarter _topLeft = new (new Vector2Int(LayerConstants.WIDTH, 0));
+        private GridQuarter _bottomRight = new (new Vector2Int(0, LayerConstants.HEIGHT));
+        private GridQuarter _bottomLeft = new (new Vector2Int(LayerConstants.WIDTH, LayerConstants.HEIGHT));
 
         public void NewPoint(Vector2Int point)
         {
             corners.CheckPoint(point.x, point.y);
-            var index = TranslateTo1D(point.x + offset.x, point.y + offset.y);
-            _grid[index] = true;
+            var grid = SelectQuarter(point);
+            var index = grid.TranslateTo1D(point.x, point.y);
+            grid.Grid.Set(index, true);
         }
         
         public void NewArea(Vector2Int firstPoint, Vector2Int secondPoint)
@@ -33,25 +33,48 @@ namespace TheLayers.Grid
             corners.CheckPoint(secondPoint.x, secondPoint.y);
             
             var startX = firstPoint.x < secondPoint.x ? firstPoint.x : secondPoint.x;
-            startX += offset.x;
             var startY = firstPoint.y < secondPoint.y ? firstPoint.y : secondPoint.y;
-            startY += offset.y;
-            var width = Math.Abs(firstPoint.x - secondPoint.x);
-            var height = Math.Abs(firstPoint.y - secondPoint.y);
-
-            for (int i = startX; i < startX + width; i++)
+            var endX = firstPoint.x > secondPoint.x ? firstPoint.x : secondPoint.x;
+            var endY = firstPoint.y > secondPoint.y ? firstPoint.y : secondPoint.y;
+            
+            for (int x = startX; x <= endX; x++)
             {
-                for (int j = startY; j < startY + height; j++)
+                for (int y = startY; y <= endY; y++)
                 {
-                    var index = TranslateTo1D(i, j);
-                    _grid[index] = true;
+                    var grid = SelectQuarter(new Vector2Int(x, y));
+                    var index = grid.TranslateTo1D(x, y);
+                    grid.Grid.Set(index, true);
                 }
             }
         }
         
-        private int TranslateTo1D(int x, int y)
+        private GridQuarter SelectQuarter(Vector2Int point)
         {
-            return x * _width + y;
+            return point.x switch
+            {
+                >= 0 when point.y >= 0 => _topRight,
+                < 0 when point.y >= 0 => _topLeft,
+                >= 0 when point.y < 0 => _bottomRight,
+                _ => _bottomLeft
+            };
+        }
+
+        public struct GridQuarter
+        {
+            public NativeBitArray Grid;
+            public Vector2Int Offset;
+
+            public GridQuarter(Vector2Int offset)
+            {
+                Grid = new NativeBitArray(LayerConstants.WIDTH * LayerConstants.HEIGHT, Allocator.Persistent);
+                Offset = offset;
+            }
+            public int TranslateTo1D(int x, int y)
+            {
+                x += Offset.x;
+                y += Offset.y;
+                return x * LayerConstants.WIDTH + y;
+            }
         }
 
         // public void SetPoint(Vector2Int point)

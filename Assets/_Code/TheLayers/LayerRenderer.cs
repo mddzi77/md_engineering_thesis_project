@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace TheLayers
 {
-    public class LayerDraw : MonoBehaviour
+    public class LayerRenderer : MonoBehaviour
     {
         
     }

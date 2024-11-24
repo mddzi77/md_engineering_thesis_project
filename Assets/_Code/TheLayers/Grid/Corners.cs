@@ -47,6 +47,7 @@ namespace TheLayers.Grid
                 bottom = yPoint;
             }
         }
+    }
 
         // public bool TryWiderBounds(int xPoint, int yPoint, out Vector4 diff)
         // {
@@ -81,5 +82,4 @@ namespace TheLayers.Grid
         //
         //     return changed;
         // }
-    }
 }

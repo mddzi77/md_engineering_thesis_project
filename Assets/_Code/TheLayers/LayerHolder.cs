@@ -3,12 +3,13 @@ using TheLayers.Grid;
 using Tools;
 using Tools.Drawing;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace TheLayers
 {
     public class LayerHolder : MonoBehaviour
     {
-        [SerializeField] private LayerDraw layerDraw;
+        [FormerlySerializedAs("layerDraw")] [SerializeField] private LayerRenderer layerRenderer;
         [SerializeField] private LayerGrid grid;
         public List<Cell> Cells => _cells;
         
