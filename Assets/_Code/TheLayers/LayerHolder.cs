@@ -8,21 +8,27 @@ namespace TheLayers
 {
     public class LayerHolder : MonoBehaviour
     {
-        public LayerGrid Grid { get; private set; }
+        [SerializeField] private LayerDraw layerDraw;
+        [SerializeField] private LayerGrid grid;
         public List<Cell> Cells => _cells;
         
         private LayerConfig _layerConfig;
         private readonly List<Cell> _cells = new();
 
-        public void Init(LayerConfig layerConfig, LayerGrid layerGrid)
+        public void Init(LayerConfig layerConfig)
         {
             _layerConfig = layerConfig;
-            Grid = layerGrid;
+            grid = new LayerGrid();
         }
-        
-        public void SetPoint(Vector2Int point)
+
+        public void NewPoint(Vector2Int point)
         {
-            Grid.SetPoint(point);
+            grid.NewPoint(point);
+        }
+
+        public void NewArea(Vector2Int firstPoint, Vector2Int secondPoint)
+        {
+            grid.NewArea(firstPoint, secondPoint);
         }
         
         public void AddPixel(Cell cell)
