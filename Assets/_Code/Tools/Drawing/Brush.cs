@@ -39,11 +39,11 @@ namespace Tools.Drawing
             
             if (CanDraw(position) == false) return;
             
-            var pixel = Instantiate(cellBase, _layerManager.CurrentLayerHolder.transform).GetComponent<Cell>();
-            _layerManager.CurrentLayerHolder.AddPixel(pixel);
             _layerManager.CurrentLayerHolder.NewPoint(new Vector2Int((int)_gridPos.x, (int)_gridPos.y));
-            pixel.transform.position = position;
-            pixel.SetSprite(_layerManager.CurrentLayer.Sprite);
+            // var pixel = Instantiate(cellBase, _layerManager.CurrentLayerHolder.transform).GetComponent<Cell>();
+            // _layerManager.CurrentLayerHolder.AddPixel(pixel);
+            // pixel.transform.position = position;
+            // pixel.SetSprite(_layerManager.CurrentLayer.Sprite);
         }
 
         private bool CanDraw(Vector3 position)

@@ -10,9 +10,11 @@ namespace TheLayers
         [SerializeField] private string layerName;
         [SerializeField] private int order;
         [SerializeField] private Sprite sprite;
+        [SerializeField] private Material material;
 
         public string LayerName => layerName;
         public int Order => order;
         public Sprite Sprite => sprite;
+        public Material Material => material;
     }
 }

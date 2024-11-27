@@ -8,27 +8,43 @@ using UnityEngine;
 
 namespace TheLayers.Grid
 {
-    [Serializable]
-    public class LayerGrid
+    public class LayerGrid : MonoBehaviour
     {
         [SerializeField] private Corners corners;
+        
+        public GridQuarter[] GridQuarters => _gridQuarters;
 
         // private NativeArray<bool> _grid;
-        private GridQuarter _topRight = new (new Vector2Int(0, 0));
-        private GridQuarter _topLeft = new (new Vector2Int(LayerConstants.WIDTH, 0));
-        private GridQuarter _bottomRight = new (new Vector2Int(0, LayerConstants.HEIGHT));
-        private GridQuarter _bottomLeft = new (new Vector2Int(LayerConstants.WIDTH, LayerConstants.HEIGHT));
-
-        public void NewPoint(Vector2Int point)
+        private GridQuarter[] _gridQuarters = 
         {
-            corners.CheckPoint(point.x, point.y);
+            new (new Vector2Int(0, 0)), // top right
+            new (new Vector2Int(LayerConstants.WIDTH, 0)), // top left
+            new (new Vector2Int(LayerConstants.WIDTH, LayerConstants.HEIGHT)), // bottom left
+            new (new Vector2Int(0, LayerConstants.HEIGHT)) // bottom right
+        };
+        private bool _gridInitialized = false;
+
+        public int NewPoint(Vector2Int point)
+        {
+            if (!_gridInitialized)
+            {
+                corners = new Corners(point.x, point.y);
+                _gridInitialized = true;
+            }
+            else corners.CheckPoint(point.x, point.y);
             var grid = SelectQuarter(point);
-            var index = grid.TranslateTo1D(point.x, point.y);
-            grid.Grid.Set(index, true);
+            var index = _gridQuarters[grid].TranslateTo1D(point.x, point.y);
+            _gridQuarters[grid].Grid.Set(index, true);
+            return grid;
         }
         
         public void NewArea(Vector2Int firstPoint, Vector2Int secondPoint)
         {
+            if (!_gridInitialized)
+            {
+                corners = new Corners(firstPoint.x, firstPoint.y);
+                _gridInitialized = true;
+            }
             corners.CheckPoint(firstPoint.x, firstPoint.y);
             corners.CheckPoint(secondPoint.x, secondPoint.y);
             
@@ -42,39 +58,29 @@ namespace TheLayers.Grid
                 for (int y = startY; y <= endY; y++)
                 {
                     var grid = SelectQuarter(new Vector2Int(x, y));
-                    var index = grid.TranslateTo1D(x, y);
-                    grid.Grid.Set(index, true);
+                    var index = _gridQuarters[grid].TranslateTo1D(x, y);
+                    _gridQuarters[grid].Grid.Set(index, true);
                 }
             }
         }
         
-        private GridQuarter SelectQuarter(Vector2Int point)
+        public void OnDestroy()
+        {
+            for (int i = 0; i < _gridQuarters.Length; i++)
+            {
+                _gridQuarters[i].Grid.Dispose();
+            }
+        }
+        
+        private int SelectQuarter(Vector2Int point)
         {
             return point.x switch
             {
-                >= 0 when point.y >= 0 => _topRight,
-                < 0 when point.y >= 0 => _topLeft,
-                >= 0 when point.y < 0 => _bottomRight,
-                _ => _bottomLeft
+                >= 0 when point.y >= 0 => 0,
+                < 0 when point.y >= 0 => 1,
+                >= 0 when point.y < 0 => 3,
+                _ => 2
             };
-        }
-
-        public struct GridQuarter
-        {
-            public NativeBitArray Grid;
-            public Vector2Int Offset;
-
-            public GridQuarter(Vector2Int offset)
-            {
-                Grid = new NativeBitArray(LayerConstants.WIDTH * LayerConstants.HEIGHT, Allocator.Persistent);
-                Offset = offset;
-            }
-            public int TranslateTo1D(int x, int y)
-            {
-                x += Offset.x;
-                y += Offset.y;
-                return x * LayerConstants.WIDTH + y;
-            }
         }
 
         // public void SetPoint(Vector2Int point)

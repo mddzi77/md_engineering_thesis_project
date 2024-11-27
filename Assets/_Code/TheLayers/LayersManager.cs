@@ -51,7 +51,9 @@ namespace TheLayers
         {
             var layer = new GameObject(layerConfig.LayerName);
             var holder = layer.AddComponent<LayerHolder>();
-            holder.Init(layerConfig);
+            var layerRenderer = layer.AddComponent<LayerRenderer>();
+            var layerGrid = layer.AddComponent<LayerGrid>();
+            holder.Init(layerConfig, layerRenderer, layerGrid);
             layer.transform.SetParent(transform);
             _layerHolders.Add(layerConfig, holder);
         }

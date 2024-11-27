@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TheLayers.Grid;
 using Tools;
 using Tools.Drawing;
@@ -9,27 +10,30 @@ namespace TheLayers
 {
     public class LayerHolder : MonoBehaviour
     {
-        [FormerlySerializedAs("layerDraw")] [SerializeField] private LayerRenderer layerRenderer;
-        [SerializeField] private LayerGrid grid;
+        [SerializeField] private LayerRenderer layerRenderer;
         public List<Cell> Cells => _cells;
         
         private LayerConfig _layerConfig;
         private readonly List<Cell> _cells = new();
+        private LayerGrid _layerGrid;
 
-        public void Init(LayerConfig layerConfig)
+        public void Init(LayerConfig layerConfig, LayerRenderer rendererComponent, LayerGrid layerGrid)
         {
             _layerConfig = layerConfig;
-            grid = new LayerGrid();
+            _layerGrid = layerGrid;
+            layerRenderer = rendererComponent;
+            layerRenderer.SetMaterial(layerConfig.Material);
         }
 
         public void NewPoint(Vector2Int point)
         {
-            grid.NewPoint(point);
+            _layerGrid.NewPoint(point);
+            layerRenderer.Redraw();
         }
 
         public void NewArea(Vector2Int firstPoint, Vector2Int secondPoint)
         {
-            grid.NewArea(firstPoint, secondPoint);
+            // 
         }
         
         public void AddPixel(Cell cell)
