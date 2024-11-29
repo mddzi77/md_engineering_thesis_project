@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using TMPro;
 using Tools;
-using UnityEditor.EditorTools;
 using UnityEngine;
 
 namespace UI.Bottom

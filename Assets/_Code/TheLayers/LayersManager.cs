@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using MdUtils;
+using TheLayers.Grid;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -9,6 +10,7 @@ namespace TheLayers
     public class LayersManager: MonoSingleton<LayersManager>
     {
         [SerializeField] private LayerConfig[] layerConfigs;
+        [SerializeField] GameObject cellBase;
         
         public LayerConfig CurrentLayer => _currentLayer;
         public LayerHolder CurrentLayerHolder => _currentLayerHolder;
@@ -50,7 +52,8 @@ namespace TheLayers
         {
             var layer = new GameObject(layerConfig.LayerName);
             var holder = layer.AddComponent<LayerHolder>();
-            holder.Init(layerConfig);
+            var layerGrid = layer.AddComponent<LayerGrid>();
+            holder.Init(layerConfig, layerGrid, cellBase);
             layer.transform.SetParent(transform);
             _layerHolders.Add(layerConfig, holder);
         }

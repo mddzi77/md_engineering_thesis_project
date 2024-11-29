@@ -37,12 +37,13 @@ namespace Tools.Drawing
         {
             var position = new Vector3(_gridPos.x, _gridPos.y, _layerManager.CurrentLayer.Order);
             
-            if (CanDraw(position) == false) return;
-            
-            var pixel = Instantiate(cellBase, _layerManager.CurrentLayerHolder.transform).GetComponent<Cell>();
-            _layerManager.CurrentLayerHolder.AddPixel(pixel);
-            pixel.transform.position = position;
-            pixel.SetSprite(_layerManager.CurrentLayer.Sprite);
+            _layerManager.CurrentLayerHolder.NewCell(position);
+            // if (_layerManager.CurrentLayerHolder.CanDraw(position)) return;
+            //
+            // var pixel = Instantiate(cellBase, _layerManager.CurrentLayerHolder.transform).GetComponent<Cell>();
+            // _layerManager.CurrentLayerHolder.AddPixel(pixel);
+            // pixel.transform.position = position;
+            // pixel.SetSprite(_layerManager.CurrentLayer.Sprite);
         }
 
         private bool CanDraw(Vector3 position)
