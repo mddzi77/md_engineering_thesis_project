@@ -28,7 +28,7 @@ namespace TheLayers
         {
             if (_layerGrid.TryNewPoint(new Vector2Int((int)position.x, (int)position.y)))
             {
-                var pixel = Instantiate(transform);
+                var pixel = new GameObject();
                 pixel.transform.position = position;
                 var spriteRenderer = pixel.AddComponent<SpriteRenderer>();
                 spriteRenderer.sprite = (_layerConfig.Sprite);
