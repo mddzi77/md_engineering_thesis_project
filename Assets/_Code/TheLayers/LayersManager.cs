@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
 using MdUtils;
 using TheLayers.Grid;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace TheLayers
 {
@@ -12,6 +10,7 @@ namespace TheLayers
         [SerializeField] private LayerConfig[] layerConfigs;
         [SerializeField] GameObject cellBase;
         
+        public LayerConfig[] LayerConfigs => layerConfigs;
         public LayerConfig CurrentLayer => _currentLayer;
         public LayerHolder CurrentLayerHolder => _currentLayerHolder;
         

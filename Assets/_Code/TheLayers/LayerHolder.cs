@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
+using TheLayers.Cells;
 using TheLayers.Grid;
-using Tools;
 using Tools.Drawing;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 
 namespace TheLayers
@@ -26,16 +25,34 @@ namespace TheLayers
 
         public void NewCell(Vector3 position)
         {
-            if (_layerGrid.TryNewPoint(new Vector2Int((int)position.x, (int)position.y)))
+            var intPosition = new Vector2Int((int)position.x, (int)position.y);
+            if (_layerGrid.TryNewPoint(intPosition))
             {
-                var pixel = new GameObject();
-                pixel.transform.position = position;
-                var spriteRenderer = pixel.AddComponent<SpriteRenderer>();
-                spriteRenderer.sprite = (_layerConfig.Sprite);
+                var cell = CellsPool.GetCell(_layerConfig);
+                cell.transform.position = position;
+                cell.transform.parent = transform;
+                cell.SetActive(true);
+
+                // var pixel = new GameObject();
+                // pixel.transform.position = position;
+                // var spriteRenderer = pixel.AddComponent<SpriteRenderer>();
+                // spriteRenderer.sprite = (_layerConfig.Sprite);
             }
         }
         
-        public void AddPixel(Cell cell)
+        public async UniTask NewCellAsync(Vector3 position)
+        {
+            var intPosition = new Vector2Int((int)position.x, (int)position.y);
+            if (_layerGrid.TryNewPoint(intPosition))
+            {
+                var cell = await CellsPool.GetCellAsync(_layerConfig);
+                cell.transform.position = position;
+                cell.transform.parent = transform;
+                cell.SetActive(true);
+            }
+        }
+        
+        private void AddCell(GameObject cell, Vector2Int position)
         {
             // _pixels.Add(cell);
         }

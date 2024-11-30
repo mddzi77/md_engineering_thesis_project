@@ -18,7 +18,7 @@ namespace Tools.Drawing
         [SerializeField] private InputActionReference leftMouse;
         [SerializeField] private InputActionReference modifierAction;
         [SerializeField] private SpriteRenderer layerSprite;
-        [SerializeField] private BoxCollider detector;
+        // [SerializeField] private BoxCollider detector;
         [SerializeField] private List<GameObject> detectedObjects;
 
         public int SizeX { get; private set; }
@@ -107,7 +107,7 @@ namespace Tools.Drawing
                 transform.position = position;
                 deltaY = currentPos.y - _startPos.y + 1;
             }
-            ModifyBounds(deltaX, deltaY);
+            // ModifyBounds(deltaX, deltaY);
             SizeX = (int) deltaX;
             SizeY = (int) deltaY;
             transform.localScale = new Vector3(deltaX, deltaY, 1);
@@ -127,26 +127,39 @@ namespace Tools.Drawing
                 for (int y = startY; y <= endY; y++)
                 {
                     var position = new Vector3(x, y, _layerManager.CurrentLayer.Order);
-                    DrawPixel(position);
+                    _layerManager.CurrentLayerHolder.NewCell(position);
                 }
             }
             Debug.Log($"{(endX - startX + 1) * (endY - startY + 1)} cells drawn");
         }
 
-        private IEnumerator DrawingCoroutine()
+        private async UniTask DrawingCoroutine()
         {
-            yield return null;
+            var startX = _startPos.x < _endPos.x ? (int) _startPos.x : (int) _endPos.x;
+            var endX = _startPos.x > _endPos.x ? (int) _startPos.x : (int) _endPos.x;
+            var startY = _startPos.y < _endPos.y ? (int) _startPos.y : (int) _endPos.y;
+            var endY = _startPos.y > _endPos.y ? (int) _startPos.y : (int) _endPos.y;
+
+            for (int x = startX; x <= endX; x++)
+            {
+                for (int y = startY; y <= endY; y++)
+                {
+                    var position = new Vector3(x, y, _layerManager.CurrentLayer.Order);
+                    await _layerManager.CurrentLayerHolder.NewCellAsync(position);
+                }
+            }
+            Debug.Log($"{(endX - startX + 1) * (endY - startY + 1)} cells drawn");
         }
         
         private void DrawPixel(Vector3 position)
         {
-            if (!CanDraw(position)) return;
+            _layerManager.CurrentLayerHolder.NewCell(position);
             // var asyncOperation = await InstantiateAsync(cellBase, _layerManager.CurrentLayerHolder.transform);
             // var pixel = asyncOperation[0].GetComponent<Cell>();
-            var pixel = Instantiate(cellBase, _layerManager.CurrentLayerHolder.transform).GetComponent<Cell>();
-            _layerManager.CurrentLayerHolder.AddPixel(pixel);
-            pixel.transform.position = position;
-            pixel.SetSprite(_layerManager.CurrentLayer.Sprite);
+            // var pixel = Instantiate(cellBase, _layerManager.CurrentLayerHolder.transform).GetComponent<Cell>();
+            // _layerManager.CurrentLayerHolder.AddPixel(pixel);
+            // pixel.transform.position = position;
+            // pixel.SetSprite(_layerManager.CurrentLayer.Sprite);
         }
         
         private void OnLeftMouse(InputAction.CallbackContext context)
@@ -171,7 +184,8 @@ namespace Tools.Drawing
             if (_mode is Mode.Click or Mode.None) return;
             
             _endPos = MouseGrid.GridPos;
-            Draw();
+            DrawingCoroutine().Forget();
+            // Draw();
             ResetTool();
         }
         
@@ -185,7 +199,8 @@ namespace Tools.Drawing
             _endPos = MouseGrid.GridPos;
             // DragUpdate();
             // await UniTask.WaitForSeconds(0.4f);
-            Draw();
+            DrawingCoroutine().Forget();
+            // Draw();
             ResetTool();
         }
         
@@ -194,10 +209,10 @@ namespace Tools.Drawing
             transform.position = new Vector3(transform.position.x, transform.position.y, _layerManager.CurrentLayer.Order);
         }
         
-        private void ModifyBounds(float deltaX, float deltaY)
-        {
-            detector.size = new Vector3(1 - 0.1f / deltaX, 1 - 0.1f / deltaY, 0.1f);
-        }
+        // private void ModifyBounds(float deltaX, float deltaY)
+        // {
+        //     detector.size = new Vector3(1 - 0.1f / deltaX, 1 - 0.1f / deltaY, 0.1f);
+        // }
 
         private bool CanDraw(Vector3 position)
         {
