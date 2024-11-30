@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      pg_logo_kolor_podstawowa_2_0: 4716508734838841820
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      pg_poziome_logo_kolor-300x212 alternatywna_2_0: -6670443183183307738
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
