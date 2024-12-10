@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks.Linq;
 using MouseGridPosition;
 using TheLayers;
 using UI;
@@ -140,15 +141,23 @@ namespace Tools.Drawing
             var startY = _startPos.y < _endPos.y ? (int) _startPos.y : (int) _endPos.y;
             var endY = _startPos.y > _endPos.y ? (int) _startPos.y : (int) _endPos.y;
 
+            var counter = 0;
             for (int x = startX; x <= endX; x++)
             {
                 for (int y = startY; y <= endY; y++)
                 {
                     var position = new Vector3(x, y, _layerManager.CurrentLayer.Order);
-                    await _layerManager.CurrentLayerHolder.NewCellAsync(position);
+                    _layerManager.CurrentLayerHolder.NewCellAsync(position).Forget();
+                    
+                    if (counter % 2000 == 0)
+                    {
+                        await UniTask.Yield();
+                    }
+                    counter++;
                 }
             }
             Debug.Log($"{(endX - startX + 1) * (endY - startY + 1)} cells drawn");
+            await UniTask.Yield();
         }
         
         private void DrawPixel(Vector3 position)

@@ -11,7 +11,6 @@ namespace MainCamera
     {
         [SerializeField] private InputActionReference middleMouse;
         [SerializeField] private InputActionReference mousePosition;
-        [SerializeField] private float dragSpeed = 1;
         
         [Space] [SerializeField] private InputActionReference scroll;
         [SerializeField] private float scrollSpeed = .1f;

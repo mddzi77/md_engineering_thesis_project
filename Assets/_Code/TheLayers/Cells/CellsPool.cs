@@ -51,6 +51,7 @@ namespace TheLayers.Cells
             var pool = _pools.Find(p => p.layerConfig == layerConfig).pool;
             if (pool.Count == 0)
             {
+                await UniTask.CompletedTask;
                 return InstantiateCell(layerConfig);
             }
             return pool.Dequeue();
@@ -77,8 +78,14 @@ namespace TheLayers.Cells
         
         private static GameObject InstantiateCell(LayerConfig layerConfig)
         {
-            var cell = new GameObject();
-            cell.transform.parent = staticTransform;
+            var cell = new GameObject
+            {
+                name = "Cell",
+                transform =
+                {
+                    parent = staticTransform
+                }
+            };
             cell.SetActive(false);
                 
             var spriteRenderer = cell.AddComponent<SpriteRenderer>();

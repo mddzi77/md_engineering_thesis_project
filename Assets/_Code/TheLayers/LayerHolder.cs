@@ -50,6 +50,8 @@ namespace TheLayers
                 cell.transform.parent = transform;
                 cell.SetActive(true);
             }
+
+            await UniTask.Yield();
         }
         
         private void AddCell(GameObject cell, Vector2Int position)
