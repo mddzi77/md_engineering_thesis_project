@@ -13,7 +13,7 @@ namespace MdUtils.InputCombos
     public class InputComboWithMain
     {
         [SerializeField] private InputActionReference mainAction;
-        // [ListDrawerSettings(Draggable = true, AlwaysExpanded = true)]
+        [ListDrawerSettings(Draggable = true, AlwaysExpanded = true)]
         [SerializeField] private List<InputActionReference> modifierActions;
         
         public bool IsPressed => _isPressed;
@@ -79,24 +79,24 @@ namespace MdUtils.InputCombos
         }
     }
 
-    [CustomPropertyDrawer(typeof(InputComboWithMain))]
-    public class InputComboWithMainDrawer : PropertyDrawer
-    {
-        public override VisualElement CreatePropertyGUI(SerializedProperty property)
-        {
-            var root = new VisualElement();
-            
-            var mainAction = property.FindPropertyRelative("mainAction");
-            var modifierActions = property.FindPropertyRelative("modifierActions");
-            
-            var mainField = new PropertyField(mainAction);
-            var modifierField = new PropertyField(modifierActions);
-            
-            root.Add(new Label("Main Action"));
-            root.Add(mainField);
-            root.Add(modifierField);
-            
-            return root;
-        }
-    }
+    // [CustomPropertyDrawer(typeof(InputComboWithMain))]
+    // public class InputComboWithMainDrawer : PropertyDrawer
+    // {
+    //     public override VisualElement CreatePropertyGUI(SerializedProperty property)
+    //     {
+    //         var root = new VisualElement();
+    //         
+    //         var mainAction = property.FindPropertyRelative("mainAction");
+    //         var modifierActions = property.FindPropertyRelative("modifierActions");
+    //         
+    //         var mainField = new PropertyField(mainAction);
+    //         var modifierField = new PropertyField(modifierActions);
+    //         
+    //         root.Add(new Label("Main Action"));
+    //         root.Add(mainField);
+    //         root.Add(modifierField);
+    //         
+    //         return root;
+    //     }
+    // }
 }
