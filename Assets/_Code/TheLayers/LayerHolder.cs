@@ -14,13 +14,11 @@ namespace TheLayers
         private LayerConfig _layerConfig;
         private readonly List<Cell> _pixels = new();
         private LayerGrid _layerGrid;
-        private GameObject _cellBase;
 
         public void Init(LayerConfig layerConfig, LayerGrid layerGrid, GameObject cellBase)
         {
             _layerConfig = layerConfig;
             _layerGrid = layerGrid;
-            _cellBase = cellBase;
         }
 
         public void NewCell(Vector3 position)

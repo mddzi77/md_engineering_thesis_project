@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MdUtils;
 using TheLayers.Grid;
 using UnityEngine;
@@ -11,8 +12,11 @@ namespace TheLayers
         [SerializeField] GameObject cellBase;
         
         public LayerConfig[] LayerConfigs => layerConfigs;
+        public Dictionary<LayerConfig, LayerHolder> LayerHolders => _layerHolders;
         public LayerConfig CurrentLayer => _currentLayer;
         public LayerHolder CurrentLayerHolder => _currentLayerHolder;
+        public static event Action Initialized;
+        public static bool IsInitialized { get; private set; }
         
         private LayerConfig _currentLayer;
         private LayerHolder _currentLayerHolder;
@@ -28,6 +32,8 @@ namespace TheLayers
                 CreateLayer(layer);
             }
             SetCurrentLayer(layerConfigs[0]); // set default layer
+            IsInitialized = true;
+            Initialized?.Invoke();
         }
 
         public void SetCurrentLayer(LayerConfig layerConfig)
@@ -45,6 +51,16 @@ namespace TheLayers
                 _currentLayerHolder = _layerHolders[layerConfig];
                 return;
             }
+        }
+        
+        public void DisableLayer(LayerConfig layerConfig)
+        {
+            _layerHolders[layerConfig].gameObject.SetActive(false);
+        }
+        
+        public void EnableLayer(LayerConfig layerConfig)
+        {
+            _layerHolders[layerConfig].gameObject.SetActive(true);
         }
         
         private void CreateLayer(LayerConfig layerConfig)
