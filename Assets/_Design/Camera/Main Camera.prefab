@@ -255,7 +255,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   middleMouse: {fileID: -3626618978401559676, guid: f60942dfd1d437340afd25034205eac3, type: 3}
   mousePosition: {fileID: 1692558960569414594, guid: f60942dfd1d437340afd25034205eac3, type: 3}
-  dragSpeed: 0.5
   scroll: {fileID: 7066251308298378193, guid: f60942dfd1d437340afd25034205eac3, type: 3}
   scrollSpeed: 1.15
   scrollMin: 0.5
