@@ -9,10 +9,10 @@ namespace TheLayers
 {
     public class LayerHolder : MonoBehaviour
     {
-        public List<Cell> Pixels => _pixels;
+        public List<GameObject> Pixels => _pixels;
         
         private LayerConfig _layerConfig;
-        private readonly List<Cell> _pixels = new();
+        private readonly List<GameObject> _pixels = new();
         private LayerGrid _layerGrid;
 
         public void Init(LayerConfig layerConfig, LayerGrid layerGrid, GameObject cellBase)
@@ -30,6 +30,7 @@ namespace TheLayers
                 cell.transform.position = position;
                 cell.transform.parent = transform;
                 cell.SetActive(true);
+                _pixels.Add(cell);
 
                 // var pixel = new GameObject();
                 // pixel.transform.position = position;
@@ -47,19 +48,34 @@ namespace TheLayers
                 cell.transform.position = position;
                 cell.transform.parent = transform;
                 cell.SetActive(true);
+                _pixels.Add(cell);
             }
 
             await UniTask.Yield();
         }
-        
-        private void AddCell(GameObject cell, Vector2Int position)
+
+        public async UniTask<List<GameObject>> GetCells(List<Vector2> positions)
         {
-            // _pixels.Add(cell);
-        }
-        
-        public void RemovePixel(Cell cell)
-        {
-            _pixels.Remove(cell);
+            List<GameObject> cells = new();
+            
+            if (_pixels.Count < 0) return cells;
+            for (var i = 0; i < positions.Count; i++)
+            {
+                var pos = positions[i];
+                var intPos = new Vector2Int((int)pos.x, (int)pos.y);
+                // foreach (var pixel in _pixels)
+                // {
+                //     
+                // }
+                var cell = _pixels.Find(c =>
+                    Mathf.Approximately(c.transform.position.x, intPos.x) &&
+                    Mathf.Approximately(c.transform.position.y, intPos.y));
+                if (cell != null)
+                    cells.Add(cell.gameObject);
+            }
+
+            await UniTask.Yield();
+            return cells;
         }
     }
 }

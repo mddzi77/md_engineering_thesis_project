@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using MdUtils;
 using TheLayers.Grid;
 using UnityEngine;
@@ -61,6 +62,26 @@ namespace TheLayers
         public void EnableLayer(LayerConfig layerConfig)
         {
             _layerHolders[layerConfig].gameObject.SetActive(true);
+        }
+
+        public async UniTask<List<GameObject>> GetCellsAsync(List<Vector2> positions)
+        {
+            List<GameObject> cells = new();
+            var tasks = new List<UniTask<List<GameObject>>>();
+            
+            foreach (var config in layerConfigs)
+            {
+                var holder = _layerHolders[config];
+                tasks.Add(holder.GetCells(positions));
+            }
+            var results = await UniTask.WhenAll(tasks);
+            
+            foreach (var result in results)
+            {
+                cells.AddRange(result);
+            }
+
+            return cells;
         }
         
         private void CreateLayer(LayerConfig layerConfig)

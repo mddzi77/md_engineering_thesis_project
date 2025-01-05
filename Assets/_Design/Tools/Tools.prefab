@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4981388790990384233}
   - component: {fileID: 474258120109101996}
   - component: {fileID: 1335579274673775386}
+  - component: {fileID: 2605627508055892648}
   m_Layer: 0
   m_Name: Select
   m_TagString: Untagged
@@ -49,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftMouse: {fileID: -4949743767066450138, guid: f60942dfd1d437340afd25034205eac3, type: 3}
   modifierAction: {fileID: 4792521147824218995, guid: f60942dfd1d437340afd25034205eac3, type: 3}
+  selectContainer: {fileID: 2605627508055892648}
 --- !u!212 &4981388790990384233
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -152,6 +154,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &2605627508055892648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103416005027500523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cfad2ef97724469a772d2b67b197441, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1071864453343690669
 GameObject:
   m_ObjectHideFlags: 0

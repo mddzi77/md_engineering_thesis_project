@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using MouseGridPosition;
 using TheLayers;
 using Tools.Drawing;
@@ -13,6 +15,7 @@ namespace Tools.Editing
     {
         [SerializeField] private InputActionReference leftMouse;
         [SerializeField] private InputActionReference modifierAction;
+        [SerializeField] private SelectContainer selectContainer;
 
         public int SizeX { get; private set; }
         public int SizeY { get; private set; }
@@ -117,7 +120,7 @@ namespace Tools.Editing
             if (_mode is Mode.Click or Mode.None) return;
             
             _endPos = MouseGrid.GridPos;
-            // TODO: Select
+            SelectingCoroutine();
             ResetTool();
         }
         
@@ -129,10 +132,38 @@ namespace Tools.Editing
         private void SecondClick()
         {
             _endPos = MouseGrid.GridPos;
-            // TODO: Select
+            SelectingCoroutine();
             ResetTool();
         }
-        
+
+        private async UniTask SelectingCoroutine()
+        {
+            var startX = _startPos.x < _endPos.x ? (int)_startPos.x : (int)_endPos.x;
+            var endX = _startPos.x > _endPos.x ? (int)_startPos.x : (int)_endPos.x;
+            var startY = _startPos.y < _endPos.y ? (int)_startPos.y : (int)_endPos.y;
+            var endY = _startPos.y > _endPos.y ? (int)_startPos.y : (int)_endPos.y;
+
+            List<Vector2> positions = new();
+
+            var counter = 0;
+            for (int x = startX; x <= endX; x++)
+            {
+                for (int y = startY; y <= endY; y++)
+                {
+                    var position = new Vector3(x, y, _layerManager.CurrentLayer.Order);
+                    positions.Add(position);
+
+                    counter++;
+                }
+            }
+
+            var result = await LayersManager.Instance.GetCellsAsync(positions);
+            selectContainer.SetSelectedObjects(result);
+
+            // Debug.Log($"{(endX - startX + 1) * (endY - startY + 1)} cells drawn");
+            await UniTask.Yield();
+        }
+
         private void ResetTool()
         {
             OnToggle?.Invoke(false, this);
