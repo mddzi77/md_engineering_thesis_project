@@ -27,9 +27,12 @@ namespace Tools.Editing
         private Vector2 _startPos;
         private Vector2 _endPos;
         private bool _startPointSet;
+        private SpriteRenderer _toolSprite;
 
         private void Start()
         {
+            _toolSprite = GetComponent<SpriteRenderer>();
+            _toolSprite.enabled = false;
             _layerManager = LayersManager.Instance;
             leftMouse.action.performed += OnLeftMouse;
             leftMouse.action.canceled += OnLeftMouseCancel;
@@ -113,6 +116,7 @@ namespace Tools.Editing
             OnToggle?.Invoke(true, this);
             _startPos = MouseGrid.GridPos;
             _mode = modifierAction.action.IsPressed() ? Mode.Click : Mode.Drag;
+            _toolSprite.enabled = true;
         }
         
         private void OnLeftMouseCancel(InputAction.CallbackContext context)
@@ -170,6 +174,7 @@ namespace Tools.Editing
             transform.localScale = Vector3.one;
             // detectedObjects.Clear();
             _mode = Mode.None;
+            _toolSprite.enabled = false;
         }
 
         private enum Mode
