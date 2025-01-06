@@ -1,21 +1,28 @@
 using System.Collections.Generic;
+using TriInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Tools.Editing
 {
     public class SelectContainer : MonoBehaviour
     {
         [SerializeField] private LayerMask selectionLayer;
+        [ReadOnly]
+        [SerializeField] private List<GameObject> selectedObjects;
         
         public bool HasSelection { get; private set; }
 
-        private List<GameObject> _selectedObjects;
-
-        public void SetSelectedObjects(List<GameObject> selectedObjects)
+        public void SetSelectedObjects(List<GameObject> newSelected)
         {
+            if (HasSelection)
+            {
+                ClearSelection();
+            }
             HasSelection = true;
-            _selectedObjects = selectedObjects;
-            foreach (var selected in _selectedObjects)
+            selectedObjects.Clear();
+            selectedObjects.AddRange(newSelected);
+            foreach (var selected in selectedObjects)
             {
                 // selected.layer = selectionLayer;
                 var sprite = selected.GetComponent<SpriteRenderer>();
@@ -29,8 +36,8 @@ namespace Tools.Editing
         {
             foreach (var selected in selectedObject)
             {
-                if (_selectedObjects.Contains(selected)) continue;
-                _selectedObjects.Add(selected);
+                if (selectedObjects.Contains(selected)) continue;
+                selectedObjects.Add(selected);
                 var sprite = selected.GetComponent<SpriteRenderer>();
                 var color = sprite.color;
                 color.a = 0.3f;
@@ -42,8 +49,8 @@ namespace Tools.Editing
         {
             foreach (var selected in selectedObject)
             {
-                if (!_selectedObjects.Contains(selected)) continue;
-                _selectedObjects.Remove(selected);
+                if (!selectedObjects.Contains(selected)) continue;
+                selectedObjects.Remove(selected);
                 var sprite = selected.GetComponent<SpriteRenderer>();
                 var color = sprite.color;
                 color.a = .9f;
@@ -54,7 +61,7 @@ namespace Tools.Editing
         public void ClearSelection()
         {
             HasSelection = false;
-            foreach (var selected in _selectedObjects)
+            foreach (var selected in selectedObjects)
             {
                 // selected.layer = 0;
                 var sprite = selected.GetComponent<SpriteRenderer>();
@@ -62,6 +69,7 @@ namespace Tools.Editing
                 color.a = .9f;
                 sprite.color = color;
             }
+            selectedObjects.Clear();
         }
     }
 }

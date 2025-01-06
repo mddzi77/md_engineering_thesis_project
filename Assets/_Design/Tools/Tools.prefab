@@ -52,7 +52,9 @@ MonoBehaviour:
   modifierAction: {fileID: 4792521147824218995, guid: f60942dfd1d437340afd25034205eac3, type: 3}
   addSelection: {fileID: -5054396679071099567, guid: f60942dfd1d437340afd25034205eac3, type: 3}
   removeSelection: {fileID: 3854831391525438236, guid: f60942dfd1d437340afd25034205eac3, type: 3}
+  detector: {fileID: 474258120109101996}
   selectContainer: {fileID: 2605627508055892648}
+  detectedObjects: []
 --- !u!212 &4981388790990384233
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -127,7 +129,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 0.1}
+  m_Size: {x: 1, y: 1, z: 50}
   m_Center: {x: 0.5, y: 0.5, z: 0}
 --- !u!54 &1335579274673775386
 Rigidbody:

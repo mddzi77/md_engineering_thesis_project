@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using MouseGridPosition;
 using TheLayers;
 using Tools.Drawing;
+using TriInspector;
 using UI;
 using UI.Bottom;
 using UnityEngine;
@@ -17,7 +18,10 @@ namespace Tools.Editing
         [SerializeField] private InputActionReference modifierAction;
         [SerializeField] private InputActionReference addSelection;
         [SerializeField] private InputActionReference removeSelection;
+        [SerializeField] private BoxCollider detector;
         [SerializeField] private SelectContainer selectContainer;
+        [ReadOnly]
+        [SerializeField] private List<GameObject> detectedObjects;
 
         public int SizeX { get; private set; }
         public int SizeY { get; private set; }
@@ -62,6 +66,16 @@ namespace Tools.Editing
             DragUpdate();
         }
 
+        private void OnTriggerEnter(Collider other)
+        {
+            detectedObjects.Add(other.gameObject);
+        }
+        
+        private void OnTriggerExit(Collider other)
+        {
+            detectedObjects.Remove(other.gameObject);
+        }
+
         private void DragUpdate()
         {
             var currentPos = MouseGrid.GridPos;
@@ -98,6 +112,7 @@ namespace Tools.Editing
                 transform.position = position;
                 deltaY = currentPos.y - _startPos.y + 1;
             }
+            ModifyBounds(deltaX, deltaY);
             SizeX = (int) deltaX;
             SizeY = (int) deltaY;
             transform.localScale = new Vector3(deltaX, deltaY, 1);
@@ -126,7 +141,7 @@ namespace Tools.Editing
             if (_mode is Mode.Click or Mode.None) return;
             
             _endPos = MouseGrid.GridPos;
-            SelectingCoroutine();
+            Selecting();
             ResetTool();
         }
         
@@ -138,8 +153,23 @@ namespace Tools.Editing
         private void SecondClick()
         {
             _endPos = MouseGrid.GridPos;
-            SelectingCoroutine();
+            Selecting();
             ResetTool();
+        }
+        
+        private void ModifyBounds(float deltaX, float deltaY)
+        {
+            detector.size = new Vector3(1 - 0.1f / deltaX, 1 - 0.1f / deltaY, 50);
+        }
+
+        private void Selecting()
+        {
+            if (addSelection.action.IsPressed())
+                selectContainer.AddSelectedObjects(detectedObjects);
+            else if (removeSelection.action.IsPressed())
+                selectContainer.RemoveSelectedObjects(detectedObjects);
+            else
+                selectContainer.SetSelectedObjects(detectedObjects);
         }
 
         private async UniTaskVoid SelectingCoroutine()
@@ -179,7 +209,7 @@ namespace Tools.Editing
         {
             OnToggle?.Invoke(false, this);
             transform.localScale = Vector3.one;
-            // detectedObjects.Clear();
+            detectedObjects.Clear();
             _mode = Mode.None;
             _toolSprite.enabled = false;
         }

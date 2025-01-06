@@ -90,7 +90,7 @@ namespace TheLayers.Cells
                 }
             };
             cell.SetActive(false);
-            // cell.layer = instance.tileMask;
+            cell.tag = layerConfig.LayerName;
                 
             var spriteRenderer = cell.AddComponent<SpriteRenderer>();
             spriteRenderer.sprite = layerConfig.Sprite;
@@ -102,7 +102,6 @@ namespace TheLayers.Cells
             var collider = cell.AddComponent<BoxCollider>();
             collider.size = new Vector3(1, 1, 0.1f);
             collider.center = new Vector3(0.5f, 0.5f, 0);
-            // collider.isTrigger = true;
                 
             return cell;
         }

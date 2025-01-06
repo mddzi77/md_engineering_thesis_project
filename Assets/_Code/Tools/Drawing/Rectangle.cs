@@ -23,6 +23,7 @@ namespace Tools.Drawing
         [SerializeField] private InputActionReference modifierAction;
         [SerializeField] private SpriteRenderer layerSprite;
         [SerializeField] private BoxCollider detector;
+        [ReadOnly]
         [SerializeField] private List<GameObject> detectedObjects;
 
         public int SizeX { get; private set; }
@@ -41,23 +42,16 @@ namespace Tools.Drawing
         private void Start()
         {
             _layerManager = LayersManager.Instance;
-            leftMouse.action.performed += OnLeftMouse;
-            leftMouse.action.canceled += OnLeftMouseCancel;
-            modifierAction.action.canceled += ModifierStop;
         }
 
         private void OnEnable()
         {
-            leftMouse.action.performed += OnLeftMouse;
-            leftMouse.action.canceled += OnLeftMouseCancel;
-            modifierAction.action.canceled += ModifierStop;
+            EnableInput();
         }
 
         private void OnDisable()
         {
-            leftMouse.action.performed -= OnLeftMouse;
-            leftMouse.action.canceled -= OnLeftMouseCancel;
-            modifierAction.action.canceled -= ModifierStop;
+            DisableInput();
             ResetTool();
         }
 
@@ -141,6 +135,8 @@ namespace Tools.Drawing
 
         private async UniTask DrawingCoroutine()
         {
+            DisableInput(); // prevent tool usage while drawing
+            
             var startX = _startPos.x < _endPos.x ? (int) _startPos.x : (int) _endPos.x;
             var endX = _startPos.x > _endPos.x ? (int) _startPos.x : (int) _endPos.x;
             var startY = _startPos.y < _endPos.y ? (int) _startPos.y : (int) _endPos.y;
@@ -168,7 +164,11 @@ namespace Tools.Drawing
             Debug.Log($"Cells drawn: {_counter}");
             _counter = 0;
 #endif
+            
             await UniTask.Yield();
+            
+            EnableInput();
+            ResetTool();
         }
         
         private void DrawPixel(Vector3 position)
@@ -210,7 +210,6 @@ namespace Tools.Drawing
             _endPos = MouseGrid.GridPos;
             DrawingCoroutine().Forget();
             // Draw();
-            ResetTool();
         }
         
         private void ModifierStop(InputAction.CallbackContext context)
@@ -225,7 +224,6 @@ namespace Tools.Drawing
             // await UniTask.WaitForSeconds(0.4f);
             DrawingCoroutine().Forget();
             // Draw();
-            ResetTool();
         }
         
         private void SetLayerOrder()
@@ -259,6 +257,20 @@ namespace Tools.Drawing
             layerSprite.sprite = null;
             detectedObjects.Clear();
             _mode = Mode.None;
+        }
+
+        private void EnableInput()
+        {
+            leftMouse.action.performed += OnLeftMouse;
+            leftMouse.action.canceled += OnLeftMouseCancel;
+            modifierAction.action.canceled += ModifierStop;
+        }
+        
+        private void DisableInput()
+        {
+            leftMouse.action.performed -= OnLeftMouse;
+            leftMouse.action.canceled -= OnLeftMouseCancel;
+            modifierAction.action.canceled -= ModifierStop;
         }
 
         private enum Mode
