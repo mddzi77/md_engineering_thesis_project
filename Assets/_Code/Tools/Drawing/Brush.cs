@@ -41,12 +41,9 @@ namespace Tools.Drawing
         {
             var dY = Mathf.Abs(_gridPos.y - _oldGridPos.y);
             var dX = Mathf.Abs(_gridPos.x - _oldGridPos.x);
-            if (_isDrawing &&
-                ((int)dX > 1 || (int)dY > 1)
-                )
+            if (_isDrawing && (dX > 1 || dY > 1))
             {
                 DrawInterpolate(dX, dY);
-                // Draw(_gridPos.x, _gridPos.y);
             }
             else
             {
@@ -78,7 +75,6 @@ namespace Tools.Drawing
             if ((int)dX == 0 || (int)dY == 0)
             {
                 StraightLine((int)dX, (int)dY);
-                Debug.Log("Straight line");
                 return;
             }
             
@@ -92,31 +88,40 @@ namespace Tools.Drawing
             while (sum < bigger)
             {
                 rest += step;
-                var amount = Mathf.Floor(rest);
+                var amount = (int)Mathf.Floor(rest);
                 rest -= amount;
                 
                 if (axis == 1) // horizontal
                 {
-                    for (int i = 0; i < amount; i++)
-                    {
-                        Draw(curX, curY);
-                        curX += dirX;
-                    }
-
+                    DrawForHorizontal(amount, dirX, curX, curY);
                     curY += dirY;
                 }
                 else // vertical
                 {
-                    for (int i = 0; i < amount; i++)
-                    {
-                        Draw(curX, curY);
-                        curY += dirY;
-                    }
-
+                    DrawForVertical(amount, dirY, curX, curY);
                     curX += dirX;
                 }
                 
                 sum += step;
+            }
+            Draw(_gridPos.x, _gridPos.y); // make sure to draw the last pixel  
+        }
+        
+        private void DrawForHorizontal(int amount, int dirX, float curX, float curY)
+        {
+            for (int i = 0; i < amount; i++)
+            {
+                Draw(curX, curY);
+                curX += dirX;
+            }
+        }
+        
+        private void DrawForVertical(int amount, int dirY, float curX, float curY)
+        {
+            for (int i = 0; i < amount; i++)
+            {
+                Draw(curX, curY);
+                curY += dirY;
             }
         }
         
@@ -126,7 +131,7 @@ namespace Tools.Drawing
             {
                 for (int i = 0; i < dY; i++)
                 {
-                    Draw(_oldGridPos.x, _oldGridPos.y + i + 1);
+                    Draw(_oldGridPos.x, _oldGridPos.y + i);
                 }
             }
             else
@@ -136,6 +141,7 @@ namespace Tools.Drawing
                     Draw(_oldGridPos.x + i + 1, _oldGridPos.y);
                 }
             }
+            Draw(_gridPos.x, _gridPos.y); // make sure to draw the last pixel
         }
 
         private bool CanDraw(Vector3 position)
