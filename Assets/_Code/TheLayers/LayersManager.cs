@@ -16,7 +16,10 @@ namespace TheLayers
         public Dictionary<LayerConfig, LayerHolder> LayerHolders => _layerHolders;
         public LayerConfig CurrentLayer => _currentLayer;
         public LayerHolder CurrentLayerHolder => _currentLayerHolder;
+        
         public static event Action Initialized;
+        public static event Action<LayerConfig> LayerChanged;
+        
         public static bool IsInitialized { get; private set; }
         
         private LayerConfig _currentLayer;
@@ -41,6 +44,7 @@ namespace TheLayers
         {
             _currentLayer = layerConfig;
             _currentLayerHolder = _layerHolders[layerConfig];
+            LayerChanged?.Invoke(layerConfig);
         }
 
         public void SetCurrentLayer(string layerName)
@@ -50,6 +54,7 @@ namespace TheLayers
                 if (layerConfig.LayerName != layerName) continue;
                 _currentLayer = layerConfig;
                 _currentLayerHolder = _layerHolders[layerConfig];
+                LayerChanged?.Invoke(layerConfig);
                 return;
             }
         }

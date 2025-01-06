@@ -22,10 +22,6 @@ namespace Tools
             {
                 _currentTool.tool.gameObject.SetActive(false);
             }
-            if (selectContainer.HasSelection)
-            {
-                selectContainer.ClearSelection();
-            }
             NewTool(tool);
         }
         
@@ -35,10 +31,17 @@ namespace Tools
             {
                 if (tool.config.name.Equals(config.name))
                 {
-                    Debug.Log("Set tool to: " + config.name);
+                    // clear selection if tool is not for editing
+                    if (!config.IsForEditing)
+                    {
+                        selectContainer.ClearSelection();
+                    }
+                    
                     _currentTool = tool;
                     _currentTool.tool.gameObject.SetActive(true);
                     _toolIsActive = true;
+                    
+                    Debug.Log("Set tool to: " + config.name);
                     return;
                 }
             }

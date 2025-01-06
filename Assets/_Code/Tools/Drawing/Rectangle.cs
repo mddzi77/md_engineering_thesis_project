@@ -200,6 +200,7 @@ namespace Tools.Drawing
             OnToggle?.Invoke(true, this);
             _startPos = MouseGrid.GridPos;
             layerSprite.sprite = _layerManager.CurrentLayer.Sprite;
+            layerSprite.color = _layerManager.CurrentLayer.Color;
             _mode = modifierAction.action.IsPressed() ? Mode.Click : Mode.Drag;
         }
         

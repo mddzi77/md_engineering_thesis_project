@@ -8,7 +8,7 @@ namespace Tools.Editing
     public class Move : ToolAbstract, IRectangleWithSize
     {
         [SerializeField] private InputActionReference leftMouse;
-
+        [SerializeField] private SelectContainer selectContainer;
 
         public int SizeX { get; private set; }
         public int SizeY { get; private set; }

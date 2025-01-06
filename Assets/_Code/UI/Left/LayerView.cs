@@ -27,6 +27,7 @@ namespace UI.Left
         {
             _layerConfig = layerConfig;
             layerSprite.sprite = layerConfig.Sprite;
+            layerSprite.color = layerConfig.Color;
             layerName.text = layerConfig.LayerName;
         }
         

@@ -9,10 +9,12 @@ namespace UI
     {
         [SerializeField] private string toolName;
         [SerializeField] private Sprite icon;
-        [SerializeField] private InputActionReference inputAction;
+        [SerializeField] private InputActionReference selectToolAction;
+        [SerializeField] private bool isForEditing;
         
         public string Name => toolName;
         public Sprite Icon => icon;
-        public InputAction InputAction => inputAction.action;
+        public InputAction SelectToolAction => selectToolAction.action;
+        public bool IsForEditing => isForEditing;
     }
 }

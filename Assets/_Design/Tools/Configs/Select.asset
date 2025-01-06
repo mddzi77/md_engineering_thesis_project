@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27e37d008e0447fbaf052bb6f01fb40e, type: 3}
   m_Name: Select
   m_EditorClassIdentifier: 
-  toolName: 
+  toolName: Select
   icon: {fileID: 0}
-  inputAction: {fileID: 6052576042955365560, guid: f60942dfd1d437340afd25034205eac3, type: 3}
+  selectToolAction: {fileID: 6052576042955365560, guid: f60942dfd1d437340afd25034205eac3, type: 3}
+  isForEditing: 0

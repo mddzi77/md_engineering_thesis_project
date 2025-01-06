@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Metal 1
+  - Metal 2
+  - P Diffusion
+  - N Diffusion
+  - Poly Crystal
+  - Poly Crystal 2
   layers:
   - Default
   - TransparentFX

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TriInspector;
 using UnityEngine;
@@ -53,7 +54,7 @@ namespace Tools.Editing
                 selectedObjects.Remove(selected);
                 var sprite = selected.GetComponent<SpriteRenderer>();
                 var color = sprite.color;
-                color.a = .9f;
+                color.a = .95f;
                 sprite.color = color;
             }
         }
@@ -66,10 +67,31 @@ namespace Tools.Editing
                 // selected.layer = 0;
                 var sprite = selected.GetComponent<SpriteRenderer>();
                 var color = sprite.color;
-                color.a = .9f;
+                color.a = .95f;
                 sprite.color = color;
             }
             selectedObjects.Clear();
+        }
+
+        public void ReParent(Transform parent)
+        {
+            foreach (var selected in selectedObjects)
+            {
+                selected.transform.parent = parent;
+            }
+        }
+
+        public void ResetParent()
+        {
+            
+        }
+        
+        public void ForEachSelected(Action<GameObject> action)
+        {
+            foreach (var selected in selectedObjects)
+            {
+                action(selected);
+            }
         }
     }
 }

@@ -95,9 +95,7 @@ namespace TheLayers.Cells
             var spriteRenderer = cell.AddComponent<SpriteRenderer>();
             spriteRenderer.sprite = layerConfig.Sprite;
             spriteRenderer.material = instance.material;
-            var color = spriteRenderer.color;
-            color.a = 0.9f;
-            spriteRenderer.color = color;
+            spriteRenderer.color = layerConfig.Color;
             
             var collider = cell.AddComponent<BoxCollider>();
             collider.size = new Vector3(1, 1, 0.1f);

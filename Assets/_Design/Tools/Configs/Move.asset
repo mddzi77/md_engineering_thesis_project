@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 27e37d008e0447fbaf052bb6f01fb40e, type: 3}
-  m_Name: Rectangle
+  m_Name: Move
   m_EditorClassIdentifier: 
-  toolName: Rectangle
+  toolName: Move
   icon: {fileID: 0}
-  selectToolAction: {fileID: 8870026407784090628, guid: f60942dfd1d437340afd25034205eac3, type: 3}
-  isForEditing: 0
+  selectToolAction: {fileID: 582862745325643702, guid: f60942dfd1d437340afd25034205eac3, type: 3}
+  isForEditing: 1

@@ -18,7 +18,7 @@ namespace UI
             _toolsManager = ToolsManager.Instance;
             _button = GetComponent<Button>();
             _button.onClick.AddListener(OnButtonClick);
-            toolConfig.InputAction.performed += OnToolAction;
+            toolConfig.SelectToolAction.performed += OnToolAction;
         }
         
         private void OnToolAction(InputAction.CallbackContext context)

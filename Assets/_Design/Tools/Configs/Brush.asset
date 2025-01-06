@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27e37d008e0447fbaf052bb6f01fb40e, type: 3}
   m_Name: Brush
   m_EditorClassIdentifier: 
-  toolName: 
+  toolName: Brush
   icon: {fileID: 0}
-  inputAction: {fileID: -5392907269363895679, guid: f60942dfd1d437340afd25034205eac3, type: 3}
+  selectToolAction: {fileID: -5392907269363895679, guid: f60942dfd1d437340afd25034205eac3, type: 3}
+  isForEditing: 0
