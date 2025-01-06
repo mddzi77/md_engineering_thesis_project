@@ -11,14 +11,17 @@ namespace TheLayers.Cells
         [SerializeField] private Transform poolParent;
         [SerializeField] private int poolSize;
         [SerializeField] private int instantiatePerFrame;
+        [SerializeField] private Material material;
+        [SerializeField] private LayerMask tileMask;
+
+        private static CellsPool instance;
         
         private static List<PoolData> _pools = new();
-        private static Transform staticTransform;
         private int _poolIndex;
 
         private void Start()
         {
-            staticTransform = poolParent;
+            instance = this;
             foreach (var config in layersManager.LayerConfigs)
             {
                 _pools.Add(new PoolData
@@ -83,13 +86,18 @@ namespace TheLayers.Cells
                 name = "Cell",
                 transform =
                 {
-                    parent = staticTransform
+                    parent = instance.poolParent
                 }
             };
             cell.SetActive(false);
+            // cell.layer = instance.tileMask;
                 
             var spriteRenderer = cell.AddComponent<SpriteRenderer>();
             spriteRenderer.sprite = layerConfig.Sprite;
+            spriteRenderer.material = instance.material;
+            var color = spriteRenderer.color;
+            color.a = 0.9f;
+            spriteRenderer.color = color;
                 
             return cell;
         }

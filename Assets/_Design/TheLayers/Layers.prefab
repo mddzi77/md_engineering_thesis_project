@@ -101,3 +101,7 @@ MonoBehaviour:
   poolParent: {fileID: 3158227880308931540}
   poolSize: 40000
   instantiatePerFrame: 2
+  material: {fileID: 2100000, guid: 8fd3aa8cae2602e49b89e536d6733baf, type: 2}
+  tileMask:
+    serializedVersion: 2
+    m_Bits: 128

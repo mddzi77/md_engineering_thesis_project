@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9ffe1959d770fc4b97b58dbfb4a7ea3, type: 3}
   m_Name: PdiffLayer
   m_EditorClassIdentifier: 
-  layerName: N Diffusion
+  layerName: P Diffusion
   order: 3
   sprite: {fileID: -1222494991, guid: fa3146e65d9604a46a26caaef3901df8, type: 3}

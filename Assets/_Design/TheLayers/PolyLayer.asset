@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9ffe1959d770fc4b97b58dbfb4a7ea3, type: 3}
   m_Name: PolyLayer
   m_EditorClassIdentifier: 
-  layerName: PolyCrystal
+  layerName: Poly Crystal
   order: 1
   sprite: {fileID: 1008206152, guid: fa3146e65d9604a46a26caaef3901df8, type: 3}

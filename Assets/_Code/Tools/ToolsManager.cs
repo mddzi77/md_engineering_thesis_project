@@ -1,5 +1,6 @@
 using System;
 using MdUtils;
+using Tools.Editing;
 using UI;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ namespace Tools
 {
     public class ToolsManager : MonoSingleton<ToolsManager>
     {
+        [SerializeField] private SelectContainer selectContainer;
         [SerializeField] private ToolHolder[] tools;
         
         public ToolHolder[] Tools => tools;
@@ -19,6 +21,10 @@ namespace Tools
             if (_toolIsActive)
             {
                 _currentTool.tool.gameObject.SetActive(false);
+            }
+            if (selectContainer.HasSelection)
+            {
+                selectContainer.ClearSelection();
             }
             NewTool(tool);
         }

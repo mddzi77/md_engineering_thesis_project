@@ -50,6 +50,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftMouse: {fileID: -4949743767066450138, guid: f60942dfd1d437340afd25034205eac3, type: 3}
   modifierAction: {fileID: 4792521147824218995, guid: f60942dfd1d437340afd25034205eac3, type: 3}
+  addSelection: {fileID: -5054396679071099567, guid: f60942dfd1d437340afd25034205eac3, type: 3}
+  removeSelection: {fileID: 3854831391525438236, guid: f60942dfd1d437340afd25034205eac3, type: 3}
   selectContainer: {fileID: 2605627508055892648}
 --- !u!212 &4981388790990384233
 SpriteRenderer:
@@ -166,6 +168,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cfad2ef97724469a772d2b67b197441, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectionLayer:
+    serializedVersion: 2
+    m_Bits: 72
 --- !u!1 &1071864453343690669
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,6 +372,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e661e015ef95a740af492c76a80f0d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectContainer: {fileID: 2605627508055892648}
   tools:
   - config: {fileID: 11400000, guid: 15c21d7e0e5fd8a4f9d572f853736698, type: 2}
     tool: {fileID: 3337193285866088843}

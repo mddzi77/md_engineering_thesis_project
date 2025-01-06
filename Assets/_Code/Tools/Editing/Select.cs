@@ -15,6 +15,8 @@ namespace Tools.Editing
     {
         [SerializeField] private InputActionReference leftMouse;
         [SerializeField] private InputActionReference modifierAction;
+        [SerializeField] private InputActionReference addSelection;
+        [SerializeField] private InputActionReference removeSelection;
         [SerializeField] private SelectContainer selectContainer;
 
         public int SizeX { get; private set; }
@@ -140,7 +142,7 @@ namespace Tools.Editing
             ResetTool();
         }
 
-        private async UniTask SelectingCoroutine()
+        private async UniTaskVoid SelectingCoroutine()
         {
             var startX = _startPos.x < _endPos.x ? (int)_startPos.x : (int)_endPos.x;
             var endX = _startPos.x > _endPos.x ? (int)_startPos.x : (int)_endPos.x;
@@ -160,9 +162,14 @@ namespace Tools.Editing
                     counter++;
                 }
             }
-
+            
             var result = await LayersManager.Instance.GetCellsAsync(positions);
-            selectContainer.SetSelectedObjects(result);
+            if (addSelection.action.IsPressed())
+                selectContainer.AddSelectedObjects(result);
+            else if (removeSelection.action.IsPressed())
+                selectContainer.RemoveSelectedObjects(result);
+            else
+                selectContainer.SetSelectedObjects(result);
 
             // Debug.Log($"{(endX - startX + 1) * (endY - startY + 1)} cells drawn");
             await UniTask.Yield();
