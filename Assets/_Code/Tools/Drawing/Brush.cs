@@ -1,3 +1,4 @@
+using System;
 using MouseGridPosition;
 using TheLayers;
 using UI;
@@ -13,6 +14,7 @@ namespace Tools.Drawing
         private LayersManager _layerManager;
         private Vector2 _gridPos;
         private Vector2 _oldGridPos;
+        private bool _isDrawing;
 
         private void Start()
         {
@@ -23,27 +25,117 @@ namespace Tools.Drawing
         {
             if (leftMouse.action.IsPressed())
                 OnPressed();
+            else if (_isDrawing) _isDrawing = false;
         }
 
         private void OnPressed()
         {
             _gridPos = MouseGrid.GridPos;
             if (_oldGridPos == _gridPos || PointerOnUI.Instance) return;
-            Draw();
+            Drawing();
+            if (!_isDrawing) _isDrawing = true;
             _oldGridPos = _gridPos;
         }
 
-        private void Draw()
+        private void Drawing()
         {
-            var position = new Vector3(_gridPos.x, _gridPos.y, _layerManager.CurrentLayer.Order);
+            var dY = Mathf.Abs(_gridPos.y - _oldGridPos.y);
+            var dX = Mathf.Abs(_gridPos.x - _oldGridPos.x);
+            if (_isDrawing &&
+                ((int)dX > 1 || (int)dY > 1)
+                )
+            {
+                DrawInterpolate(dX, dY);
+                // Draw(_gridPos.x, _gridPos.y);
+            }
+            else
+            {
+                Draw(_gridPos.x, _gridPos.y);
+            }
+            Draw(_gridPos.x, _gridPos.y);
             
-            _layerManager.CurrentLayerHolder.NewCell(position);
             // if (_layerManager.CurrentLayerHolder.CanDraw(position)) return;
             //
             // var pixel = Instantiate(cellBase, _layerManager.CurrentLayerHolder.transform).GetComponent<Cell>();
             // _layerManager.CurrentLayerHolder.AddPixel(pixel);
             // pixel.transform.position = position;
             // pixel.SetSprite(_layerManager.CurrentLayer.Sprite);
+        }
+
+        private void Draw(float posX, float posY)
+        {
+            var position = new Vector3(posX, posY, _layerManager.CurrentLayer.Order);
+            if (!CanDraw(position)) return;
+            _layerManager.CurrentLayerHolder.NewCell(position);
+        }
+
+        private void DrawInterpolate(float dX, float dY)
+        {
+            var axis = dX > dY ? 1 : 0; // 1 - horizontal axis, 0 - vertical axis
+            var dirX = _gridPos.x > _oldGridPos.x ? 1 : -1;
+            var dirY = _gridPos.y > _oldGridPos.y ? 1 : -1;
+            
+            if ((int)dX == 0 || (int)dY == 0)
+            {
+                StraightLine((int)dX, (int)dY);
+                Debug.Log("Straight line");
+                return;
+            }
+            
+            var step = dX > dY ? dX / dY : dY / dX;
+            float rest = 0f;
+            float sum = 0f;
+
+            var bigger = dX > dY ? dX : dY;
+            var curX = _oldGridPos.x;
+            var curY = _oldGridPos.y;
+            while (sum < bigger)
+            {
+                rest += step;
+                var amount = Mathf.Floor(rest);
+                rest -= amount;
+                
+                if (axis == 1) // horizontal
+                {
+                    for (int i = 0; i < amount; i++)
+                    {
+                        Draw(curX, curY);
+                        curX += dirX;
+                    }
+
+                    curY += dirY;
+                }
+                else // vertical
+                {
+                    for (int i = 0; i < amount; i++)
+                    {
+                        Draw(curX, curY);
+                        curY += dirY;
+                    }
+
+                    curX += dirX;
+                }
+                
+                sum += step;
+            }
+        }
+        
+        private void StraightLine(int dX, int dY)
+        {
+            if (dX == 0)
+            {
+                for (int i = 0; i < dY; i++)
+                {
+                    Draw(_oldGridPos.x, _oldGridPos.y + i + 1);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < dX; i++)
+                {
+                    Draw(_oldGridPos.x + i + 1, _oldGridPos.y);
+                }
+            }
         }
 
         private bool CanDraw(Vector3 position)
@@ -54,7 +146,7 @@ namespace Tools.Drawing
             position.y += 0.5f;
             // Debug.DrawRay(position, Vector3.forward, Color.red, 2f);
             return Physics.Raycast(position, Vector3.forward, out var hit, 1f) == false;
-            
+
             // List version
             // var pixels = _layerManager.CurrentLayerHolder.Pixels;
             //
