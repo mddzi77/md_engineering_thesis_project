@@ -98,6 +98,11 @@ namespace TheLayers.Cells
             var color = spriteRenderer.color;
             color.a = 0.9f;
             spriteRenderer.color = color;
+            
+            var collider = cell.AddComponent<BoxCollider>();
+            collider.size = new Vector3(1, 1, 0.1f);
+            collider.center = new Vector3(0.5f, 0.5f, 0);
+            // collider.isTrigger = true;
                 
             return cell;
         }

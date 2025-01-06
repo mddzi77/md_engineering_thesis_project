@@ -221,6 +221,7 @@ MonoBehaviour:
   leftMouse: {fileID: -4949743767066450138, guid: f60942dfd1d437340afd25034205eac3, type: 3}
   modifierAction: {fileID: 4792521147824218995, guid: f60942dfd1d437340afd25034205eac3, type: 3}
   layerSprite: {fileID: 2418471749851492488}
+  detector: {fileID: 7483136490688990615}
   detectedObjects: []
 --- !u!212 &2418471749851492488
 SpriteRenderer:

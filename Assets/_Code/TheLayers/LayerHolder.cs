@@ -23,20 +23,25 @@ namespace TheLayers
 
         public void NewCell(Vector3 position)
         {
-            var intPosition = new Vector2Int((int)position.x, (int)position.y);
-            if (_layerGrid.TryNewPoint(intPosition))
-            {
-                var cell = CellsPool.GetCell(_layerConfig);
-                cell.transform.position = position;
-                cell.transform.parent = transform;
-                cell.SetActive(true);
-                _pixels.Add(cell);
-
-                // var pixel = new GameObject();
-                // pixel.transform.position = position;
-                // var spriteRenderer = pixel.AddComponent<SpriteRenderer>();
-                // spriteRenderer.sprite = (_layerConfig.Sprite);
-            }
+            // var intPosition = new Vector2Int((int)position.x, (int)position.y);
+            var cell = CellsPool.GetCell(_layerConfig);
+            cell.transform.position = position;
+            cell.transform.parent = transform;
+            cell.SetActive(true);
+            _pixels.Add(cell);
+            // if (_layerGrid.TryNewPoint(intPosition))
+            // {
+            //     var cell = CellsPool.GetCell(_layerConfig);
+            //     cell.transform.position = position;
+            //     cell.transform.parent = transform;
+            //     cell.SetActive(true);
+            //     _pixels.Add(cell);
+            //
+            //     // var pixel = new GameObject();
+            //     // pixel.transform.position = position;
+            //     // var spriteRenderer = pixel.AddComponent<SpriteRenderer>();
+            //     // spriteRenderer.sprite = (_layerConfig.Sprite);
+            // }
         }
         
         public async UniTask NewCellAsync(Vector3 position)

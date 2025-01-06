@@ -22,7 +22,7 @@ namespace Tools.Drawing
         [SerializeField] private InputActionReference leftMouse;
         [SerializeField] private InputActionReference modifierAction;
         [SerializeField] private SpriteRenderer layerSprite;
-        // [SerializeField] private BoxCollider detector;
+        [SerializeField] private BoxCollider detector;
         [SerializeField] private List<GameObject> detectedObjects;
 
         public int SizeX { get; private set; }
@@ -35,7 +35,9 @@ namespace Tools.Drawing
         private Vector2 _startPos;
         private Vector2 _endPos;
         private bool _startPointSet;
-
+#if UNITY_EDITOR
+        private int _counter;
+#endif
         private void Start()
         {
             _layerManager = LayersManager.Instance;
@@ -111,7 +113,7 @@ namespace Tools.Drawing
                 transform.position = position;
                 deltaY = currentPos.y - _startPos.y + 1;
             }
-            // ModifyBounds(deltaX, deltaY);
+            ModifyBounds(deltaX, deltaY);
             SizeX = (int) deltaX;
             SizeY = (int) deltaY;
             transform.localScale = new Vector3(deltaX, deltaY, 1);
@@ -150,7 +152,9 @@ namespace Tools.Drawing
                 for (int y = startY; y <= endY; y++)
                 {
                     var position = new Vector3(x, y, _layerManager.CurrentLayer.Order);
-                    _layerManager.CurrentLayerHolder.NewCellAsync(position).Forget();
+                    // _layerManager.CurrentLayerHolder.NewCellAsync(position).Forget();
+                    
+                    DrawPixel(position);
                     
                     if (counter % 2000 == 0)
                     {
@@ -159,13 +163,21 @@ namespace Tools.Drawing
                     counter++;
                 }
             }
-            Debug.Log($"{(endX - startX + 1) * (endY - startY + 1)} cells drawn");
+            Debug.Log($"{(endX - startX + 1) * (endY - startY + 1)} field drawn");
+#if UNITY_EDITOR
+            Debug.Log($"Cells drawn: {_counter}");
+            _counter = 0;
+#endif
             await UniTask.Yield();
         }
         
         private void DrawPixel(Vector3 position)
         {
+            if (!CanDraw(position)) return;
             _layerManager.CurrentLayerHolder.NewCell(position);
+#if UNITY_EDITOR
+            _counter++;
+#endif
             // var asyncOperation = await InstantiateAsync(cellBase, _layerManager.CurrentLayerHolder.transform);
             // var pixel = asyncOperation[0].GetComponent<Cell>();
             // var pixel = Instantiate(cellBase, _layerManager.CurrentLayerHolder.transform).GetComponent<Cell>();
@@ -221,18 +233,22 @@ namespace Tools.Drawing
             transform.position = new Vector3(transform.position.x, transform.position.y, _layerManager.CurrentLayer.Order);
         }
         
-        // private void ModifyBounds(float deltaX, float deltaY)
-        // {
-        //     detector.size = new Vector3(1 - 0.1f / deltaX, 1 - 0.1f / deltaY, 0.1f);
-        // }
+        private void ModifyBounds(float deltaX, float deltaY)
+        {
+            detector.size = new Vector3(1 - 0.1f / deltaX, 1 - 0.1f / deltaY, 0.1f);
+        }
 
         private bool CanDraw(Vector3 position)
         {
-            foreach (var detected in detectedObjects)
+            for (var i = 0; i < detectedObjects.Count; i++)
             {
-                if (detected.transform.position == position)
-                    return false;
+                var detected = detectedObjects[i];
+                if (!Mathf.Approximately(position.x, detected.transform.position.x) ||
+                    !Mathf.Approximately(position.y, detected.transform.position.y)) continue;
+                detectedObjects.Remove(detected);
+                return false;
             }
+
             return true;
         }
 
