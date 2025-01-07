@@ -40,23 +40,16 @@ namespace Tools.Editing
             _toolSprite = GetComponent<SpriteRenderer>();
             _toolSprite.enabled = false;
             _layerManager = LayersManager.Instance;
-            leftMouse.action.performed += OnLeftMouse;
-            leftMouse.action.canceled += OnLeftMouseCancel;
-            modifierAction.action.canceled += ModifierStop;
         }
 
         private void OnEnable()
         {
-            leftMouse.action.performed += OnLeftMouse;
-            leftMouse.action.canceled += OnLeftMouseCancel;
-            modifierAction.action.canceled += ModifierStop;
+            EnableInput();
         }
 
         private void OnDisable()
         {
-            leftMouse.action.performed -= OnLeftMouse;
-            leftMouse.action.canceled -= OnLeftMouseCancel;
-            modifierAction.action.canceled -= ModifierStop;
+            DisableInput();
             ResetTool();
         }
 
@@ -141,7 +134,7 @@ namespace Tools.Editing
             if (_mode is Mode.Click or Mode.None) return;
             
             _endPos = MouseGrid.GridPos;
-            Selecting();
+            Selecting().Forget();
             ResetTool();
         }
         
@@ -153,23 +146,28 @@ namespace Tools.Editing
         private void SecondClick()
         {
             _endPos = MouseGrid.GridPos;
-            Selecting();
+            Selecting().Forget();
             ResetTool();
         }
         
         private void ModifyBounds(float deltaX, float deltaY)
         {
-            detector.size = new Vector3(1 - 0.1f / deltaX, 1 - 0.1f / deltaY, 50);
+            detector.size = new Vector3(1 - 0.1f / deltaX, 1 - 0.1f / deltaY, 20);
         }
 
-        private void Selecting()
+        private async UniTaskVoid Selecting()
         {
+            DisableInput();
+            
             if (addSelection.action.IsPressed())
                 selectContainer.AddSelectedObjects(detectedObjects);
             else if (removeSelection.action.IsPressed())
                 selectContainer.RemoveSelectedObjects(detectedObjects);
             else
                 selectContainer.SetSelectedObjects(detectedObjects);
+            
+            await UniTask.Yield();
+            EnableInput();
         }
 
         private async UniTaskVoid SelectingCoroutine()
@@ -212,6 +210,20 @@ namespace Tools.Editing
             detectedObjects.Clear();
             _mode = Mode.None;
             _toolSprite.enabled = false;
+        }
+
+        private void EnableInput()
+        {
+            leftMouse.action.performed += OnLeftMouse;
+            leftMouse.action.canceled += OnLeftMouseCancel;
+            modifierAction.action.canceled += ModifierStop;
+        }
+        
+        private void DisableInput()
+        {
+            leftMouse.action.performed -= OnLeftMouse;
+            leftMouse.action.canceled -= OnLeftMouseCancel;
+            modifierAction.action.canceled -= ModifierStop;
         }
 
         private enum Mode

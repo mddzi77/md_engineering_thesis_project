@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using Cysharp.Threading.Tasks.Linq;
-using MdUtils.InputCombos;
 using MouseGridPosition;
 using TheLayers;
 using TriInspector;
@@ -11,17 +8,14 @@ using UI;
 using UI.Bottom;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
-using Vector2 = UnityEngine.Vector2;
-using Vector3 = UnityEngine.Vector3;
 
-namespace Tools.Drawing
+namespace Tools.Editing
 {
-    public class Rectangle : ToolAbstract, IRectangleWithSize
+    public class RectangleErase : ToolAbstract, IRectangleWithSize
     {
         [SerializeField] private InputActionReference leftMouse;
         [SerializeField] private InputActionReference modifierAction;
-        [SerializeField] private SpriteRenderer layerSprite;
+        [SerializeField] private SpriteRenderer toolSprite;
         [SerializeField] private BoxCollider detector;
         [ReadOnly]
         [SerializeField] private List<GameObject> detectedObjects;
@@ -36,11 +30,12 @@ namespace Tools.Drawing
         private Vector2 _startPos;
         private Vector2 _endPos;
         private bool _startPointSet;
-#if UNITY_EDITOR
-        private int _counter;
-#endif
+        private SpriteRenderer _toolSprite;
+        
         private void Start()
         {
+            _toolSprite = GetComponent<SpriteRenderer>();
+            _toolSprite.enabled = false;
             _layerManager = LayersManager.Instance;
         }
 
@@ -115,55 +110,11 @@ namespace Tools.Drawing
             _oldGridPos = currentPos;
         }
 
-        private void Draw()
-        {
-            var startX = _startPos.x < _endPos.x ? (int) _startPos.x : (int) _endPos.x;
-            var endX = _startPos.x > _endPos.x ? (int) _startPos.x : (int) _endPos.x;
-            var startY = _startPos.y < _endPos.y ? (int) _startPos.y : (int) _endPos.y;
-            var endY = _startPos.y > _endPos.y ? (int) _startPos.y : (int) _endPos.y;
-
-            for (int x = startX; x <= endX; x++)
-            {
-                for (int y = startY; y <= endY; y++)
-                {
-                    var position = new Vector3(x, y, _layerManager.CurrentLayer.Order);
-                    _layerManager.CurrentLayerHolder.NewCell(position);
-                }
-            }
-            Debug.Log($"{(endX - startX + 1) * (endY - startY + 1)} cells drawn");
-        }
-
-        private async UniTask DrawingCoroutine()
+        private async UniTask ErasingCoroutine()
         {
             DisableInput(); // prevent tool usage while drawing
             
-            var startX = _startPos.x < _endPos.x ? (int) _startPos.x : (int) _endPos.x;
-            var endX = _startPos.x > _endPos.x ? (int) _startPos.x : (int) _endPos.x;
-            var startY = _startPos.y < _endPos.y ? (int) _startPos.y : (int) _endPos.y;
-            var endY = _startPos.y > _endPos.y ? (int) _startPos.y : (int) _endPos.y;
-
-            var counter = 0;
-            for (int x = startX; x <= endX; x++)
-            {
-                for (int y = startY; y <= endY; y++)
-                {
-                    var position = new Vector3(x, y, _layerManager.CurrentLayer.Order);
-                    // _layerManager.CurrentLayerHolder.NewCellAsync(position).Forget();
-                    
-                    DrawCell(position);
-                    
-                    if (counter % 2000 == 0)
-                    {
-                        await UniTask.Yield();
-                    }
-                    counter++;
-                }
-            }
-            Debug.Log($"{(endX - startX + 1) * (endY - startY + 1)} field drawn");
-#if UNITY_EDITOR
-            Debug.Log($"Cells drawn: {_counter}");
-            _counter = 0;
-#endif
+            LayersManager.Instance.ReturnCells(detectedObjects);
             
             await UniTask.Yield();
             
@@ -171,19 +122,10 @@ namespace Tools.Drawing
             ResetTool();
         }
         
-        private void DrawCell(Vector3 position)
+        private void DrawPixel(Vector3 position)
         {
             if (!CanDraw(position)) return;
             _layerManager.CurrentLayerHolder.NewCell(position);
-#if UNITY_EDITOR
-            _counter++;
-#endif
-            // var asyncOperation = await InstantiateAsync(cellBase, _layerManager.CurrentLayerHolder.transform);
-            // var pixel = asyncOperation[0].GetComponent<Cell>();
-            // var pixel = Instantiate(cellBase, _layerManager.CurrentLayerHolder.transform).GetComponent<Cell>();
-            // _layerManager.CurrentLayerHolder.AddPixel(pixel);
-            // pixel.transform.position = position;
-            // pixel.SetSprite(_layerManager.CurrentLayer.Sprite);
         }
         
         private void OnLeftMouse(InputAction.CallbackContext context)
@@ -196,12 +138,10 @@ namespace Tools.Drawing
                 return;
             }
             
-            SetLayerOrder();
             OnToggle?.Invoke(true, this);
             _startPos = MouseGrid.GridPos;
-            layerSprite.sprite = _layerManager.CurrentLayer.Sprite;
-            layerSprite.color = _layerManager.CurrentLayer.Color;
             _mode = modifierAction.action.IsPressed() ? Mode.Click : Mode.Drag;
+            _toolSprite.enabled = true; 
         }
         
         private void OnLeftMouseCancel(InputAction.CallbackContext context)
@@ -209,8 +149,7 @@ namespace Tools.Drawing
             if (_mode is Mode.Click or Mode.None) return;
             
             _endPos = MouseGrid.GridPos;
-            DrawingCoroutine().Forget();
-            // Draw();
+            ErasingCoroutine().Forget();
         }
         
         private void ModifierStop(InputAction.CallbackContext context)
@@ -221,20 +160,15 @@ namespace Tools.Drawing
         private void SecondClick()
         {
             _endPos = MouseGrid.GridPos;
-            // DragUpdate();
+            DragUpdate();
             // await UniTask.WaitForSeconds(0.4f);
-            DrawingCoroutine().Forget();
+            ErasingCoroutine().Forget();
             // Draw();
-        }
-        
-        private void SetLayerOrder()
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y, _layerManager.CurrentLayer.Order);
         }
         
         private void ModifyBounds(float deltaX, float deltaY)
         {
-            detector.size = new Vector3(1 - 0.1f / deltaX, 1 - 0.1f / deltaY, 0.1f);
+            detector.size = new Vector3(1 - 0.1f / deltaX, 1 - 0.1f / deltaY, 20);
         }
 
         private bool CanDraw(Vector3 position)
@@ -255,9 +189,9 @@ namespace Tools.Drawing
         {
             OnToggle?.Invoke(false, this);
             transform.localScale = Vector3.one;
-            layerSprite.sprite = null;
             detectedObjects.Clear();
             _mode = Mode.None;
+            _toolSprite.enabled = false;
         }
 
         private void EnableInput()
