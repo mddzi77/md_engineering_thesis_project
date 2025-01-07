@@ -60,9 +60,12 @@ namespace TheLayers.Cells
             return pool.Dequeue();
         }
 
-        public static void ReturnCell(GameObject cell)
+        public static void ReturnCell(LayerConfig layerConfig, GameObject cell)
         {
-            
+            var pool = _pools.Find(p => p.layerConfig == layerConfig).pool;
+            cell.transform.SetParent(instance.poolParent, false);
+            cell.SetActive(false);
+            pool.Enqueue(cell);
         }
         
         private void InstantiateCells(LayerConfig layerConfig)

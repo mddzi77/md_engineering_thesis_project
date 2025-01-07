@@ -31,48 +31,31 @@ namespace Tools.Editing
         {
             _gridPos = MouseGrid.GridPos;
             if (_oldGridPos == _gridPos || PointerOnUI.Instance) return;
-            Drawing();
+            Erase(_gridPos.x, _gridPos.y);
             if (!_isDrawing) _isDrawing = true;
             _oldGridPos = _gridPos;
         }
 
-        private void Drawing()
-        {
-            // var dY = Mathf.Abs(_gridPos.y - _oldGridPos.y);
-            // var dX = Mathf.Abs(_gridPos.x - _oldGridPos.x);
-            // if (_isDrawing && (dX > 1 || dY > 1))
-            // {
-            //     DrawInterpolate(dX, dY);
-            // }
-            // else
-            // {
-            //     Draw(_gridPos.x, _gridPos.y);
-            // }
-            Erase(_gridPos.x, _gridPos.y);
-            
-            // if (_layerManager.CurrentLayerHolder.CanDraw(position)) return;
-            //
-            // var pixel = Instantiate(cellBase, _layerManager.CurrentLayerHolder.transform).GetComponent<Cell>();
-            // _layerManager.CurrentLayerHolder.AddPixel(pixel);
-            // pixel.transform.position = position;
-            // pixel.SetSprite(_layerManager.CurrentLayer.Sprite);
-        }
-
         private void Erase(float posX, float posY)
         {
-            var position = new Vector3(posX, posY, _layerManager.CurrentLayer.Order);
-            // if (!CanDraw(position)) return;
-            _layerManager.CurrentLayerHolder.NewCell(position);
+            var position = new Vector3(posX + 0.5f, posY + 0.5f, -1);
+            RaycastHit hit;
+
+            while (Physics.Raycast(position, Vector3.forward, out hit, 15f))
+            {
+                var cell = hit.transform.gameObject;
+                LayersManager.Instance.ReturnCell(cell);
+            }
         }
 
-        private bool CanErase(Vector3 position)
+        private bool CanErase(Vector3 position, out RaycastHit hit)
         {
             // Raycast version
             position.z -= 0.5f;
             position.x += 0.5f;
             position.y += 0.5f;
             // Debug.DrawRay(position, Vector3.forward, Color.red, 2f);
-            return Physics.Raycast(position, Vector3.forward, out var hit, 1f) == false;
+            return Physics.Raycast(position, Vector3.forward, out hit, 1f) == false;
 
             // List version
             // var pixels = _layerManager.CurrentLayerHolder.Pixels;

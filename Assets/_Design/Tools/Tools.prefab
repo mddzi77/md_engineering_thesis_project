@@ -334,6 +334,51 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!1 &4476797276400701738
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 103042431249171659}
+  - component: {fileID: 3442354023976006636}
+  m_Layer: 0
+  m_Name: BrushErase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &103042431249171659
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4476797276400701738}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.7381331, y: -0.2142806, z: 0.8000303}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5753840454053093876}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3442354023976006636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4476797276400701738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 205c34beb8b2465eb6ed362891a15d94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftMouse: {fileID: -4949743767066450138, guid: f60942dfd1d437340afd25034205eac3, type: 3}
 --- !u!1 &7116140785540452134
 GameObject:
   m_ObjectHideFlags: 0
@@ -418,6 +463,7 @@ Transform:
   - {fileID: 7898586373536706408}
   - {fileID: 1197394550040966590}
   - {fileID: 7216685058864160050}
+  - {fileID: 103042431249171659}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7143563123090335309
@@ -442,6 +488,8 @@ MonoBehaviour:
     tool: {fileID: 3550389538599853902}
   - config: {fileID: 11400000, guid: 0ee0692bf51d07f468e08aca88b7028c, type: 2}
     tool: {fileID: 2574532794790629185}
+  - config: {fileID: 11400000, guid: 1958b81f4b7dc488ba1f70eab309e97b, type: 2}
+    tool: {fileID: 3442354023976006636}
 --- !u!1 &7800769013120249515
 GameObject:
   m_ObjectHideFlags: 0
