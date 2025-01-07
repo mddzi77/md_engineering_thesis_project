@@ -37,7 +37,7 @@ namespace UI
         private new void Awake()
         {
             base.Awake();
-            _raycasters = FindObjectsOfType<GraphicRaycaster>();
+            _raycasters = FindObjectsByType<GraphicRaycaster>(FindObjectsSortMode.None);
         }
 
         public static implicit operator bool(PointerOnUI pointerOnUI)

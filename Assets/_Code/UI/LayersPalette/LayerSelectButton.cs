@@ -9,22 +9,37 @@ namespace UI.LayersPalette
     public class LayerSelectButton : MonoBehaviour
     {
         [SerializeField] private LayerConfig _layerConfig;
+        [SerializeField] private Image selectedImage;
 
         private Button _button;
         private Image _image;
 
-        private void Awake()
+        private void Start()
         {
+            LayersManager.LayerChanged += OnLayerChanged;
             _button = GetComponent<Button>();
             _button.onClick.AddListener(OnClick);
             _image = GetComponent<Image>();
             _image.sprite = _layerConfig.Sprite;
+            _image.color = _layerConfig.Color;
         }
 
         private void OnClick()
         {
             LayersManager.Instance.SetCurrentLayer(_layerConfig);
             Debug.Log($"Layer changed to {_layerConfig.LayerName}");
+        }
+        
+        private void OnLayerChanged(LayerConfig layerConfig)
+        {
+            if (layerConfig == _layerConfig)
+            {
+                selectedImage.enabled = true;
+            }
+            else
+            {
+                selectedImage.enabled = false;
+            }
         }
     }
 }
