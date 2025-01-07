@@ -49,7 +49,6 @@ namespace Tools.Drawing
             {
                 Draw(_gridPos.x, _gridPos.y);
             }
-            Draw(_gridPos.x, _gridPos.y);
             
             // if (_layerManager.CurrentLayerHolder.CanDraw(position)) return;
             //

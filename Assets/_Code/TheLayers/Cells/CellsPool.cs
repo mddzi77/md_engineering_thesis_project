@@ -59,6 +59,11 @@ namespace TheLayers.Cells
             }
             return pool.Dequeue();
         }
+
+        public static void ReturnCell(GameObject cell)
+        {
+            
+        }
         
         private void InstantiateCells(LayerConfig layerConfig)
         {

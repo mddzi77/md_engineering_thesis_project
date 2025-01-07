@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using MdUtils;
+using TheLayers.Cells;
 using TheLayers.Grid;
 using UnityEngine;
 
@@ -87,6 +88,24 @@ namespace TheLayers
             }
 
             return cells;
+        }
+
+        public void ReturnCells(List<GameObject> cells)
+        {
+            foreach (var cell in cells)
+            {
+                ReturnCell(cell);
+            }
+        }
+
+        public void ReturnCell(GameObject cell)
+        {
+            foreach (var layerConfig in layerConfigs)
+            {
+                
+                if (!layerConfig.LayerName.Equals(cell.tag)) continue;
+                // CellsPool;
+            }
         }
         
         private void CreateLayer(LayerConfig layerConfig)
