@@ -9,7 +9,8 @@ namespace UI
     [CreateAssetMenu(menuName = "Tools/Tool Config")]
     public class ToolConfig : ScriptableObject
     {
-        [SerializeField] private string toolName;
+        // [SerializeField] private string toolName;
+        [SerializeField] private string tooltip;
         [SerializeField] private Sprite icon;
         [SerializeField] private InputActionReference selectToolAction;
         [SerializeField] private bool isForEditing;
@@ -17,7 +18,8 @@ namespace UI
         [Indent, SerializeField] private Texture2D texture;
         [Indent, SerializeField] private Vector2 hotspot;
         
-        public string Name => toolName;
+        // public string Name => toolName;
+        public string Tooltip => tooltip;
         public Sprite Icon => icon;
         public Texture2D Cursor => texture;
         public Vector2 Hotspot => hotspot;

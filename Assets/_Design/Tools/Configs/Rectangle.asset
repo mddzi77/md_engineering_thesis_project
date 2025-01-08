@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Rectangle
   m_EditorClassIdentifier: 
   toolName: Rectangle
+  tooltip: R - Draw rectangle
   icon: {fileID: 21300000, guid: f807dd150a4b3b9449fe3070f8d72cd5, type: 3}
   selectToolAction: {fileID: 8870026407784090628, guid: f60942dfd1d437340afd25034205eac3, type: 3}
   isForEditing: 0

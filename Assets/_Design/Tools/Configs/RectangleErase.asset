@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: RectangleErase
   m_EditorClassIdentifier: 
   toolName: Rectangle Erase
+  tooltip: W - Rectangle eraser
   icon: {fileID: 21300000, guid: 144966ee9d7cfaf41ad4085b0d4bb81a, type: 3}
   selectToolAction: {fileID: -6484697423478219656, guid: f60942dfd1d437340afd25034205eac3, type: 3}
   isForEditing: 0

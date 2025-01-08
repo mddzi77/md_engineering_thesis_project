@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27e37d008e0447fbaf052bb6f01fb40e, type: 3}
   m_Name: Move
   m_EditorClassIdentifier: 
-  toolName: Move
+  tooltip: M - Move
   icon: {fileID: 21300000, guid: 941ff767532b1544dbf046ebf389172d, type: 3}
   selectToolAction: {fileID: 582862745325643702, guid: f60942dfd1d437340afd25034205eac3, type: 3}
   isForEditing: 1

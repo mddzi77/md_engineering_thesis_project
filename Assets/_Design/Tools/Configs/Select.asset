@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Select
   m_EditorClassIdentifier: 
   toolName: Select
+  tooltip: S - Select
   icon: {fileID: 21300000, guid: dfa072665b5b42d42abf2f4535af658e, type: 3}
   selectToolAction: {fileID: 6052576042955365560, guid: f60942dfd1d437340afd25034205eac3, type: 3}
   isForEditing: 0

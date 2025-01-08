@@ -10,6 +10,7 @@ namespace UI
     {
         [SerializeField] private ToolConfig toolConfig;
         [SerializeField] private Image icon;
+        [SerializeField] private Tooltip tooltip;
 
         private ToolsManager _toolsManager;
         private Button _button;
@@ -20,6 +21,7 @@ namespace UI
             _button = GetComponent<Button>();
             _button.onClick.AddListener(OnButtonClick);
             icon.sprite = toolConfig.Icon;
+            tooltip.SetText(toolConfig.Tooltip);
             toolConfig.SelectToolAction.performed += OnToolAction;
         }
         

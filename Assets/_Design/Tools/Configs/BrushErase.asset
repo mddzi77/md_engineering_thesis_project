@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27e37d008e0447fbaf052bb6f01fb40e, type: 3}
   m_Name: BrushErase
   m_EditorClassIdentifier: 
-  toolName: Brush Erase
+  tooltip: E - Eraser
   icon: {fileID: 21300000, guid: 975905951802c794090ca77ff5864d47, type: 3}
   selectToolAction: {fileID: 5542444796335182012, guid: f60942dfd1d437340afd25034205eac3, type: 3}
   isForEditing: 0
