@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: BrushErase
   m_EditorClassIdentifier: 
   toolName: Brush Erase
-  icon: {fileID: 0}
+  icon: {fileID: 8859225441076862958, guid: 975905951802c794090ca77ff5864d47, type: 3}
   selectToolAction: {fileID: 5542444796335182012, guid: f60942dfd1d437340afd25034205eac3, type: 3}
   isForEditing: 0
+  texture: {fileID: 2800000, guid: 596b781e7cd5e114e99e4c5fc619ddab, type: 3}
+  hotspot: {x: 2, y: 29}

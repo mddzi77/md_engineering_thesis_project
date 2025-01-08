@@ -1,6 +1,8 @@
 ﻿using MdUtils.InputCombos;
+using TriInspector;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 namespace UI
 {
@@ -11,9 +13,14 @@ namespace UI
         [SerializeField] private Sprite icon;
         [SerializeField] private InputActionReference selectToolAction;
         [SerializeField] private bool isForEditing;
+        [Title("Cursor")]
+        [Indent, SerializeField] private Texture2D texture;
+        [Indent, SerializeField] private Vector2 hotspot;
         
         public string Name => toolName;
         public Sprite Icon => icon;
+        public Texture2D Cursor => texture;
+        public Vector2 Hotspot => hotspot;
         public InputAction SelectToolAction => selectToolAction.action;
         public bool IsForEditing => isForEditing;
     }

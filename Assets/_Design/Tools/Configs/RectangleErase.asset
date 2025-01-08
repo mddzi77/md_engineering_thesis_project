@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: RectangleErase
   m_EditorClassIdentifier: 
   toolName: Rectangle Erase
-  icon: {fileID: 0}
+  icon: {fileID: -4245449671412997320, guid: 144966ee9d7cfaf41ad4085b0d4bb81a, type: 3}
   selectToolAction: {fileID: -6484697423478219656, guid: f60942dfd1d437340afd25034205eac3, type: 3}
   isForEditing: 0
+  texture: {fileID: 2800000, guid: 0d06155c0c0ae374f8bbde6ef3bb29de, type: 3}
+  hotspot: {x: 2, y: 29}

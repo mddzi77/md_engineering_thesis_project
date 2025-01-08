@@ -36,7 +36,8 @@ namespace Tools
                     {
                         selectContainer.ClearSelection();
                     }
-                    
+
+                    SetCursor(config);
                     _currentTool = tool;
                     _currentTool.tool.gameObject.SetActive(true);
                     _toolIsActive = true;
@@ -45,6 +46,11 @@ namespace Tools
                     return;
                 }
             }
+        }
+        
+        private void SetCursor(ToolConfig config)
+        {
+            Cursor.SetCursor(config.Cursor, config.Hotspot, CursorMode.Auto);
         }
 
         [Serializable]
