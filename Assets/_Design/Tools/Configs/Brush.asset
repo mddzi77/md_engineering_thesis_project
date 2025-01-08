@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Brush
   m_EditorClassIdentifier: 
   toolName: Brush
-  icon: {fileID: -7336805681979244506, guid: 67d68357a20a5a8449c11209a8674dae, type: 3}
+  icon: {fileID: 21300000, guid: 67d68357a20a5a8449c11209a8674dae, type: 3}
   selectToolAction: {fileID: -5392907269363895679, guid: f60942dfd1d437340afd25034205eac3, type: 3}
   isForEditing: 0
   texture: {fileID: 2800000, guid: 5cd0938dc4fe84f4eb7bcc9ce958af91, type: 3}

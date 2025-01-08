@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Move
   m_EditorClassIdentifier: 
   toolName: Move
-  icon: {fileID: -3527056022417232336, guid: 941ff767532b1544dbf046ebf389172d, type: 3}
+  icon: {fileID: 21300000, guid: 941ff767532b1544dbf046ebf389172d, type: 3}
   selectToolAction: {fileID: 582862745325643702, guid: f60942dfd1d437340afd25034205eac3, type: 3}
   isForEditing: 1
   texture: {fileID: 2800000, guid: e321810efd794f043b1d385d23df4d8b, type: 3}

@@ -9,6 +9,7 @@ namespace UI
     public class ToolSelectButton : MonoBehaviour
     {
         [SerializeField] private ToolConfig toolConfig;
+        [SerializeField] private Image icon;
 
         private ToolsManager _toolsManager;
         private Button _button;
@@ -18,6 +19,7 @@ namespace UI
             _toolsManager = ToolsManager.Instance;
             _button = GetComponent<Button>();
             _button.onClick.AddListener(OnButtonClick);
+            icon.sprite = toolConfig.Icon;
             toolConfig.SelectToolAction.performed += OnToolAction;
         }
         
