@@ -1,10 +1,8 @@
-﻿using MdUtils.InputCombos;
-using TriInspector;
+﻿using TriInspector;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
-namespace UI
+namespace Tools
 {
     [CreateAssetMenu(menuName = "Tools/Tool Config")]
     public class ToolConfig : ScriptableObject

@@ -1,10 +1,9 @@
 using System.Collections.Generic;
-using System.Linq;
 using TheLayers;
 using TriInspector;
 using UnityEngine;
 
-namespace UI.Left
+namespace UI.Right
 {
     public class LayersView : MonoBehaviour
     {

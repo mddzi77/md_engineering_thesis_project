@@ -1,10 +1,9 @@
-﻿using System;
-using Tools;
+﻿using Tools;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-namespace UI
+namespace UI.Left
 {
     public class ToolSelectButton : MonoBehaviour
     {

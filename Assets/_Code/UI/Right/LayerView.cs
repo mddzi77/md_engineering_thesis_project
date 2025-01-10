@@ -1,17 +1,17 @@
 using System;
 using TheLayers;
 using TMPro;
+using UI.LayersPalette;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.Left
+namespace UI.Right
 {
     public class LayerView : MonoBehaviour
     {
-        [SerializeField] private Image layerSprite;
+        [SerializeField] LayerSelectButton layerSelectButton;
         [SerializeField] private TextMeshProUGUI layerName;
-        [SerializeField] private Button visibilityButton;
-        [SerializeField] private TextMeshProUGUI visibilityText;
+        [SerializeField] private VisibilityButtonView visibilityButton;
         
         public event Action<LayerConfig, bool> OnVisibility;
 
@@ -20,14 +20,13 @@ namespace UI.Left
         
         private void Start()
         {
-            visibilityButton.onClick.AddListener(OnButtonClick);
+            visibilityButton.AddListener(OnButtonClick);
         }
         
         public void SetLayer(LayerConfig layerConfig)
         {
+            layerSelectButton.Init(layerConfig);
             _layerConfig = layerConfig;
-            layerSprite.sprite = layerConfig.Sprite;
-            layerSprite.color = layerConfig.Color;
             layerName.text = layerConfig.LayerName;
         }
         
@@ -35,12 +34,7 @@ namespace UI.Left
         {
             _isVisible = !_isVisible;
             OnVisibility?.Invoke(_layerConfig, _isVisible);
-            SetVisibilityButton();
-        }
-
-        private void SetVisibilityButton()
-        {
-            visibilityText.text = _isVisible ? "On" : "Off";
+            visibilityButton.ToggleIcon(_isVisible);
         }
     }
 }
