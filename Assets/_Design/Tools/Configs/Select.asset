@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27e37d008e0447fbaf052bb6f01fb40e, type: 3}
   m_Name: Select
   m_EditorClassIdentifier: 
-  toolName: Select
-  icon: {fileID: 0}
+  tooltip: S - Select
+  icon: {fileID: 21300000, guid: dfa072665b5b42d42abf2f4535af658e, type: 3}
   selectToolAction: {fileID: 6052576042955365560, guid: f60942dfd1d437340afd25034205eac3, type: 3}
   isForEditing: 0
+  texture: {fileID: 2800000, guid: 288a2d9bf1bf4354ab4207b8d828fea9, type: 3}
+  hotspot: {x: 2, y: 29}

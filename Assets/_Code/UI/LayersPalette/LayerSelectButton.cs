@@ -14,8 +14,9 @@ namespace UI.LayersPalette
         private Button _button;
         private Image _image;
 
-        private void Start()
+        public void Init(LayerConfig layerConfig)
         {
+            _layerConfig = layerConfig;
             LayersManager.LayerChanged += OnLayerChanged;
             _button = GetComponent<Button>();
             _button.onClick.AddListener(OnClick);
