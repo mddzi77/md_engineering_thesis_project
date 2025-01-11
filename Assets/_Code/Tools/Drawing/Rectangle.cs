@@ -201,8 +201,11 @@ namespace Tools.Drawing
             SetLayerOrder();
             OnToggle?.Invoke(true, this);
             _startPos = MouseGrid.GridPos;
-            layerSprite.sprite = _layerManager.CurrentLayer.Sprite;
-            layerSprite.color = _layerManager.CurrentLayer.Color;
+            // layerSprite.sprite = _layerManager.CurrentLayer.Sprite;
+            var newColor = _layerManager.CurrentLayer.Color;
+            newColor.a = 0.7f;
+            layerSprite.color = newColor;
+            layerSprite.enabled = true;
             _mode = modifierAction.action.IsPressed() ? Mode.Click : Mode.Drag;
         }
         
@@ -257,7 +260,8 @@ namespace Tools.Drawing
         {
             OnToggle?.Invoke(false, this);
             transform.localScale = Vector3.one;
-            layerSprite.sprite = null;
+            layerSprite.enabled = false;
+            // layerSprite.sprite = null;
             detectedObjects.Clear();
             _mode = Mode.None;
         }
