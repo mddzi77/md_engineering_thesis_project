@@ -137,6 +137,8 @@ namespace Tools.Drawing
         {
             DisableInput(); // prevent tool usage while drawing
             
+            _mode = Mode.None;
+            
             var startX = _startPos.x < _endPos.x ? (int) _startPos.x : (int) _endPos.x;
             var endX = _startPos.x > _endPos.x ? (int) _startPos.x : (int) _endPos.x;
             var startY = _startPos.y < _endPos.y ? (int) _startPos.y : (int) _endPos.y;
@@ -152,7 +154,7 @@ namespace Tools.Drawing
                     
                     DrawCell(position);
                     
-                    if (counter % 2000 == 0)
+                    if (counter % 500 == 0)
                     {
                         await UniTask.Yield();
                     }

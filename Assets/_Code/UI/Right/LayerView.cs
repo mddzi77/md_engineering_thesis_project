@@ -9,7 +9,7 @@ namespace UI.Right
 {
     public class LayerView : MonoBehaviour
     {
-        [SerializeField] LayerSelectButton layerSelectButton;
+        [SerializeField] private LayerSelectButton layerSelectButton;
         [SerializeField] private TextMeshProUGUI layerName;
         [SerializeField] private VisibilityButtonView visibilityButton;
         
