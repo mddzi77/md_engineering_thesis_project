@@ -8,6 +8,7 @@ namespace Tools
 {
     public class ToolsManager : MonoSingleton<ToolsManager>
     {
+        [SerializeField] private Texture2D workingCursor;
         [SerializeField] private SelectContainer selectContainer;
         [SerializeField] private ToolHolder[] tools;
         
@@ -15,6 +16,7 @@ namespace Tools
 
         private bool _toolIsActive;
         private ToolHolder _currentTool;
+        private bool _isWorking;
         
         public void SetCurrentTool(ToolConfig tool)
         {
@@ -23,6 +25,20 @@ namespace Tools
                 _currentTool.tool.gameObject.SetActive(false);
             }
             NewTool(tool);
+        }
+        
+        public void ToggleWorkingCursor(bool isWorking)
+        {
+            if (isWorking)
+            {
+                Cursor.SetCursor(workingCursor, Vector2.zero, CursorMode.Auto);
+                _isWorking = true;
+            }
+            else
+            {
+                _isWorking = false;
+                SetCursor(_currentTool.config);
+            }
         }
         
         private void NewTool(ToolConfig config)
@@ -50,6 +66,7 @@ namespace Tools
         
         private void SetCursor(ToolConfig config)
         {
+            if (_isWorking) return;
             Cursor.SetCursor(config.Cursor, config.Hotspot, CursorMode.Auto);
         }
 

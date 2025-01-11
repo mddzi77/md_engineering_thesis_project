@@ -136,7 +136,7 @@ namespace Tools.Drawing
         private async UniTask DrawingCoroutine()
         {
             DisableInput(); // prevent tool usage while drawing
-            
+            ToolsManager.Instance.ToggleWorkingCursor(true);
             _mode = Mode.None;
             
             var startX = _startPos.x < _endPos.x ? (int) _startPos.x : (int) _endPos.x;
@@ -169,6 +169,7 @@ namespace Tools.Drawing
             
             await UniTask.Yield();
             
+            ToolsManager.Instance.ToggleWorkingCursor(false);
             EnableInput();
             ResetTool();
         }

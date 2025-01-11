@@ -158,6 +158,8 @@ namespace Tools.Editing
         private async UniTaskVoid Selecting()
         {
             DisableInput();
+            ToolsManager.Instance.ToggleWorkingCursor(true);
+            _mode = Mode.None;
             
             if (addSelection.action.IsPressed())
                 selectContainer.AddSelectedObjects(detectedObjects);
@@ -167,6 +169,7 @@ namespace Tools.Editing
                 selectContainer.SetSelectedObjects(detectedObjects);
             
             await UniTask.Yield();
+            ToolsManager.Instance.ToggleWorkingCursor(false);
             EnableInput();
         }
 

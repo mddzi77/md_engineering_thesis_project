@@ -113,11 +113,14 @@ namespace Tools.Editing
         private async UniTask ErasingCoroutine()
         {
             DisableInput(); // prevent tool usage while drawing
+            ToolsManager.Instance.ToggleWorkingCursor(true);
+            _mode = Mode.None;
             
             LayersManager.Instance.ReturnCells(detectedObjects);
             
             await UniTask.Yield();
             
+            ToolsManager.Instance.ToggleWorkingCursor(false);
             EnableInput();
             ResetTool();
         }

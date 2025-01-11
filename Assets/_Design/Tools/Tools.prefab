@@ -634,6 +634,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e661e015ef95a740af492c76a80f0d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  workingCursor: {fileID: 2800000, guid: f263dda4ca1b28b47bb2da70a60cb828, type: 3}
   selectContainer: {fileID: 2605627508055892648}
   tools:
   - config: {fileID: 11400000, guid: 15c21d7e0e5fd8a4f9d572f853736698, type: 2}
