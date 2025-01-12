@@ -103,7 +103,7 @@ namespace TheLayers
             foreach (var layerConfig in layerConfigs)
             {
                 if (!layerConfig.LayerName.Equals(cell.tag)) continue;
-                CellsPool.ReturnCell(layerConfig, cell);
+                _layerHolders[layerConfig].ReturnCell(cell);
             }
         }
         
