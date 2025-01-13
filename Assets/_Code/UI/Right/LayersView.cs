@@ -25,7 +25,7 @@ namespace UI.Right
             var layerConfigs = _layersManager.LayerConfigs;
             foreach (var layerConfig in layerConfigs)
             {
-                if (layerConfig.LayerName.Equals("Contacts")) continue;
+                if (layerConfig.LayerName.Equals("Contact")) continue;
                 var layerView = Instantiate(layerViewPrefab, transform).GetComponent<LayerView>();
                 layerView.SetLayer(layerConfig);
                 layerView.OnVisibility += OnVisibility;
