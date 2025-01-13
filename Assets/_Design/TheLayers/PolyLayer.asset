@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: PolyLayer
   m_EditorClassIdentifier: 
   layerName: Poly Crystal
-  order: 4
+  order: 5
   sprite: {fileID: 1008206152, guid: fa3146e65d9604a46a26caaef3901df8, type: 3}
-  color: {r: 0.83137256, g: 0.33502993, b: 0.12941177, a: 1}
+  color: {r: 0.8584906, g: 0.5215235, b: 0.24701849, a: 1}
   rules:
     minimumWidth: 1
     minimumSpacing: 3
+  poolSize: 10000

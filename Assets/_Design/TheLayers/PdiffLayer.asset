@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: PdiffLayer
   m_EditorClassIdentifier: 
   layerName: P Diffusion
-  order: 5
+  order: 6
   sprite: {fileID: 21300000, guid: b23bb1bbbacbbec41804a241d621d29f, type: 3}
-  color: {r: 0.8584906, g: 0.8154827, b: 0.10933607, a: 1}
+  color: {r: 0.8301887, g: 0.80335087, b: 0.36418653, a: 1}
   rules:
     minimumWidth: 1
     minimumSpacing: 5
+  poolSize: 10000

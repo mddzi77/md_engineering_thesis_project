@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Contact
   m_EditorClassIdentifier: 
   layerName: Contact
-  order: 0
+  order: 1
   sprite: {fileID: 21300000, guid: 5b7e8ccc18dce4b4eb453963c7b7a2ad, type: 3}
   color: {r: 0.10980393, g: 0.10980393, b: 0.10980393, a: 1}
   rules:
     minimumWidth: 1
     minimumSpacing: 5
+  poolSize: 10

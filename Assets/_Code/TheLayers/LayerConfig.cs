@@ -13,11 +13,13 @@ namespace TheLayers
         [SerializeField] private Sprite sprite;
         [SerializeField] private Color color;
         [SerializeField] private LayerRules rules;
+        [SerializeField] private int poolSize = 40000;
 
         public string LayerName => layerName;
         public int Order => order;
         public Sprite Sprite => sprite;
         public Color Color => color;
         public LayerRules Rules => rules;
+        public int PoolSize => poolSize;
     }
 }
