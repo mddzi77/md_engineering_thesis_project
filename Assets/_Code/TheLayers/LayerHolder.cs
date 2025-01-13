@@ -44,6 +44,13 @@ namespace TheLayers
             // }
         }
         
+        public void NewCell(GameObject cell)
+        {
+            cell.transform.parent = transform;
+            cell.SetActive(true);
+            _cells.Add(cell);
+        }
+        
         public async UniTask NewCellAsync(Vector3 position)
         {
             var intPosition = new Vector2Int((int)position.x, (int)position.y);

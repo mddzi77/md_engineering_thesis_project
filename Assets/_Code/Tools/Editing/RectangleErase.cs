@@ -17,6 +17,7 @@ namespace Tools.Editing
         [SerializeField] private InputActionReference modifierAction;
         [SerializeField] private SpriteRenderer toolSprite;
         [SerializeField] private BoxCollider detector;
+        [SerializeField] private string tooltip;
         [ReadOnly]
         [SerializeField] private List<GameObject> detectedObjects;
 
@@ -41,11 +42,13 @@ namespace Tools.Editing
 
         private void OnEnable()
         {
+            ShowTooltip(tooltip);
             EnableInput();
         }
 
         private void OnDisable()
         {
+            HideTooltip();
             DisableInput();
             ResetTool();
         }
@@ -164,9 +167,7 @@ namespace Tools.Editing
         {
             _endPos = MouseGrid.GridPos;
             DragUpdate();
-            // await UniTask.WaitForSeconds(0.4f);
             ErasingCoroutine().Forget();
-            // Draw();
         }
         
         private void ModifyBounds(float deltaX, float deltaY)

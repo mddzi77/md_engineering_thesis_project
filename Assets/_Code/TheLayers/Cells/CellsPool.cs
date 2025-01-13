@@ -99,6 +99,7 @@ namespace TheLayers.Cells
             };
             cell.SetActive(false);
             cell.tag = layerConfig.LayerName;
+            cell.layer = LayerMask.NameToLayer("Tile");
                 
             var spriteRenderer = cell.AddComponent<SpriteRenderer>();
             spriteRenderer.sprite = layerConfig.Sprite;

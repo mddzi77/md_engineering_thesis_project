@@ -23,6 +23,7 @@ namespace Tools.Drawing
         [SerializeField] private InputActionReference modifierAction;
         [SerializeField] private SpriteRenderer layerSprite;
         [SerializeField] private BoxCollider detector;
+        [SerializeField] private string tooltip;
         [ReadOnly]
         [SerializeField] private List<GameObject> detectedObjects;
 
@@ -46,11 +47,13 @@ namespace Tools.Drawing
 
         private void OnEnable()
         {
+            ShowTooltip(tooltip);
             EnableInput();
         }
 
         private void OnDisable()
         {
+            HideTooltip();
             DisableInput();
             ResetTool();
         }

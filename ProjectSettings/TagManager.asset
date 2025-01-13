@@ -10,6 +10,7 @@ TagManager:
   - N Diffusion
   - Poly Crystal
   - Poly Crystal 2
+  - Contact
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - UI
   - Outline
   - Tile
-  - 
+  - Contact
   - 
   - 
   - 
