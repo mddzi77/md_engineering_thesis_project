@@ -7,6 +7,7 @@ namespace Game.Checker
     {
         [SerializeField] private BoxCollider detector;
         [SerializeField] private DesignRuleChecker designRuleChecker;
+        [SerializeField] private TopographyValidator topographyValidator;
         
         private LayersManager _layersManager;
 
@@ -24,6 +25,12 @@ namespace Game.Checker
         public void CheckDesignRules()
         {
             designRuleChecker.StartCheck();
+        }
+        
+        [ContextMenu("Check Topography")]
+        public void CheckTopography()
+        {
+            topographyValidator.StartValidation().Forget();
         }
     }
 }

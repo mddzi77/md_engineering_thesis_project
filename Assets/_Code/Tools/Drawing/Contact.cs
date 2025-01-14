@@ -175,8 +175,8 @@ namespace Tools.Drawing
             sprite.size = new Vector2(SizeX, SizeY);
             
             var bounds = contact.GetComponent<BoxCollider>();
-            bounds.center = new Vector3((float)SizeX / 2, (float)SizeY / 2, 0);
-            bounds.size = new Vector3(SizeX, SizeY, 0.1f);
+            bounds.center = new Vector3((float)SizeX / 2, (float)SizeY / 2, 5);
+            bounds.size = new Vector3(SizeX, SizeY, 10);
             
             _layerHolder.NewCell(contact);
         }

@@ -1,0 +1,9 @@
+{
+  "NM": {
+    "drain": "vdd",
+    "source": "vss",
+    "gate": null,
+    "W": 5,
+    "H": 3
+  }
+}

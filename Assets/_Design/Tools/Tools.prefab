@@ -698,7 +698,7 @@ MonoBehaviour:
   selectContainer: {fileID: 2605627508055892648}
   escAction: {fileID: 7864503897216875086, guid: f60942dfd1d437340afd25034205eac3, type: 3}
   defaultCursor: {fileID: 2800000, guid: e8ede9ac6ab064545936441dbb200245, type: 3}
-  defaultHotspot: {x: 6, y: 30}
+  defaultHotspot: {x: 6, y: 1}
   tools:
   - config: {fileID: 11400000, guid: 15c21d7e0e5fd8a4f9d572f853736698, type: 2}
     tool: {fileID: 3337193285866088843}

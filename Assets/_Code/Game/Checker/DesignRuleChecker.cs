@@ -1,10 +1,12 @@
+using System;
 using System.Collections.Generic;
 using TheLayers;
 using UnityEngine;
 
 namespace Game.Checker
 {
-    public class DesignRuleChecker : MonoBehaviour
+    [Serializable]
+    public class DesignRuleChecker
     {
         private Dictionary<LayerConfig, LayerHolder> _layerHolders;
         
