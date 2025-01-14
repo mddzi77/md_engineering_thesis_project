@@ -15,7 +15,9 @@ namespace Game.Checker
     {
         [SerializeField] private LayerConfig polyLayer;
         [SerializeField] private List<LayerConfig> layerConfigs;
+        
         public bool IsSearching { get; private set; }
+        public event Action<List<NTransistor>, List<PTransistor>> ValidationCompleted;
         
         private NodeLabel _vddLabel;
         private NodeLabel _vssLabel;
@@ -56,6 +58,7 @@ namespace Game.Checker
 
             await FindTransistors();
             await StartSearch(startingLayer);
+            ValidationCompleted?.Invoke(_nTransistors, _pTransistors);
         }
 
         public void Restore()
@@ -120,8 +123,62 @@ namespace Game.Checker
             {
                 StartContactSearch(vddNode.Contacts[i], vddNode);
             }
+
+            for (int i = 0; i < vddNode.PTransistors.Count; i++)
+            {
+                NewNode(vddNode.PTransistors[i], "P Diffusion");
+            }
+            
+            for (int i = 0; i < vddNode.NTransistors.Count; i++)
+            {
+                NewNode(vddNode.NTransistors[i], "N Diffusion");
+            }
         }
-        
+
+        private void NewNode(Transistor transistor, string tag)
+        {
+            var node = new Node(_lastId++.ToString());
+            _nodes.Add(node);
+            if (transistor.Pin1 == null) return;
+            transistor.SetPin2(node);
+            var collider = transistor.Collider;
+            var center = collider.bounds.center;
+            var size = collider.bounds.size;
+            transistor.Object.SetActive(false);
+            size.x /= 2;
+            size.y /= 2;
+            size.z /= 2;
+            var overlaps = Physics.OverlapBox(center, size);
+            Collider overlap = null;
+            foreach (var col in overlaps)
+            {
+                if (col.gameObject.CompareTag(tag))
+                {
+                    overlap = col;
+                    break;
+                }
+            }
+            var position = overlap.transform.position;
+            node.Cells.Add(overlap.gameObject);
+            overlap.gameObject.SetActive(false);
+            SearchByOverlap(position, node);
+            _nodes.Add(node);
+            for (int i = 0; i < node.Contacts.Count; i++)
+            {
+                StartContactSearch(node.Contacts[i], node);
+            }
+
+            for (int i = 0; i < node.PTransistors.Count; i++)
+            {
+                NewNode(node.PTransistors[i], "P Diffusion");
+            }
+            
+            for (int i = 0; i < node.NTransistors.Count; i++)
+            {
+                NewNode(node.NTransistors[i], "N Diffusion");
+            }
+        }
+
         private void StartContactSearch(GameObject contact, Node node)
         {
             contact.SetActive(true);

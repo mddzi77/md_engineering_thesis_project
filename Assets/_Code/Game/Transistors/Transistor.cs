@@ -25,6 +25,9 @@ namespace Game.Transistors
         public float Top;
         public float Bottom;
         
+        public float Width { get; private set; }
+        public float Length { get; private set; }
+        
         protected string Tag;  
         
         public async UniTask FindRest()
@@ -131,6 +134,8 @@ namespace Game.Transistors
                     Pin1Origin = Bottom;
                     Pin2Origin = Top;
                 }
+                Length = Top - Bottom + 1;
+                Width = Right - Left + 1;
             }
             else if (origin.y > Bottom && origin.y < Top)
             {
@@ -144,6 +149,8 @@ namespace Game.Transistors
                     Pin1Origin = Left;
                     Pin2Origin = Right;
                 }
+                Length = Right - Left + 1;
+                Width = Top - Bottom + 1;
             }
             Pin1 = node;
         }
@@ -172,6 +179,11 @@ namespace Game.Transistors
                     Pin2Origin = Left;
                 }
             }
+            Pin2 = node;
+        }
+
+        public void SetPin2(Node node)
+        {
             Pin2 = node;
         }
 

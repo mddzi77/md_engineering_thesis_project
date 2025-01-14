@@ -5,5 +5,12 @@
     "gate": null,
     "W": 5,
     "H": 3
+  },
+  "PM": {
+    "pin1": "vdd",
+    "pin2": "vss",
+    "gate": null,
+    "W": 5,
+    "H": 3
   }
 }
