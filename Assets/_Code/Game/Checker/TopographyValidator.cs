@@ -4,9 +4,7 @@ using Cysharp.Threading.Tasks;
 using Game.Transistors;
 using TheLayers;
 using Tools.NodeLabel;
-using UnityEditor.Searcher;
 using UnityEngine;
-using Object = System.Object;
 
 namespace Game.Checker
 {
