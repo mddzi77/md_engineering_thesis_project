@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27e37d008e0447fbaf052bb6f01fb40e, type: 3}
+  m_Name: VddLabel
+  m_EditorClassIdentifier: 
+  tooltip: D - Vdd label
+  icon: {fileID: 21300000, guid: d30ee47307c58d440a69f743c38b9119, type: 3}
+  selectToolAction: {fileID: 6657948679733400780, guid: f60942dfd1d437340afd25034205eac3, type: 3}
+  isForEditing: 0
+  texture: {fileID: 2800000, guid: 5c0f1a391bd077444910a701cd628745, type: 3}
+  hotspot: {x: 16, y: 15}

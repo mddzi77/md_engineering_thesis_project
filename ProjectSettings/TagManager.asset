@@ -11,6 +11,7 @@ TagManager:
   - Poly Crystal
   - Poly Crystal 2
   - Contact
+  - Label
   layers:
   - Default
   - TransparentFX

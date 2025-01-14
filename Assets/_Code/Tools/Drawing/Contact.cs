@@ -234,7 +234,7 @@ namespace Tools.Drawing
             
             var size = Physics.RaycastNonAlloc(position, Vector3.forward, results, 10);
             if (size == 2) return true;
-            InfoPanel.Instance.SetErrorText("Contact must be drawn on two overlapping layers", 2.5f);
+            InfoPanel.Instance.SetErrorText("Contact must be drawn on two overlapping layers", 1f);
             return false;
 
         }
