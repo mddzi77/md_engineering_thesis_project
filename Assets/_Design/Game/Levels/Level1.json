@@ -1,7 +1,7 @@
 {
   "NM": {
-    "drain": "vdd",
-    "source": "vss",
+    "pin1": "vdd",
+    "pin2": "vss",
     "gate": null,
     "W": 5,
     "H": 3

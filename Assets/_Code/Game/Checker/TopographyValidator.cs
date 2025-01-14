@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Game.Transistors;
 using TheLayers;
 using Tools.NodeLabel;
 using UnityEditor.Searcher;
 using UnityEngine;
+using Object = System.Object;
 
 namespace Game.Checker
 {
@@ -19,8 +21,9 @@ namespace Game.Checker
         private NodeLabel _vssLabel;
         private List<Node> _nodes = new();
         private List<PTransistor> _pTransistors = new();
-        // private List<>
-        private Vector3 _overlapSize = new Vector3(0.5f, 0.5f, 1f);
+        private List<NTransistor> _nTransistors = new();
+        private Vector3 _overlapSize = new Vector3(0.5f, 0.5f, 0.1f);
+        private int _lastId = 0;
         
         public async UniTaskVoid StartValidation()
         {
@@ -37,9 +40,32 @@ namespace Game.Checker
                 }
             }
             
+            var start = _vddLabel.transform.position;
+            start.x += 0.5f;
+            start.y += 0.5f;
+            Physics.Raycast(start, Vector3.forward, out var hit, 3);
+            LayerConfig startingLayer = null;
+            foreach (var config in layerConfigs)
+            {
+                if (config.LayerName.Equals(hit.transform.tag))
+                {
+                    startingLayer = config;
+                    break;
+                }
+            }
 
             await FindTransistors();
-            // StartSearch().Forget();
+            await StartSearch(startingLayer);
+        }
+
+        public void Restore()
+        {
+            foreach (var transistor in _nTransistors)
+                transistor.Restore();
+            foreach (var transistor in _pTransistors)
+                transistor.Restore();
+            foreach (var node in _nodes)
+                node.Restore();
         }
 
         private async UniTask FindTransistors()
@@ -62,144 +88,148 @@ namespace Game.Checker
                     {
                         var pTransistor = new PTransistor(poly, overlap.gameObject); 
                         await pTransistor.FindRest();
+                        pTransistor.CreateCollider().Forget();
                         usedPolys.AddRange(pTransistor.Polys);
+                        _pTransistors.Add(pTransistor);
                     }
                     else if (overlap.gameObject.CompareTag("N Diffusion"))
                     {
-                        
+                        var nTransistor = new NTransistor(poly, overlap.gameObject);
+                        await nTransistor.FindRest();
+                        nTransistor.CreateCollider().Forget();
+                        usedPolys.AddRange(nTransistor.Polys);
+                        _nTransistors.Add(nTransistor);
                     }
                 }
             }
+            
+            await UniTask.Yield();
+            await UniTask.Yield();
         }
 
-        private async UniTaskVoid StartSearch(LayerConfig startingLayer)
+        private async UniTask StartSearch(LayerConfig startingLayer)
         {
             IsSearching = true;
-            var vddNode = new Node();
+            var vddNode = new Node("vdd");
             var start = _vddLabel.transform.position;
-            start.x += 0.5f;
-            start.y += 0.5f;
-            List<UniTask> tasks = new();
+            start.z = startingLayer.Order;
 
-            tasks.Add(SearchByOverlap(start, vddNode));
-            
-            await UniTask.WhenAll(tasks);
-        }
-
-        private async UniTask SearchByOverlap(Vector3 start, Node node)
-        {
-            var position = start;
-            var overlaps = Physics.OverlapBox(position, _overlapSize);
-        }
-
-        private class Node
-        {
-            public List<GameObject> Cells = new();
-            public List<GameObject> Contacts = new();
-            
-            public Node(){}
-        }
-
-        private class PTransistor : Transistor
-        {
-            public PTransistor(GameObject firstPoly, GameObject firstPDiff)
+            await SearchByOverlap(start, vddNode);
+            _nodes.Add(vddNode);
+            for (int i = 0; i < vddNode.Contacts.Count; i++)
             {
-                Object = new GameObject("PTransistor");
-                Tag = "P Diffusion";
-                Object.transform.position = firstPoly.transform.position;
-                Diffs.Add(firstPDiff);
-                Polys.Add(firstPoly);
+                StartContactSearch(vddNode.Contacts[i], vddNode);
             }
         }
-
-        private class NTransistor : Transistor
+        
+        private void StartContactSearch(GameObject contact, Node node)
         {
-            public NTransistor(GameObject firstPoly, GameObject firstNDiff)
-            {
-                Object = new GameObject("NTransistor");
-                Tag = "N Diffusion";
-                Object.transform.position = firstPoly.transform.position;
-                Diffs.Add(firstNDiff);
-                Polys.Add(firstPoly);
-            }
+            contact.SetActive(true);
+            var collider = contact.GetComponent<BoxCollider>();
+            var center = collider.bounds.center;
+            var size = collider.bounds.size;
+            contact.SetActive(false);
+            size.x = size.x / 2 - 0.1f;
+            size.y = size.y / 2 - 0.1f;
+            size.z = size.z / 2 - 0.1f;
+            
+            var overlaps = Physics.OverlapBox(center, size);
+            var position = overlaps[0].transform.position;
+            node.Cells.Add(overlaps[0].gameObject);
+            overlaps[0].gameObject.SetActive(false);
+            SearchByOverlap(position, node);
         }
 
-        private class Transistor
+        private async UniTask SearchByOverlap(Vector3 center, Node node)
         {
-            public List<GameObject> Diffs = new();
-            public List<GameObject> Polys = new();
-            public BoxCollider Collider;
-            public GameObject Object;
-
-            public float Left;
-            public float Right;
-            public float Top;
-            public float Bottom;
-            
-            protected string Tag;  
-            
-            public async UniTask FindRest()
+            center.x += 0.5f;
+            center.y += 0.5f;
+            var overlaps = Physics.OverlapBox(center, _overlapSize);
+            foreach (var overlap in overlaps)
             {
-                var position = Object.transform.position;
-                position.x += 0.5f;
-                position.y += 0.5f;
-                position.z += 0.5f;
-                FindNeighbours(position);
-                await UniTask.CompletedTask;
-            }
-            
-            public async UniTaskVoid CreateCollider()
-            {
-                foreach (var poly in Polys)
+                if (CheckForVss(overlap.transform.position)) node.ChangeID("vss");
+                if (overlap.gameObject.CompareTag("Contact"))
                 {
-                    
+                    if (node.Contacts.Contains(overlap.gameObject)) continue;
+                    node.Contacts.Add(overlap.gameObject);
+                    overlap.gameObject.SetActive(false);
+                }
+                else if (overlap.gameObject.CompareTag("P Transistor"))
+                {
+                    var pTransistor = FindPTransistor(overlap.gameObject);
+                    if (node.PTransistors.Contains(pTransistor)) continue;
+                    ConnectTransistor(node, pTransistor, overlap.transform.position);
+                }
+                else if (overlap.gameObject.CompareTag("N Transistor"))
+                {
+                    var nTransistor = FindNTransistor(overlap.gameObject);
+                    if (node.NTransistors.Contains(nTransistor)) continue;
+                    ConnectTransistor(node, nTransistor, overlap.transform.position);
+                }
+                else
+                {
+                    var position = overlap.transform.position;
+                    node.Cells.Add(overlap.gameObject);
+                    overlap.gameObject.SetActive(false);
+                    await SearchByOverlap(position, node);
                 }
             }
-            
-            private void FindNeighbours(Vector3 position)
+        }
+        
+        private PTransistor FindPTransistor(GameObject transistorObject)
+        {
+            foreach (var transistor in _pTransistors)
             {
-                var left = new Vector3(position.x - 1, position.y, position.z);
-                var right = new Vector3(position.x + 1, position.y, position.z);
-                var up = new Vector3(position.x, position.y + 1, position.z);
-                var down = new Vector3(position.x, position.y - 1, position.z);
-                
-                CheckOverlap(left);
-                CheckOverlap(right);
-                CheckOverlap(up);
-                CheckOverlap(down);
-            }
-
-            private void CheckOverlap(Vector3 center)
-            {
-                var leftOverlaps = Physics.OverlapBox(center, new Vector3(0.45f, 0.45f, 0.55f));
-                if (leftOverlaps.Length > 1)
+                if (transistor.Object.Equals(transistorObject))
                 {
-                    bool foundPoly = false;
-                    GameObject poly = null;
-                    bool foundDiff = false;
-                    GameObject diff = null;
-                    foreach (var overlap in leftOverlaps)
-                    {
-                        if (overlap.gameObject.CompareTag("Poly Crystal"))
-                        {
-                            if (Polys.Contains(overlap.gameObject)) continue;
-                            foundPoly = true;
-                            poly = overlap.gameObject;
-                        }
-                        else if (overlap.gameObject.CompareTag(Tag))
-                        {
-                            if (Diffs.Contains(overlap.gameObject)) continue;
-                            foundDiff = true;
-                            diff = overlap.gameObject;
-                        }
-                    }
-
-                    if (!foundPoly || !foundDiff) return;
-                    Polys.Add(poly);
-                    Diffs.Add(diff);
-                    FindNeighbours(center);
+                    return transistor;
                 }
             }
+
+            return null;
+        }
+        
+        private NTransistor FindNTransistor(GameObject transistorObject)
+        {
+            foreach (var transistor in _nTransistors)
+            {
+                if (transistor.Object.Equals(transistorObject))
+                {
+                    return transistor;
+                }
+            }
+
+            return null;
+        }
+        
+        private void ConnectTransistor(Node node, PTransistor pTransistor, Vector3 position)
+        {
+            node.PTransistors.Add(pTransistor);
+            ConnectPin(node, pTransistor, position);
+        }
+        
+        private void ConnectTransistor(Node node, NTransistor nTransistor, Vector3 position)
+        {
+            node.NTransistors.Add(nTransistor);
+            ConnectPin(node, nTransistor, position);
+        }
+
+        private void ConnectPin(Node node, Transistor transistor, Vector3 position)
+        {
+            if (transistor.Pin1 == null)
+            {
+                transistor.SetPin1(node, position);
+            }
+            else if (transistor.Pin2 == null)
+            {
+                transistor.SetPin2(node, position);
+            }
+        }
+
+        private bool CheckForVss(Vector3 position)
+        {
+            return Mathf.Approximately(position.x, _vssLabel.transform.position.x) &&
+                   Mathf.Approximately(position.y, _vssLabel.transform.position.y);
         }
     }
 }

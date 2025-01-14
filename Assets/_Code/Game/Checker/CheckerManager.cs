@@ -1,11 +1,11 @@
+using MdUtils;
 using TheLayers;
 using UnityEngine;
 
 namespace Game.Checker
 {
-    public class CheckerManager : MonoBehaviour
+    public class CheckerManager : MonoSingleton<CheckerManager>
     {
-        [SerializeField] private BoxCollider detector;
         [SerializeField] private DesignRuleChecker designRuleChecker;
         [SerializeField] private TopographyValidator topographyValidator;
         
@@ -14,11 +14,6 @@ namespace Game.Checker
         private void Start()
         {
             _layersManager = LayersManager.Instance;
-        }
-        
-        private void OnTriggerEnter(Collider other)
-        {
-            
         }
         
         [ContextMenu("Check Design Rules")]
@@ -31,6 +26,19 @@ namespace Game.Checker
         public void CheckTopography()
         {
             topographyValidator.StartValidation().Forget();
+        }
+        
+        [ContextMenu("Check All")]
+        public void CheckAll()
+        {
+            CheckDesignRules();
+            CheckTopography();
+        }
+        
+        [ContextMenu("Restore")]
+        public void Restore()
+        {
+            topographyValidator.Restore();
         }
     }
 }

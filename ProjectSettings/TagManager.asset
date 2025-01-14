@@ -12,6 +12,8 @@ TagManager:
   - Poly Crystal 2
   - Contact
   - Label
+  - P Transistor
+  - N Transistor
   layers:
   - Default
   - TransparentFX

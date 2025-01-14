@@ -64,6 +64,7 @@ namespace Tools.Drawing
 
         private void OnTriggerEnter(Collider other)
         {
+            if (_mode == Mode.None) return;
             InfoPanel.Instance.SetErrorText("Can't overlap with other contacts");
             detectedObjects.Add(other.gameObject);
         }
