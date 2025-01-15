@@ -197,13 +197,13 @@ namespace Tools.Editing
                 }
             }
             
-            var result = await LayersManager.Instance.GetCellsAsync(positions);
-            if (addSelection.action.IsPressed())
-                selectContainer.AddSelectedObjects(result);
-            else if (removeSelection.action.IsPressed())
-                selectContainer.RemoveSelectedObjects(result);
-            else
-                selectContainer.SetSelectedObjects(result);
+            // var result = await LayersManager.Instance.GetAllCellsAsync(positions);
+            // if (addSelection.action.IsPressed())
+            //     selectContainer.AddSelectedObjects(result);
+            // else if (removeSelection.action.IsPressed())
+            //     selectContainer.RemoveSelectedObjects(result);
+            // else
+            //     selectContainer.SetSelectedObjects(result);
 
             // Debug.Log($"{(endX - startX + 1) * (endY - startY + 1)} cells drawn");
             await UniTask.Yield();
