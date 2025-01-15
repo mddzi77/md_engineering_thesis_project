@@ -15,7 +15,7 @@ namespace TheLayers
         private readonly List<GameObject> _cells = new();
         private LayerGrid _layerGrid;
 
-        public void Init(LayerConfig layerConfig, LayerGrid layerGrid, GameObject cellBase)
+        public void Init(LayerConfig layerConfig, LayerGrid layerGrid)
         {
             _layerConfig = layerConfig;
             _layerGrid = layerGrid;
