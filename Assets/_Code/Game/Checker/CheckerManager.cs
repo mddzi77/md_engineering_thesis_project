@@ -50,6 +50,12 @@ namespace Game.Checker
         {
             topographyValidator.ValidationCompleted -= OnValidationCompleted;
 
+            if (nTransistors.Count == 0 && pTransistors.Count == 0)
+            {
+                Restore();
+                return;
+            }
+
             foreach (var levelData in levelFile.LevelDatas)
             {
                 if (levelData.type == ComponentType.PTransistor)

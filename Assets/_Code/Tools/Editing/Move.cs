@@ -74,11 +74,6 @@ namespace Tools.Editing
             
             SizeX = (int) (gridPosition.x - _dragOrigin.x);
             SizeY = (int) (gridPosition.y - _dragOrigin.y);
-            // var movement = _dragOrigin - gridPosition;
-            // SizeX = (int) movement.x;
-            // SizeY = (int) movement.y;
-            // var newPos = _startPos - new Vector3(movement.x, movement.y, 0);
-            // transform.position = newPos;
         }
         
         private bool IsOnSelected(out RaycastHit hit)

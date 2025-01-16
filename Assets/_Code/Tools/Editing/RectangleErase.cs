@@ -128,12 +128,6 @@ namespace Tools.Editing
             ResetTool();
         }
         
-        private void DrawPixel(Vector3 position)
-        {
-            if (!CanDraw(position)) return;
-            _layerManager.CurrentLayerHolder.NewCell(position);
-        }
-        
         private void OnLeftMouse(InputAction.CallbackContext context)
         {
             if (PointerOnUI.Instance) return;

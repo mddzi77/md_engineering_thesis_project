@@ -89,6 +89,7 @@ namespace Tools
                 _currentTool.tool.gameObject.SetActive(false);
             }
             Cursor.SetCursor(defaultCursor, defaultHotspot, CursorMode.Auto);
+            selectContainer.ClearSelection();
         }
 
         [Serializable]

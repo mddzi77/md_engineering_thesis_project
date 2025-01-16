@@ -54,7 +54,8 @@ MonoBehaviour:
   removeSelection: {fileID: 3854831391525438236, guid: f60942dfd1d437340afd25034205eac3, type: 3}
   detector: {fileID: 474258120109101996}
   selectContainer: {fileID: 2605627508055892648}
-  tooltip: Shift - Select by selecting opposite corners
+  tooltip: Shift - Select by selecting opposite corners, Ctrl - Add selection, Alt
+    - Usuwanie zaznaczenia
   detectedObjects: []
 --- !u!212 &4981388790990384233
 SpriteRenderer:

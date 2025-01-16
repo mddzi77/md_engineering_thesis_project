@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceae51648ff38fc45a1d1ec9bc2ec968, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelFile: {fileID: 4900000, guid: c2570587d0b148469b5ff38ae60f1643, type: 3}
+  levelFile: {fileID: 11400000, guid: 05652008a3c6ed54ab6a3a43ddab9739, type: 2}
   topographyValidator:
     polyLayer: {fileID: 11400000, guid: d381a13066c1b4d41b9a7631b666b28d, type: 2}
     layerConfigs:

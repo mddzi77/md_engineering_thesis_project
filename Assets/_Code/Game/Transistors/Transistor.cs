@@ -99,13 +99,11 @@ namespace Game.Transistors
                 {
                     if (overlap.gameObject.CompareTag("Poly Crystal"))
                     {
-                        // if (Polys.Contains(overlap.gameObject)) continue;
                         foundPoly = true;
                         poly = overlap.gameObject;
                     }
                     else if (overlap.gameObject.CompareTag(Tag))
                     {
-                        // if (Diffs.Contains(overlap.gameObject)) continue;
                         foundDiff = true;
                         diff = overlap.gameObject;
                     }
@@ -120,7 +118,8 @@ namespace Game.Transistors
             }
         }
         
-        public void SetPin1(Node node, Vector3 origin)
+        public void 
+            SetPin1(Node node, Vector3 origin)
         {
             if (origin.x > Left && origin.x < Right)
             {
