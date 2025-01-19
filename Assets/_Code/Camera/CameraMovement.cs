@@ -19,6 +19,7 @@ namespace MainCamera
         private Camera _mainCamera;
         private bool _isDragging;
         private Vector3 _dragOrigin;
+        private static bool _enabled = true;
 
         private void Awake()
         {
@@ -36,8 +37,19 @@ namespace MainCamera
             _mainCamera.transform.position += move;
         }
         
+        public static void Enable()
+        {
+            _enabled = true;
+        }
+        
+        public static void Disable()
+        {
+            _enabled = false;
+        }
+        
         private void OnMiddleMouseDown(InputAction.CallbackContext ctx)
         {
+            if (!_enabled) return;
             _isDragging = true;
             _dragOrigin = _mainCamera.ScreenToWorldPoint(mousePosition.action.ReadValue<Vector2>());
         }
@@ -49,6 +61,7 @@ namespace MainCamera
 
         private void OnScroll(InputAction.CallbackContext ctx)
         {
+            if (!_enabled) return;
             var scrollValue = ctx.ReadValue<Vector2>().y;
             float scrollMultiplier = 1f;
             if (scrollValue > 0) scrollMultiplier = 1 / scrollSpeed;
