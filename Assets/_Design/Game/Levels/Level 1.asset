@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ad76dde72a5e48b2949eb9e5427c969f, type: 3}
-  m_Name: Level1
+  m_Name: Level 1
   m_EditorClassIdentifier: 
-  levelDatas:
+  components:
   - type: 0
     pin1: vdd
     pin2: vss

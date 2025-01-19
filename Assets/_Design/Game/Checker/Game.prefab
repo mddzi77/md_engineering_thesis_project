@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6466400274029021390}
   - component: {fileID: 3305336092492736130}
+  - component: {fileID: 1115748055000403234}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -44,7 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceae51648ff38fc45a1d1ec9bc2ec968, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelFile: {fileID: 11400000, guid: 05652008a3c6ed54ab6a3a43ddab9739, type: 2}
   topographyValidator:
     polyLayer: {fileID: 11400000, guid: d381a13066c1b4d41b9a7631b666b28d, type: 2}
     layerConfigs:
@@ -55,3 +55,20 @@ MonoBehaviour:
     - {fileID: 11400000, guid: d381a13066c1b4d41b9a7631b666b28d, type: 2}
     - {fileID: 11400000, guid: b83830cffa4284b4bbb27a3d2f5a50e8, type: 2}
     - {fileID: 11400000, guid: 2565c61bdbc065143bbdfdc68eaab44b, type: 2}
+--- !u!114 &1115748055000403234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37871331904479711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ade9c86924948868cbcdc6f3586e779, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkManager: {fileID: 3305336092492736130}
+  levels:
+  - {fileID: 11400000, guid: 05652008a3c6ed54ab6a3a43ddab9739, type: 2}
+  - {fileID: 11400000, guid: 60e93e6409ca0a34d97a18a30fe8040e, type: 2}
+  - {fileID: 11400000, guid: da3de4c72276dd449befbf5c1881bb68, type: 2}

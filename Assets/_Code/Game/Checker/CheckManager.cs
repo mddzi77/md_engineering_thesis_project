@@ -7,17 +7,22 @@ using UnityEngine;
 
 namespace Game.Checker
 {
-    public class CheckerManager : MonoSingleton<CheckerManager>
+    public class CheckManager : MonoBehaviour
     {
-        [SerializeField] private Level levelFile;
         [SerializeField] private DesignRuleChecker designRuleChecker;
         [SerializeField] private TopographyValidator topographyValidator;
         
+        private LevelData _levelDataFile;
         private LayersManager _layersManager;
 
         private void Start()
         {
             _layersManager = LayersManager.Instance;
+        }
+        
+        public void SetLevel(LevelData levelData)
+        {
+            _levelDataFile = levelData;
         }
         
         [ContextMenu("Check Design Rules")]
@@ -56,18 +61,18 @@ namespace Game.Checker
                 return;
             }
 
-            foreach (var levelData in levelFile.LevelDatas)
+            foreach (var component in _levelDataFile.Components)
             {
-                if (levelData.type == ComponentType.PTransistor)
+                if (component.type == ComponentType.PTransistor)
                 {
                     for (int i = 0; i < pTransistors.Count; i++)
                     {
                         var transistor = pTransistors[i];
                         if (
-                            ((levelData.pin1.Equals(transistor.Pin1.ID) && levelData.pin2.Equals(transistor.Pin2.ID)) ||
-                             (levelData.pin1.Equals(transistor.Pin2.ID) &&
-                              levelData.pin2.Equals(transistor.Pin1.ID))) &&
-                            levelData.W == (int)transistor.Width && levelData.L == (int)transistor.Length
+                            ((component.pin1.Equals(transistor.Pin1.ID) && component.pin2.Equals(transistor.Pin2.ID)) ||
+                             (component.pin1.Equals(transistor.Pin2.ID) &&
+                              component.pin2.Equals(transistor.Pin1.ID))) &&
+                            component.W == (int)transistor.Width && component.L == (int)transistor.Length
                         )
                         {
                             pTransistors.RemoveAt(i);
@@ -80,10 +85,10 @@ namespace Game.Checker
                     {
                         var transistor = nTransistors[i];
                         if (
-                            ((levelData.pin1.Equals(transistor.Pin1.ID) && levelData.pin2.Equals(transistor.Pin2.ID)) ||
-                             (levelData.pin1.Equals(transistor.Pin2.ID) &&
-                              levelData.pin2.Equals(transistor.Pin1.ID))) &&
-                            levelData.W == (int)transistor.Width && levelData.L == (int)transistor.Length
+                            ((component.pin1.Equals(transistor.Pin1.ID) && component.pin2.Equals(transistor.Pin2.ID)) ||
+                             (component.pin1.Equals(transistor.Pin2.ID) &&
+                              component.pin2.Equals(transistor.Pin1.ID))) &&
+                            component.W == (int)transistor.Width && component.L == (int)transistor.Length
                         )
                         {
                             nTransistors.RemoveAt(i);

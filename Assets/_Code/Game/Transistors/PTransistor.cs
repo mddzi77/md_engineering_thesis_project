@@ -10,7 +10,7 @@ namespace Game.Transistors
             Object = new GameObject("PTransistor");
             Object.tag = "P Transistor";
             Object.transform.position = firstPoly.transform.position;
-            Object.transform.parent = CheckerManager.Instance.transform;
+            Object.transform.parent = GameManager.Instance.transform;
             Tag = "P Diffusion";
             Diffs.Add(firstPDiff);
             Polys.Add(firstPoly);

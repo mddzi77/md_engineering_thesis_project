@@ -10,7 +10,7 @@ public NTransistor(GameObject firstPoly, GameObject firstNDiff)
             Object = new GameObject("NTransistor");
             Object.tag = "N Transistor";
             Object.transform.position = firstPoly.transform.position;
-            Object.transform.parent = CheckerManager.Instance.transform;
+            Object.transform.parent = GameManager.Instance.transform;
             Tag = "N Diffusion";
             Diffs.Add(firstNDiff);
             Polys.Add(firstPoly);

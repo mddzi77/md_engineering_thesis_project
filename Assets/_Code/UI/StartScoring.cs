@@ -1,3 +1,4 @@
+using Game;
 using Game.Checker;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,7 +16,7 @@ namespace UI
 
         private void Score()
         {
-            CheckerManager.Instance.CheckTopography();
+            GameManager.Instance.StartCheck();
         }
     }
 }
