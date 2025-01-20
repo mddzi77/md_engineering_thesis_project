@@ -78,12 +78,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   layerConfigs:
-  - {fileID: 11400000, guid: dad3ac571ff3437448f6a94eea19b0b8, type: 2}
   - {fileID: 11400000, guid: f2817da4a614a4f5fbf6af815ab7fb3b, type: 2}
+  - {fileID: 11400000, guid: dad3ac571ff3437448f6a94eea19b0b8, type: 2}
+  - {fileID: 11400000, guid: d381a13066c1b4d41b9a7631b666b28d, type: 2}
   - {fileID: 11400000, guid: 019ac252b0b7345419148e265465456f, type: 2}
   - {fileID: 11400000, guid: 028d33dbd74fd436d8deea4ba99a24fc, type: 2}
-  - {fileID: 11400000, guid: dd3f701b78e8a449a8a27fedfdae0db2, type: 2}
-  - {fileID: 11400000, guid: d381a13066c1b4d41b9a7631b666b28d, type: 2}
+  - {fileID: 11400000, guid: 2565c61bdbc065143bbdfdc68eaab44b, type: 2}
+  - {fileID: 11400000, guid: b83830cffa4284b4bbb27a3d2f5a50e8, type: 2}
   cellBase: {fileID: 0}
 --- !u!114 &7509040051964518046
 MonoBehaviour:
@@ -99,7 +100,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layersManager: {fileID: 4385701404723726290}
   poolParent: {fileID: 3158227880308931540}
-  poolSize: 40000
   instantiatePerFrame: 2
   material: {fileID: 2100000, guid: 8fd3aa8cae2602e49b89e536d6733baf, type: 2}
   tileMask:

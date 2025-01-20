@@ -23,6 +23,7 @@ namespace Tools.Drawing
         [SerializeField] private InputActionReference modifierAction;
         [SerializeField] private SpriteRenderer layerSprite;
         [SerializeField] private BoxCollider detector;
+        [SerializeField] private string tooltip;
         [ReadOnly]
         [SerializeField] private List<GameObject> detectedObjects;
 
@@ -46,11 +47,13 @@ namespace Tools.Drawing
 
         private void OnEnable()
         {
+            ShowTooltip(tooltip);
             EnableInput();
         }
 
         private void OnDisable()
         {
+            HideTooltip();
             DisableInput();
             ResetTool();
         }
@@ -136,6 +139,8 @@ namespace Tools.Drawing
         private async UniTask DrawingCoroutine()
         {
             DisableInput(); // prevent tool usage while drawing
+            ToolsManager.Instance.ToggleWorkingCursor(true);
+            _mode = Mode.None;
             
             var startX = _startPos.x < _endPos.x ? (int) _startPos.x : (int) _endPos.x;
             var endX = _startPos.x > _endPos.x ? (int) _startPos.x : (int) _endPos.x;
@@ -152,7 +157,7 @@ namespace Tools.Drawing
                     
                     DrawCell(position);
                     
-                    if (counter % 2000 == 0)
+                    if (counter % 500 == 0)
                     {
                         await UniTask.Yield();
                     }
@@ -167,6 +172,7 @@ namespace Tools.Drawing
             
             await UniTask.Yield();
             
+            ToolsManager.Instance.ToggleWorkingCursor(false);
             EnableInput();
             ResetTool();
         }
@@ -199,8 +205,11 @@ namespace Tools.Drawing
             SetLayerOrder();
             OnToggle?.Invoke(true, this);
             _startPos = MouseGrid.GridPos;
-            layerSprite.sprite = _layerManager.CurrentLayer.Sprite;
-            layerSprite.color = _layerManager.CurrentLayer.Color;
+            // layerSprite.sprite = _layerManager.CurrentLayer.Sprite;
+            var newColor = _layerManager.CurrentLayer.Color;
+            newColor.a = 0.7f;
+            layerSprite.color = newColor;
+            layerSprite.enabled = true;
             _mode = modifierAction.action.IsPressed() ? Mode.Click : Mode.Drag;
         }
         
@@ -255,7 +264,8 @@ namespace Tools.Drawing
         {
             OnToggle?.Invoke(false, this);
             transform.localScale = Vector3.one;
-            layerSprite.sprite = null;
+            layerSprite.enabled = false;
+            // layerSprite.sprite = null;
             detectedObjects.Clear();
             _mode = Mode.None;
         }

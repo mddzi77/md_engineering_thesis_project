@@ -11,7 +11,6 @@ namespace TheLayers
     public class LayersManager: MonoSingleton<LayersManager>
     {
         [SerializeField] private LayerConfig[] layerConfigs;
-        [SerializeField] GameObject cellBase;
         
         public LayerConfig[] LayerConfigs => layerConfigs;
         public Dictionary<LayerConfig, LayerHolder> LayerHolders => _layerHolders;
@@ -103,7 +102,15 @@ namespace TheLayers
             foreach (var layerConfig in layerConfigs)
             {
                 if (!layerConfig.LayerName.Equals(cell.tag)) continue;
-                CellsPool.ReturnCell(layerConfig, cell);
+                _layerHolders[layerConfig].ReturnCell(cell);
+            }
+        }
+        
+        public void ReturnAllCells()
+        {
+            foreach (var layerConfig in layerConfigs)
+            {
+                ReturnCells(_layerHolders[layerConfig].Cells);
             }
         }
         
@@ -112,7 +119,7 @@ namespace TheLayers
             var layer = new GameObject(layerConfig.LayerName);
             var holder = layer.AddComponent<LayerHolder>();
             var layerGrid = layer.AddComponent<LayerGrid>();
-            holder.Init(layerConfig, layerGrid, cellBase);
+            holder.Init(layerConfig, layerGrid);
             layer.transform.SetParent(transform);
             _layerHolders.Add(layerConfig, holder);
         }

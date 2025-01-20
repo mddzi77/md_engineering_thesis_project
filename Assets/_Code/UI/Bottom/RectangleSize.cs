@@ -9,6 +9,8 @@ namespace UI.Bottom
     public class RectangleSize : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI text;
+        [SerializeField] private string unit = "um";
+        [SerializeField] private float unityMultiplier = 0.3f;
 
         private IRectangleWithSize _currentRectTool;
         private bool _enabled;
@@ -28,7 +30,9 @@ namespace UI.Bottom
         private void FixedUpdate()
         {
             if (!_enabled) return;
-            text.text = $"[{_currentRectTool.SizeX} ; {_currentRectTool.SizeY}]";
+            var sizeX = _currentRectTool.SizeX;
+            var sizeY = _currentRectTool.SizeY;
+            text.text = $"[{sizeX} ({sizeX*unityMultiplier} {unit}) ; {sizeY} ({sizeY*unityMultiplier} {unit})]";
         }
         
         private void Toggle(bool isWorking, IRectangleWithSize rectangleTool)

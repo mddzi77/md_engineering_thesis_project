@@ -9,6 +9,7 @@ namespace Tools.Editing
     public class BrushErase : ToolAbstract
     {
         [SerializeField] private InputActionReference leftMouse;
+        [SerializeField] private LayerMask layerMask;
 
         private LayersManager _layerManager;
         private Vector2 _gridPos;
@@ -41,7 +42,7 @@ namespace Tools.Editing
             var position = new Vector3(posX + 0.5f, posY + 0.5f, -1);
             RaycastHit hit;
 
-            while (Physics.Raycast(position, Vector3.forward, out hit, 15f))
+            while (Physics.Raycast(position, Vector3.forward, out hit, 15f, layerMask))
             {
                 var cell = hit.transform.gameObject;
                 LayersManager.Instance.ReturnCell(cell);
@@ -55,7 +56,7 @@ namespace Tools.Editing
             position.x += 0.5f;
             position.y += 0.5f;
             // Debug.DrawRay(position, Vector3.forward, Color.red, 2f);
-            return Physics.Raycast(position, Vector3.forward, out hit, 1f) == false;
+            return Physics.Raycast(position, Vector3.forward, out hit, 1f, layerMask) == false;
 
             // List version
             // var pixels = _layerManager.CurrentLayerHolder.Pixels;

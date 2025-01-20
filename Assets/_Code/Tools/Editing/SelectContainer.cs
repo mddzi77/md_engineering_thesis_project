@@ -69,7 +69,7 @@ namespace Tools.Editing
             HasSelection = false;
             foreach (var selected in selectedObjects)
             {
-                selected.layer = 0;
+                selected.layer = LayerMask.NameToLayer("Tile");
                 var sprite = selected.GetComponent<SpriteRenderer>();
                 var color = sprite.color;
                 color.a = .95f;

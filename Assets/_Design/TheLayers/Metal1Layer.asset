@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: Metal1Layer
   m_EditorClassIdentifier: 
   layerName: Metal 1
-  order: 1
-  sprite: {fileID: 21300000, guid: b23bb1bbbacbbec41804a241d621d29f, type: 3}
-  color: {r: 0.1021271, g: 0.1021271, b: 0.8018868, a: 1}
+  order: 3
+  sprite: {fileID: -406782692, guid: fa3146e65d9604a46a26caaef3901df8, type: 3}
+  color: {r: 0.28826985, g: 0.43645748, b: 0.7735849, a: 1}
+  rules:
+    minimumWidth: 3
+    minimumSpacing: 3
+  poolSize: 40000

@@ -76,6 +76,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e20bad391f584c38a4876862768984c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layersWithoutView:
+  - {fileID: 11400000, guid: 2565c61bdbc065143bbdfdc68eaab44b, type: 2}
+  - {fileID: 11400000, guid: b83830cffa4284b4bbb27a3d2f5a50e8, type: 2}
   layerViewPrefab: {fileID: 5601882505764203088, guid: bd7991feb0fa377488ca4ba459b24d58, type: 3}
 --- !u!1001 &1884533109326640107
 PrefabInstance:

@@ -36,7 +36,7 @@
                     "name": "MiddleMouse",
                     "type": "Button",
                     "id": "66ca4d35-27b3-42e7-8fe7-0e6c36944984",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -139,6 +139,42 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Contact",
+                    "type": "Button",
+                    "id": "fa5b05b5-bd51-4090-9d09-88bb1c5882d4",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Esc",
+                    "type": "Button",
+                    "id": "f7ce9a0d-8413-4832-993b-a47c644904d3",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Vdd",
+                    "type": "Button",
+                    "id": "d235d011-a3ea-4b7e-8468-60acd8358c53",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Vss",
+                    "type": "Button",
+                    "id": "77606093-4fc5-46d1-a07e-2ecf07b8f071",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -179,6 +215,17 @@
                     "name": "",
                     "id": "dda02d69-b115-455f-8999-96807663461e",
                     "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MiddleMouse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cd8325a8-23be-403a-8963-ca5650f6bb01",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -304,6 +351,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "RectangleErase",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ef33aacf-482a-4c01-ba54-3fcd79b17135",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Contact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7b9aaea1-4af1-4741-96cf-2ef7ea82c41b",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Esc",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cc30ca7f-1866-405b-82b1-c5e1b7e9dff8",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Vdd",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "091e1e6b-4aa2-43d6-8986-6fca395e19fd",
+                    "path": "<Keyboard>/g",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Vss",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

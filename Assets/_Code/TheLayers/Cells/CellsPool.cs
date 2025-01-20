@@ -9,7 +9,6 @@ namespace TheLayers.Cells
     {
         [SerializeField] private LayersManager layersManager;
         [SerializeField] private Transform poolParent;
-        [SerializeField] private int poolSize;
         [SerializeField] private int instantiatePerFrame;
         [SerializeField] private Material material;
         [SerializeField] private LayerMask tileMask;
@@ -27,7 +26,7 @@ namespace TheLayers.Cells
                 _pools.Add(new PoolData
                 {
                     layerConfig = config,
-                    pool = new Queue<GameObject>(poolSize)
+                    pool = new Queue<GameObject>(config.PoolSize)
                 });
             }
         }
@@ -72,7 +71,7 @@ namespace TheLayers.Cells
         {
             for (var i = 0; i < instantiatePerFrame; i++)
             {
-                if (_pools[_poolIndex].pool.Count >= poolSize) return;
+                if (_pools[_poolIndex].pool.Count >= layerConfig.PoolSize) return;
                 var cell = InstantiateCell(layerConfig);
                 _pools[_poolIndex].pool.Enqueue(cell);
             }
@@ -99,6 +98,7 @@ namespace TheLayers.Cells
             };
             cell.SetActive(false);
             cell.tag = layerConfig.LayerName;
+            cell.layer = LayerMask.NameToLayer("Tile");
                 
             var spriteRenderer = cell.AddComponent<SpriteRenderer>();
             spriteRenderer.sprite = layerConfig.Sprite;

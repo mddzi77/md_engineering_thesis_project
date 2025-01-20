@@ -17,6 +17,7 @@ namespace Tools.Editing
         [SerializeField] private InputActionReference modifierAction;
         [SerializeField] private SpriteRenderer toolSprite;
         [SerializeField] private BoxCollider detector;
+        [SerializeField] private string tooltip;
         [ReadOnly]
         [SerializeField] private List<GameObject> detectedObjects;
 
@@ -41,11 +42,13 @@ namespace Tools.Editing
 
         private void OnEnable()
         {
+            ShowTooltip(tooltip);
             EnableInput();
         }
 
         private void OnDisable()
         {
+            HideTooltip();
             DisableInput();
             ResetTool();
         }
@@ -113,19 +116,16 @@ namespace Tools.Editing
         private async UniTask ErasingCoroutine()
         {
             DisableInput(); // prevent tool usage while drawing
+            ToolsManager.Instance.ToggleWorkingCursor(true);
+            _mode = Mode.None;
             
             LayersManager.Instance.ReturnCells(detectedObjects);
             
             await UniTask.Yield();
             
+            ToolsManager.Instance.ToggleWorkingCursor(false);
             EnableInput();
             ResetTool();
-        }
-        
-        private void DrawPixel(Vector3 position)
-        {
-            if (!CanDraw(position)) return;
-            _layerManager.CurrentLayerHolder.NewCell(position);
         }
         
         private void OnLeftMouse(InputAction.CallbackContext context)
@@ -161,9 +161,7 @@ namespace Tools.Editing
         {
             _endPos = MouseGrid.GridPos;
             DragUpdate();
-            // await UniTask.WaitForSeconds(0.4f);
             ErasingCoroutine().Forget();
-            // Draw();
         }
         
         private void ModifyBounds(float deltaX, float deltaY)

@@ -7,6 +7,7 @@ namespace UI.Right
 {
     public class LayersView : MonoBehaviour
     {
+        [SerializeField] private List<LayerConfig> layersWithoutView;
         [AssetsOnly]
         [SerializeField] private GameObject layerViewPrefab;
         
@@ -25,6 +26,7 @@ namespace UI.Right
             var layerConfigs = _layersManager.LayerConfigs;
             foreach (var layerConfig in layerConfigs)
             {
+                if (layersWithoutView.Contains(layerConfig)) continue;
                 var layerView = Instantiate(layerViewPrefab, transform).GetComponent<LayerView>();
                 layerView.SetLayer(layerConfig);
                 layerView.OnVisibility += OnVisibility;

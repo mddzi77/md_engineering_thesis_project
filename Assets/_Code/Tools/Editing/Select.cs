@@ -20,6 +20,7 @@ namespace Tools.Editing
         [SerializeField] private InputActionReference removeSelection;
         [SerializeField] private BoxCollider detector;
         [SerializeField] private SelectContainer selectContainer;
+        [SerializeField] private string tooltip;
         [ReadOnly]
         [SerializeField] private List<GameObject> detectedObjects;
 
@@ -44,11 +45,13 @@ namespace Tools.Editing
 
         private void OnEnable()
         {
+            ShowTooltip(tooltip);
             EnableInput();
         }
 
         private void OnDisable()
         {
+            HideTooltip();
             DisableInput();
             ResetTool();
         }
@@ -158,6 +161,8 @@ namespace Tools.Editing
         private async UniTaskVoid Selecting()
         {
             DisableInput();
+            ToolsManager.Instance.ToggleWorkingCursor(true);
+            _mode = Mode.None;
             
             if (addSelection.action.IsPressed())
                 selectContainer.AddSelectedObjects(detectedObjects);
@@ -167,6 +172,7 @@ namespace Tools.Editing
                 selectContainer.SetSelectedObjects(detectedObjects);
             
             await UniTask.Yield();
+            ToolsManager.Instance.ToggleWorkingCursor(false);
             EnableInput();
         }
 
@@ -191,13 +197,13 @@ namespace Tools.Editing
                 }
             }
             
-            var result = await LayersManager.Instance.GetCellsAsync(positions);
-            if (addSelection.action.IsPressed())
-                selectContainer.AddSelectedObjects(result);
-            else if (removeSelection.action.IsPressed())
-                selectContainer.RemoveSelectedObjects(result);
-            else
-                selectContainer.SetSelectedObjects(result);
+            // var result = await LayersManager.Instance.GetAllCellsAsync(positions);
+            // if (addSelection.action.IsPressed())
+            //     selectContainer.AddSelectedObjects(result);
+            // else if (removeSelection.action.IsPressed())
+            //     selectContainer.RemoveSelectedObjects(result);
+            // else
+            //     selectContainer.SetSelectedObjects(result);
 
             // Debug.Log($"{(endX - startX + 1) * (endY - startY + 1)} cells drawn");
             await UniTask.Yield();
