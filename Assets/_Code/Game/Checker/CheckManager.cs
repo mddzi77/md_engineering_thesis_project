@@ -35,6 +35,7 @@ namespace Game.Checker
         public void CheckTopography()
         {
             topographyValidator.ValidationCompleted += OnValidationCompleted;
+            topographyValidator.ValidationStopped += OnValidationStopped;
             topographyValidator.StartValidation().Forget();
         }
         
@@ -51,13 +52,25 @@ namespace Game.Checker
             topographyValidator.Restore();
         }
         
+        private void OnValidationStopped()
+        {
+            topographyValidator.ValidationStopped -= OnValidationStopped;
+            topographyValidator.ValidationCompleted -= OnValidationCompleted;
+            Restore();
+            ScoreWindow.Instance.SetScoreText("There should both Vdd and Vss nodes!", false);
+        }
+        
         private void OnValidationCompleted(List<NTransistor> nTransistors, List<PTransistor> pTransistors)
         {
             topographyValidator.ValidationCompleted -= OnValidationCompleted;
+            topographyValidator.ValidationStopped -= OnValidationStopped;
+            var pTrans = new List<PTransistor>(pTransistors);
+            var nTrans = new List<NTransistor>(nTransistors);
 
-            if (nTransistors.Count == 0 && pTransistors.Count == 0)
+            if (nTrans.Count == 0 && pTrans.Count == 0)
             {
                 Restore();
+                ScoreWindow.Instance.SetScoreText("None transistors were found!", false);
                 return;
             }
 
@@ -65,9 +78,9 @@ namespace Game.Checker
             {
                 if (component.type == ComponentType.PTransistor)
                 {
-                    for (int i = 0; i < pTransistors.Count; i++)
+                    for (int i = 0; i < pTrans.Count; i++)
                     {
-                        var transistor = pTransistors[i];
+                        var transistor = pTrans[i];
                         if (
                             ((component.pin1.Equals(transistor.Pin1.ID) && component.pin2.Equals(transistor.Pin2.ID)) ||
                              (component.pin1.Equals(transistor.Pin2.ID) &&
@@ -75,15 +88,15 @@ namespace Game.Checker
                             component.W == (int)transistor.Width && component.L == (int)transistor.Length
                         )
                         {
-                            pTransistors.RemoveAt(i);
+                            pTrans.RemoveAt(i);
                         }
                     }
                 }
                 else
                 {
-                    for (int i = 0; i < nTransistors.Count; i++)
+                    for (int i = 0; i < nTrans.Count; i++)
                     {
-                        var transistor = nTransistors[i];
+                        var transistor = nTrans[i];
                         if (
                             ((component.pin1.Equals(transistor.Pin1.ID) && component.pin2.Equals(transistor.Pin2.ID)) ||
                              (component.pin1.Equals(transistor.Pin2.ID) &&
@@ -91,22 +104,23 @@ namespace Game.Checker
                             component.W == (int)transistor.Width && component.L == (int)transistor.Length
                         )
                         {
-                            nTransistors.RemoveAt(i);
+                            nTrans.RemoveAt(i);
                         }
                     }
                 }
             }
             
-            if (nTransistors.Count == 0 && pTransistors.Count == 0)
+            var correct = nTrans.Count == 0 && pTrans.Count == 0;
+            Restore();
+            
+            if (correct)
             {
-                ScoreWindow.Instance.SetScoreText("All components are placed correctly!");
+                ScoreWindow.Instance.SetScoreText("All components are placed correctly!", true);
             }
             else
             {
-                ScoreWindow.Instance.SetScoreText("Some components are not placed correctly!");
+                ScoreWindow.Instance.SetScoreText("Some components are not placed correctly!", false);
             }
-            
-            Restore();
         }
     }
 }

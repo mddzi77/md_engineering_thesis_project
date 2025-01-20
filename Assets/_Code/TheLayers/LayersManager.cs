@@ -106,6 +106,14 @@ namespace TheLayers
             }
         }
         
+        public void ReturnAllCells()
+        {
+            foreach (var layerConfig in layerConfigs)
+            {
+                ReturnCells(_layerHolders[layerConfig].Cells);
+            }
+        }
+        
         private void CreateLayer(LayerConfig layerConfig)
         {
             var layer = new GameObject(layerConfig.LayerName);

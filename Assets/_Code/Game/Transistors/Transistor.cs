@@ -118,10 +118,9 @@ namespace Game.Transistors
             }
         }
         
-        public void 
-            SetPin1(Node node, Vector3 origin)
+        public void  SetPin1(Node node, Vector3 origin)
         {
-            if (origin.x > Left && origin.x < Right)
+            if (origin.x > Left && origin.x < (Right + 1))
             {
                 if (origin.y > Top)
                 {
@@ -136,7 +135,7 @@ namespace Game.Transistors
                 Length = Top - Bottom + 1;
                 Width = Right - Left + 1;
             }
-            else if (origin.y > Bottom && origin.y < Top)
+            else if (origin.y > Bottom && origin.y < (Top + 1))
             {
                 if (origin.x > Right)
                 {

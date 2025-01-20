@@ -50,6 +50,11 @@ namespace Tools.NodeLabel
             if (CheckForMetal(start))
             {
                 if (_nodeLabel == null) CreateLabel();
+                if (!_nodeLabel.gameObject.activeInHierarchy)
+                {
+                    _nodeLabel.gameObject.SetActive(true);
+                    SetDynamicLabel();
+                }
 
                 var position = _nodeLabel.transform.position;
                 position.x = posX;
@@ -70,6 +75,11 @@ namespace Tools.NodeLabel
             _nodeLabel.SetType(nodeLabelType);
             _layerHolder.NewCell(label);
             
+            SetDynamicLabel();
+        }
+        
+        private void SetDynamicLabel()
+        {
             var dynamicLabel = Instantiate(dynamicLabelPrefab, DynamicCanvas.Instance.transform);
             dynamicLabel.GetComponent<DynamicCanvasElement>().SetWorldSpaceElement(_nodeLabel.transform);
         }

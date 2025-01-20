@@ -16,6 +16,7 @@ namespace Game.Checker
         
         public bool IsSearching { get; private set; }
         public event Action<List<NTransistor>, List<PTransistor>> ValidationCompleted;
+        public event Action ValidationStopped;
         
         private NodeLabel _vddLabel;
         private NodeLabel _vssLabel;
@@ -27,7 +28,12 @@ namespace Game.Checker
         
         public async UniTaskVoid StartValidation()
         {
-            var labels = GameObject.FindObjectsByType<NodeLabel>(FindObjectsSortMode.None);
+            var labels = GameObject.FindObjectsByType<NodeLabel>(FindObjectsInactive.Exclude , FindObjectsSortMode.None);
+            if (labels.Length == 0)
+            {
+                ValidationStopped?.Invoke();
+                return;
+            }
             foreach (var label in labels)
             {
                 if (label.Type == NodeLabelType.Vdd)
@@ -67,6 +73,11 @@ namespace Game.Checker
                 transistor.Restore();
             foreach (var node in _nodes)
                 node.Restore();
+            
+            _nTransistors.Clear();
+            _pTransistors.Clear();
+            _nodes.Clear();
+            _lastId = 0;
         }
 
         private async UniTask FindTransistors()
@@ -213,13 +224,13 @@ namespace Game.Checker
                 {
                     var pTransistor = FindPTransistor(overlap.gameObject);
                     if (node.PTransistors.Contains(pTransistor)) continue;
-                    ConnectTransistor(node, pTransistor, overlap.transform.position);
+                    ConnectTransistor(node, pTransistor, center);
                 }
                 else if (overlap.gameObject.CompareTag("N Transistor"))
                 {
                     var nTransistor = FindNTransistor(overlap.gameObject);
                     if (node.NTransistors.Contains(nTransistor)) continue;
-                    ConnectTransistor(node, nTransistor, overlap.transform.position);
+                    ConnectTransistor(node, nTransistor, center);
                 }
                 else
                 {

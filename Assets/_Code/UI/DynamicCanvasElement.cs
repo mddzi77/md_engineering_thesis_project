@@ -16,6 +16,11 @@ namespace UI
 
         private void Update()
         {
+            if (_worldSpaceElement.gameObject.activeInHierarchy == false)
+            {
+                Destroy(gameObject);
+                return;
+            }
             var position = _worldSpaceElement.position;
             position.x += 0.8f;
             position.y += 0.8f;

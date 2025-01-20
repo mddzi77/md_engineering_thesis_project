@@ -22,11 +22,11 @@ namespace Game
         private int _currentLevelIndex;
         private int _unlockedLevelIndex;
         
-        private void Start()
+        private new void Awake()
         {
+            base.Awake();
             _currentLevelIndex = PlayerPrefs.GetInt("current_level", 0);
             _unlockedLevelIndex = PlayerPrefs.GetInt("unlocked_level", 0);
-            checkManager.SetLevel(levels[_currentLevelIndex]);
         }
 
         private void OnApplicationQuit()
@@ -37,6 +37,7 @@ namespace Game
         public void StartCheck()
         {
             checkManager.SetLevel(levels[_currentLevelIndex]);
+            checkManager.CheckTopography();
         }
         
         [ContextMenu("Next Level")]
@@ -55,6 +56,19 @@ namespace Game
             }
             _currentLevelIndex++;
             PlayerPrefs.SetInt("current_level", _currentLevelIndex);
+        }
+        
+        [ContextMenu("Unlock Next Level")]
+        public void UnlockNextLevel()
+        {
+            if (_currentLevelIndex != _unlockedLevelIndex)  return;
+            // if (_unlockedLevelIndex >= levels.Count - 1)
+            // {
+            //     Debug.Log("All levels are unlocked!");
+            //     return;
+            // }
+            _unlockedLevelIndex++;
+            PlayerPrefs.SetInt("unlocked_level", _unlockedLevelIndex);
         }
         
         public void PreviousLevel()
