@@ -36,7 +36,7 @@
                     "name": "MiddleMouse",
                     "type": "Button",
                     "id": "66ca4d35-27b3-42e7-8fe7-0e6c36944984",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -215,6 +215,17 @@
                     "name": "",
                     "id": "dda02d69-b115-455f-8999-96807663461e",
                     "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MiddleMouse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cd8325a8-23be-403a-8963-ca5650f6bb01",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
