@@ -16,6 +16,8 @@ namespace UI
         [SerializeField] private Button returnButton;
         [SerializeField] private Button nextButton;
         
+        public static bool IsShown { get; private set; }
+        
         private void Start()
         {
             panel.SetActive(false);
@@ -35,6 +37,7 @@ namespace UI
 
         public void SetScoreText(string text, bool correct)
         {
+            IsShown = true;
             CameraMovement.Disable();
             scoreText.text = text;
             panel.SetActive(true);
@@ -62,6 +65,7 @@ namespace UI
         {
             CameraMovement.Enable();
             panel.SetActive(false);
+            IsShown = false;
         }
         
         private void NextLevel()

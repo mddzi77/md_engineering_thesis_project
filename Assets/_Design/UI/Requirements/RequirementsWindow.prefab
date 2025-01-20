@@ -264,6 +264,7 @@ MonoBehaviour:
   requirementsWindow: {fileID: 7466877489240851070}
   header: {fileID: 1346990597848972094}
   componentsParent: {fileID: 4819984038920479257}
+  openWindowAction: {fileID: -1510057296328836941, guid: f60942dfd1d437340afd25034205eac3, type: 3}
   okButton: {fileID: 71775366050375404}
   nextButton: {fileID: 7941590546947202724}
   prevButton: {fileID: 830008005173219677}

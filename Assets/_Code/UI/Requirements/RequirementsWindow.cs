@@ -15,12 +15,14 @@ namespace UI.Requirements
         [SerializeField] private GameObject requirementsWindow;
         [SerializeField] private TextMeshProUGUI header;
         [SerializeField] private Transform componentsParent;
+        [SerializeField] private InputActionReference openWindowAction;
         [SerializeField] private Button okButton;
         [SerializeField] private Button nextButton;
         [SerializeField] private Button prevButton;
-        
         [AssetsOnly]
         [SerializeField] private GameObject componentPrefab;
+        
+        public static bool IsShown { get; private set; }
         
         private List<ComponentView> _components = new();
         
@@ -29,20 +31,30 @@ namespace UI.Requirements
             okButton.onClick.AddListener(CloseWindow);
             nextButton.onClick.AddListener(OnNext);
             prevButton.onClick.AddListener(OnPrev);
+            openWindowAction.action.performed += OnOpenWindowAction;
             OpenWindow();
         }
         
         public void OpenWindow()
         {
+            IsShown = true;
             requirementsWindow.SetActive(true);
             CameraMovement.Disable();
             SetupValues();
+        }
+
+        private void OnOpenWindowAction(InputAction.CallbackContext context)
+        {
+            if (ScoreWindow.IsShown) return;
+            if (IsShown) CloseWindow();
+            else OpenWindow();
         }
         
         public void CloseWindow()
         {
             requirementsWindow.SetActive(false);
             CameraMovement.Enable();
+            IsShown = false;
         }
 
         private void SetupValues()
