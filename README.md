@@ -25,3 +25,6 @@ for keyboard shortcuts and intuitive drawing and editing tools, ensuring smooth 
 efficient schematic creation.
 The result is a functional educational game that provides users with a comprehensive tool for learning integrated circuit design while facilitating gradual skill
 improvement through progressively challenging levels.
+
+### Document
+<a href="https://github.com/mddzi77/md_engineering_thesis">md_engineering_thesis</a>
