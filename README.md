@@ -1,3 +1,8 @@
+# EPIC Creator
+## Educational Purpose Integrated Circuits Creator
+
+Engineering thesis project, aiming to help learn about IC layouts, easier way
+
 ## Streszczenie
 Celem niniejszej pracy jest opracowanie edukacyjnej gry komputerowej umożliwiającej wprowadzenie użytkownika w zagadnienia projektowania schematów układów
 scalonych, z wykorzystaniem silnika Unity i języka C#. Aplikacja stanowi narzędzie
